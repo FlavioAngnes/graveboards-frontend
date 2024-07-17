@@ -1,64 +1,49 @@
-<mat-grid-list cols="14" rowHeight="4px">
+<div class="main-grid">
+  <div class="side-bar">
+    <mat-list>
+      <mat-list-item>
+        <button class="test-1-button" mat-flat-button color="primary">test
+          1</button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <button class="test-2-button" mat-flat-button color="secondary">test
+          2</button>
+      </mat-list-item>
+    </mat-list>
+  </div>
 
-  <mat-grid-tile [colspan]="2" [rowspan]="200" class="side-bar">
-    <div class="side-bar">
-      <mat-list>
-        <mat-list-item>
-          <button class="test-1-button" mat-flat-button color="secondary">test 1</button>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <button class="test-2-button" mat-flat-button color="secondary">test 2</button>
-        </mat-list-item>
-      </mat-list>
-    </div>
-  </mat-grid-tile>
-  
-  <mat-grid-tile [colspan]="9" [rowspan]="20">
-    <mat-form-field class="search-bar" appearance="outline">
-      <mat-label>Search your map here</mat-label>
-      <input matInput type="text" [(ngModel)]="value">
-      @if (value) {
+  <div class="header-content">
+    <div class="search-bar">
+      <mat-form-field  appearance="outline" >
+        <mat-label>Search your map here</mat-label>
+        <input matInput type="text" [(ngModel)]="value">
+        @if (value) {
         <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
           <mat-icon>close</mat-icon>
         </button>
       }
-    </mat-form-field>
-  </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="20" class="request-button">
-      <a mat-raised-button href=" " target="_blank">+ Request a map</a>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="20" class="profile-icon">
-      <button mat-fab aria-hidden="false" aria-label="Example home icon" fontIcon="home"></button>
-  </mat-grid-tile>
+      </mat-form-field>
+    </div>
+    <div class="request-button">
+      <a mat-flat-button href=" " color="primary" target="_blank">+ Request a map</a>
+    </div>
+    <div class="profile-icon">
+      <button mat-fab aria-hidden="false" aria-label="Example home icon"
+        fontIcon="home"></button>
+    </div>
+  </div>
 
-  <mat-grid-tile [colspan]="2" [rowspan]="19" class="latest-requests">
-    Latest Requests
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="9" [rowspan]="19" class="latest-requests">
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="19" class="latest-requests">
-    See more maps
-  </mat-grid-tile>
-
-  <mat-grid-tile [colspan]="3" [rowspan]="72" class="latest-maps">
-
-      <button aria-label="Example icon button with a delete icon" mat-fab>
-        <mat-icon>add</mat-icon>
-      </button>
-
-  </mat-grid-tile>
-
-  <mat-grid-tile [colspan]="3" [rowspan]="72" class="latest-maps">
-
-  </mat-grid-tile>
-
-  <mat-grid-tile [colspan]="3" [rowspan]="72" class="latest-maps">
-
-  </mat-grid-tile>
-
-  <mat-grid-tile [colspan]="3" [rowspan]="72" class="latest-maps">
-
-  </mat-grid-tile>
-
-</mat-grid-list>
+  <div class="main-content">
+    <div class="latest-requests">
+      Latest Requests
+      <div class="request-map">
+        <button aria-label="Example" mat-fab>
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="latest-maps">
+        <!-- Additional content for latest maps can go here -->
+      </div>
+    </div>
+  </div>
