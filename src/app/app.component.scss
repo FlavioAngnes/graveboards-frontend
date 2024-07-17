@@ -1,6 +1,20 @@
+@import '@angular/material/core/theming/theming';
+
 html, body {
     height: 100%;
     margin: 0;
+  }
+
+  input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    background: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
 
   .main-grid {
@@ -22,13 +36,16 @@ html, body {
   
   .header-content{
     grid-area: header;
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    grid-template-columns: 75% 20% 5%;
-    grid-template-areas: 
-      "searchbar requestbutton profileicon";
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
     background-color: #f4f4f496;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top:8px;
+    padding-bottom: 8px;
   }
 
   .main-content{
@@ -40,21 +57,29 @@ html, body {
   .latest-requests{
   }
 
-  .search-bar {
-    grid-area: searchbar;
-    width: 80%;
-    height: 80%;
+  .search-bar input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    
   }
 
-  .request-button{
-    grid-area: requestbutton;
-    margin:auto;
-
+  .search-bar{
+    display:flex;
+    box-sizing: border-box;
+    flex-grow: 1;
+    border: solid 3px #9e9c9c;
+    padding: 10px;
+    border-radius: 24px;
   }
+
+  .search-icon {
+  }
+
+::ng-deep .request-button .mat-flat-button{
+    border-radius: 24px;
+}
 
   .profile-icon {
-    grid-area: profileicon;
-    margin:auto;
 
   }
 
