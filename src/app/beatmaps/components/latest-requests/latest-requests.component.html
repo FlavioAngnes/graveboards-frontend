@@ -1,0 +1,11 @@
+<div *ngIf="beatmaps$ | async as beatmaps; else loading">
+    <ul>
+      <li *ngFor="let beatmap of beatmaps">
+        {{ beatmap.beatmapset }}
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #loading>
+    <p>Loading beatmaps...</p>
+  </ng-template>

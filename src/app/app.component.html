@@ -18,8 +18,8 @@
       <mat-icon class="search-icon">search</mat-icon>
       <input type="text" placeholder="Search a map" #filter>
     </div>
-    <div>
-      <button class="request-button" mat-flat-button href=" " color="warn" target="_blank">+ Request a map</button>
+    <div class="request-button">
+      <button mat-flat-button href=" " color="warn">+ Request a map</button>
     </div>
     <div class="profile-icon">
       <button mat-fab aria-hidden="false" aria-label="Example home icon"
@@ -30,13 +30,6 @@
   <div class="main-content">
     <div class="latest-requests">
       Latest Requests
-      <div class="request-map">
-        <button aria-label="Example" mat-fab>
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-      <div class="latest-maps">
-        <!-- Additional content for latest maps can go here -->
-      </div>
     </div>
+    <router-outlet></router-outlet>
   </div>

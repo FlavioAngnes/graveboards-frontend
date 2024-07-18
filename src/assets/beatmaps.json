@@ -1,0 +1,34 @@
+[
+    {
+      "graveboard_id": "1",
+      
+      "artist": "Haruna Luna",
+      "artist_unicode": "春奈るな",
+      "covers": {
+        "card": "https://assets.ppy.sh/beatmaps/892080/covers/card.jpg?1548373950",
+        "card@2x": "https://assets.ppy.sh/beatmaps/892080/covers/card@2x.jpg?1548373950",
+        "cover": "https://assets.ppy.sh/beatmaps/892080/covers/cover.jpg?1548373950",
+        "cover@2x": "https://assets.ppy.sh/beatmaps/892080/covers/cover@2x.jpg?1548373950",
+        "list": "https://assets.ppy.sh/beatmaps/892080/covers/list.jpg?1548373950",
+        "list@2x": "https://assets.ppy.sh/beatmaps/892080/covers/list@2x.jpg?1548373950",
+        "slimcover": "https://assets.ppy.sh/beatmaps/892080/covers/slimcover.jpg?1548373950",
+        "slimcover@2x": "https://assets.ppy.sh/beatmaps/892080/covers/slimcover@2x.jpg?1548373950"
+      },
+      "creator": "Net0",
+      "favourite_count": 27,
+      "hype": null,
+      "id": 892080,
+      "nsfw": false,
+      "offset": 0,
+      "play_count": 22602,
+      "preview_url": "//b.ppy.sh/preview/892080.mp3",
+      "source": "ゆらぎ荘の幽奈さん",
+      "spotlight": false,
+      "status": "graveyard",
+      "title": "Momoiro Typhoon",
+      "title_unicode": "桃色タイフーン",
+      "track_id": null,
+      "user_id": 5099768,
+      "video": false
+    }
+  ]
