@@ -1,8 +1,13 @@
 @import '@angular/material/core/theming/theming';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
 html, body {
     height: 100%;
     margin: 0;
+  }
+
+  body, .mat-app-background, .mat-typography {
+    font-family: 'Nunito', sans-serif !important;
   }
 
   input {
@@ -32,9 +37,6 @@ html, body {
     height: 100vh;
   }
 
-
-
-  
   .header-content{
     grid-area: header;
     display: flex;
@@ -61,25 +63,33 @@ html, body {
   .search-bar input[type="text"] {
     width: 100%;
     box-sizing: border-box;
-    
   }
 
   .search-bar{
     display:flex;
     box-sizing: border-box;
     flex-grow: 1;
-    border: solid 3px #9e9c9c;
+    border: solid 1px #9e9c9c;
     border-radius: 24px;
-    padding: 4px; //The padding can change the size of the search bar
+    padding: 8px;
   }
 
   .search-icon {
   }
 
-.request-button{
-  display: flex;
-  border-radius: 24px;
-}
+  .request-button button {
+    border-radius: 15px; 
+    min-width: 236px;
+    border-radius: 24px;
+    padding: 12px;
+    height: auto;
+  }
+
+  .request-button .small-icon {
+    font-size: 16px; 
+    vertical-align: middle; 
+  }
+
 
   .profile-icon {
 
@@ -88,3 +98,7 @@ html, body {
   .latest-maps{
     background-color: gray;
   }
+
+  .mat-tab{
+  }
+

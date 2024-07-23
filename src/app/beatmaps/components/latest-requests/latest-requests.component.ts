@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Beatmaps } from '../../models/beatmaps';
+import { BeatmapsetListing } from '../../models/beatmap';
+import { BeatmapsetSnapshot } from '../../models/beatmap';
+import { BeatmapsetDisplayData } from '../../models/beatmap';
 import { ServicesService } from '../../services.service';
 import { Observable } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
 import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
@@ -14,7 +15,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
   providers: [ServicesService]
 })
 export class LatestRequestsComponent implements OnInit {
-  beatmaps$: Observable<Beatmaps[]>  | null = null;
+  beatmaps$: Observable<BeatmapsetListing[]>  | null = null;
   isLoading = true;
   errorMessage: string | null = null;
 
@@ -25,8 +26,8 @@ export class LatestRequestsComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.servicesService.getBeatmaps().subscribe(
-      (data: Beatmaps[]) => {
+    this.servicesService.getBeatmapsetListing().subscribe(
+      (data: BeatmapsetListing[]) => {
         this.isLoading = false;
         console.log('Data received:', data); // Log data to the console for debugging
       },
@@ -39,6 +40,6 @@ export class LatestRequestsComponent implements OnInit {
   }
 
   refresh() {
-  this.beatmaps$ = this.servicesService.getBeatmaps();
+  this.beatmaps$ = this.servicesService.getBeatmapsetListing();
   }
 }

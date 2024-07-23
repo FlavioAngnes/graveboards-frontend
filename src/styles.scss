@@ -1,9 +1,12 @@
 @use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
 @include mat.core();
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%;
+    font-family: 'Nunito', sans-serif; }
+    
+body { margin: 0; font-family: 'Nunito', sans-serif; }
 
 $custom-primary-palette: (
     50: #e8eaf6,
@@ -42,4 +45,3 @@ $my-app-theme: mat.define-light-theme(
 );
 
 @include mat.all-component-themes($my-app-theme);
-
