@@ -10,6 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SidebarComponent } from './beatmaps/components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FormsModule,
     RouterLink,
     RouterLinkActive,
-    
+    SidebarComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

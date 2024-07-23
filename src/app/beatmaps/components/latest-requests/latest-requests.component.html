@@ -1,7 +1,7 @@
 <div *ngIf="beatmaps$ | async as beatmaps; else loading">
     <ul>
       <li *ngFor="let beatmap of beatmaps">
-        {{ beatmap.beatmapset }}
+        {{ beatmap | json }}
       </li>
     </ul>
   </div>

@@ -17,6 +17,11 @@ html, body {
     appearance: none;
   }
 
+  .side-bar{
+    grid-area: sidebar;
+    overflow-y: auto;
+  }
+
   .main-grid {
     display: grid;
     grid-template-rows: auto 1fr;
@@ -28,11 +33,7 @@ html, body {
   }
 
 
-  .side-bar{
-    grid-area: sidebar;
-    background: #f5f5f5;
-    overflow-y: auto;
-  }
+
   
   .header-content{
     grid-area: header;

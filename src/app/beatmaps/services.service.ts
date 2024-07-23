@@ -14,16 +14,7 @@ export class ServicesService {
   constructor(private httpClient: HttpClient) { }
 
   getBeatmaps(): Observable<Beatmaps[]> {
-    return this.httpClient.get<Beatmaps[]>(`${this.baseUrl}${EndpointEnum.BEATMAPS}`);
+    return this.httpClient.get<Beatmaps[]>(`${this.baseUrl}${EndpointEnum.LISTINGS}`);
   }
     
 }
-
-
-// class EndpointEnum(Enum):
-//   BEATMAPS = "api/v1/beatmaps"
-//   LEADERBOARDS = "api/v1/leaderboards"
-
-// beatmaps_endpoint = EndpointEnum.BEATMAPS
-
-// return this.httpClient.get(beatmaps_endpoint.value)
