@@ -1,0 +1,83 @@
+@import '@angular/material/core/theming/theming';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+body, .mat-app-background, .mat-typography {
+    font-family: 'Nunito', sans-serif !important;
+  }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    margin: 0 auto;
+  }
+  
+  .grid-item {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 273px;
+  }
+  
+  .grid-item img {
+    max-width: 100%;
+    max-height: 200px; /* Ensure the image fits within the max height */    
+    object-fit: cover;
+  }
+
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  }
+  
+  .image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .map-info{
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    text-align: start;
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+    background-color: #F9F9F9;
+  }
+
+  .map-into-text {
+    display: flex;
+    flex-direction: column;
+    margin: 2px 0;
+    max-width: calc(100% - 52px);
+  }
+
+  .map-into-text p {
+    margin: 0;
+    overflow: hidden; /* Hide any overflowing text */
+    text-overflow: ellipsis; /* Display ellipsis when text overflows */
+    white-space: nowrap; 
+  }
+
+  .map-info img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+
+  .font-color {
+    color: #777777;
+  }

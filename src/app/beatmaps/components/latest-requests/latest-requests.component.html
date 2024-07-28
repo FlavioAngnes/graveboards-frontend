@@ -1,14 +1,21 @@
-<div *ngIf="beatmaps$ | async as beatmaps; else loading">
-    <ul>
-      <li *ngFor="let beatmapetListing of beatmaps">
-      <h2>{{ beatmapetListing.display_data.title }}</h2>
-      <p>Artist: {{ beatmapetListing.display_data.artist }}</p>
-      <p>Creator: {{ beatmapetListing.display_data.mapper }}</p>
-      <img [src]="beatmapetListing.display_data.thumbnail" alt="{{ beatmapetListing.display_data.title }} cover" />
-      </li>
-    </ul>
+<div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
+  <div class="grid-item" *ngFor="let beatmapetListing of beatmaps">
+    <div class="image-wrapper">
+      <img [src]="beatmapetListing.display_data.thumbnail"/>
+    </div>
+    <div class="map-info">
+      <img [src]="beatmapetListing.display_data.mapper_avatar"/>
+      <div class="map-into-text">
+        <p>{{ beatmapetListing.display_data.title }}</p>
+        <div class="font-color">
+          <p>by {{ beatmapetListing.display_data.artist }}</p>
+          <p>Mapped by {{ beatmapetListing.display_data.mapper }}</p>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
   
-  <ng-template #loading>
-    <p>Loading beatmaps...</p>
-  </ng-template>
+<ng-template #loading>
+  <p>Loading beatmaps...</p>
+</ng-template>
