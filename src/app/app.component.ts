@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SidebarComponent } from './beatmaps/components/sidebar/sidebar.component';
 import { MatCardModule } from '@angular/material/card';
 import { SearchbarComponent } from "./beatmaps/components/searchbar/searchbar.component"; 
+import { CallbackComponent } from './beatmaps/components/callback/callback.component';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +34,8 @@ import { SearchbarComponent } from "./beatmaps/components/searchbar/searchbar.co
     RouterLinkActive,
     SidebarComponent,
     MatCardModule,
-    SearchbarComponent
+    SearchbarComponent,
+    CallbackComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

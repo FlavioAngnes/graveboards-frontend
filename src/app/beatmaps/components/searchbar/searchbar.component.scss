@@ -67,5 +67,11 @@ html, body {
   }
 
 
-  .profile-icon {
+  .profile-icon button{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    border-radius: 50%;
   }

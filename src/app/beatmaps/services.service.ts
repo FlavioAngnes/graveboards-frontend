@@ -26,5 +26,24 @@ export class ServicesService {
   getBeatmapsetDisplayData(): Observable<BeatmapsetDisplayData[]> {
     return this.httpClient.get<BeatmapsetDisplayData[]>(`${this.baseUrl}${EndpointEnum.LISTINGS}`);
   }
+
+  getAuthorizationUrl(): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}${EndpointEnum.LOGIN}`);
+  }
+
+  postToken(code: string) {
+    const body = { code: code };
+  
+    this.httpClient.post((`${this.baseUrl}${EndpointEnum.TOKEN}`), body).subscribe({
+      next: (response) => {
+        // Handle the successful response here
+        console.log('Response from backend:', response);
+      },
+      error: (error) => {
+        // Handle errors here
+        console.error('Error sending code to backend:', error);
+      }
+    });
+  };
 }
 
