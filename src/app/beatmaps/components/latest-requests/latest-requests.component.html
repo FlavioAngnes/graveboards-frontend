@@ -10,6 +10,11 @@
         <div class="font-color">
           <p>by {{ beatmapetListing.display_data.artist }}</p>
           <p>Mapped by {{ beatmapetListing.display_data.mapper }}</p>
+          <div class="difficulties">
+            <ng-container *ngFor="let difficulty of beatmapetListing.display_data.difficulties">
+              <img [src]="getCategory(difficulty)" />
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>

@@ -29,7 +29,6 @@ export class LatestRequestsComponent implements OnInit {
     this.servicesService.getBeatmapsetListing().subscribe(
       (data: BeatmapsetListing[]) => {
         this.isLoading = false;
-        console.log('Data received:', data); // Log data to the console for debugging
       },
       (error) => {
         this.errorMessage = 'Error fetching beatmaps';
@@ -41,5 +40,23 @@ export class LatestRequestsComponent implements OnInit {
 
   refresh() {
   this.beatmaps$ = this.servicesService.getBeatmapsetListing();
+  }
+
+  getCategory(difficulty: number): string {
+    if (difficulty < 2) {
+      return '../../assets/icons/easy.png';
+    } else if (difficulty >= 2 && difficulty < 3) {
+      return './../assets/icons/normal.png';
+    } else if (difficulty >= 3 && difficulty < 4) {
+      return './../assets/icons/hard.png';
+    } else if (difficulty >= 4 && difficulty < 5) {
+      return './../assets/icons/insane.png';
+    } else if (difficulty >= 5 && difficulty < 6) {
+      return '../../assets/icons/expert.png';
+    } else if (difficulty >= 6) {
+      return '../../assets/icons/expertplus.png';
+    } else {
+      return ''; 
+    }
   }
 }

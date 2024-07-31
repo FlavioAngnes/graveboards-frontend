@@ -81,3 +81,17 @@ body, .mat-app-background, .mat-typography {
   .font-color {
     color: #777777;
   }
+
+  .difficulties {
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+  }
+
+  .difficulties img {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+  }
