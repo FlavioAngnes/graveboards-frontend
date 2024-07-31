@@ -8,6 +8,15 @@ import { map } from 'rxjs/operators';
 import { EndpointEnum } from './endpoint.enum';
 import { environment } from '../../environments/environment.development';
 
+interface TokenResponse {
+  token_type: string;
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+  expires_at: number;
+  user_id: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,10 +56,9 @@ export class ServicesService {
     );
   }
 
-  postToken(code: string): Observable<any> {
+  postToken(code: string): Observable<TokenResponse> {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       this.state = sessionStorage.getItem('state');
-      console.log("state:", this.state);
     }
 
     let body = new HttpParams()
@@ -62,17 +70,15 @@ export class ServicesService {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
   
-    return this.httpClient.post((`${this.baseUrl}${EndpointEnum.TOKEN}`), body.toString(), { headers });
+    return this.httpClient.post<TokenResponse>((`${this.baseUrl}${EndpointEnum.TOKEN}`), body.toString(), { headers });
   };
 
   isLoggedIn(): boolean {
-    return !!sessionStorage.getItem('state');
+    return !!sessionStorage.getItem('user_id');
   }
 
   logout(): void {
     sessionStorage.clear();
     localStorage.clear();
-    console.log(sessionStorage.getItem('state'));
-    // Optionally notify the server about logout
   }
 }
