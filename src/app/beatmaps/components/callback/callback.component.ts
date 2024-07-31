@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesService } from '../../services.service';
 
 
@@ -15,21 +15,26 @@ export class CallbackComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const code = params["code"];
-      console.log(code);
       if (code) {
-        this.servicesService.postToken(code);
+        this.servicesService.postToken(code).subscribe(
+          response => {
+            console.log('Login successful:', response);
+
+            sessionStorage.setItem('auth_token', response.token);
+
+            this.router.navigate(['/']);
+          }
+        )
       } else {
         console.error('No code parameter found');
       };
     })
-};
-
-
-
+  };
 }

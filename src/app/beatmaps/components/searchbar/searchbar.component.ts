@@ -22,13 +22,15 @@ export class SearchbarComponent {
   constructor(private servicesService: ServicesService) { }
 
   onLoginButtonClick(): void {
-    this.servicesService.getAuthorizationUrl().subscribe(
-      response => {
-        let authorizationUrl = response.authorization_url
-        window.location.href = authorizationUrl;
-      }
-    );
+    if (this.servicesService.isLoggedIn()) {
+      this.servicesService.logout();
+    } else {
+      this.servicesService.getAuthorizationUrl().subscribe(
+        response => {
+          let authorizationUrl = response.authorization_url
+          window.location.href = authorizationUrl;
+        }
+      );
+    }
   }
-
-
 }
