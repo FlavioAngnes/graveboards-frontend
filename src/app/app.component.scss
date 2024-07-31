@@ -41,6 +41,16 @@ html, body {
   .header-content{
     grid-area: header;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background-color: #f4f4f496;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top:8px;
+    padding-bottom: 8px;
   }
 
   .main-content{

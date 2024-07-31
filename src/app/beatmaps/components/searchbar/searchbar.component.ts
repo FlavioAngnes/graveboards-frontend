@@ -20,49 +20,5 @@ import { ServicesService } from '../../services.service';
   providers: [ServicesService],
 })
 export class SearchbarComponent {
-  userAvatarUrl: string | null = null;
-  isLoggedIn: boolean = false;
-
-  constructor(private servicesService: ServicesService) { }
-
-  ngOnInit() {
-    this.checkLoginStatus();
-  }
-
-  checkLoginStatus(): void {
-    if (this.servicesService.isLoggedIn()) {
-      this.isLoggedIn = true;
-      const userId: number = Number(sessionStorage.getItem('user_id'));
-
-      this.servicesService.getUserProfile(userId).subscribe(
-        userProfile => {
-          this.userAvatarUrl = userProfile.avatar_url;
-        }
-      );
-    } else {
-      this.isLoggedIn = false;
-      this.userAvatarUrl = null;
-    }
-  }
-
-  onLoginButtonClick(): void {
-    if (this.isLoggedIn) {
-      this.servicesService.logout();
-      this.isLoggedIn = false;
-      this.userAvatarUrl = null;
-    } else {
-      this.servicesService.getAuthorizationUrl().subscribe(
-        response => {
-          let authorizationUrl = response.authorization_url;
-          window.location.href = authorizationUrl;
-        }
-      );
-    }
-  }
-
-  onLogout(): void {
-    this.servicesService.logout();
-    this.isLoggedIn = false;
-    this.userAvatarUrl = null;
-  }
+  
 }

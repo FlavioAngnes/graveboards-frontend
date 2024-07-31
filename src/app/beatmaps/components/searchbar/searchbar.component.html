@@ -8,23 +8,4 @@
       <mat-icon class="small-icon">add</mat-icon>
       Request a map</button>
   </div>
-  <div class="profile-icon">
-    <ng-container *ngIf="isLoggedIn; else loginButton">
-      <button mat-icon-button>
-        <img *ngIf="userAvatarUrl" [src]="userAvatarUrl" alt="User Avatar" class="user-avatar">
-        <mat-icon>arrow_drop_down</mat-icon>
-      </button>
-      <mat-menu>
-        <!-- Dropdown menu content -->
-        <button mat-menu-item (click)="onLogout()">Logout</button>
-        <!-- Add other menu items as needed -->
-      </mat-menu>
-    </ng-container>
-    
-    <ng-template #loginButton>
-      <button mat-icon-button (click)="onLoginButtonClick()">
-        <mat-icon>person</mat-icon>
-      </button>
-    </ng-template>
-  </div>
 </div>

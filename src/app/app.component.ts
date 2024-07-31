@@ -14,6 +14,7 @@ import { SidebarComponent } from './beatmaps/components/sidebar/sidebar.componen
 import { MatCardModule } from '@angular/material/card';
 import { SearchbarComponent } from "./beatmaps/components/searchbar/searchbar.component"; 
 import { CallbackComponent } from './beatmaps/components/callback/callback.component';
+import { ProfileButtonComponent } from './beatmaps/components/profile-button/profile-button.component';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,8 @@ import { CallbackComponent } from './beatmaps/components/callback/callback.compo
     SidebarComponent,
     MatCardModule,
     SearchbarComponent,
-    CallbackComponent
+    CallbackComponent,
+    ProfileButtonComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
