@@ -56,6 +56,10 @@ export class ServicesService {
     );
   }
 
+  getUserProfile(userId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}${EndpointEnum.USER.replace('{userId}', userId.toString())}`);
+  }
+
   postToken(code: string): Observable<TokenResponse> {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       this.state = sessionStorage.getItem('state');

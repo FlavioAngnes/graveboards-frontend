@@ -3,5 +3,6 @@ export enum EndpointEnum {
     LEADERBOARDS = "api/v1/leaderboards",
     LISTINGS = "api/v1/beatmapsets/listings",
     LOGIN = "api/v1/login",
-    TOKEN = "api/v1/token"
+    TOKEN = "api/v1/token",
+    USER = "api/v1/users/{userId}"
   }
