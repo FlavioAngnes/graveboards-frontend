@@ -4,13 +4,13 @@
     <input placeholder=" Search a map" #filter>
   </div>
   <div class="request-button">
-    <button mat-flat-button href=" " color="primary"> 
+    <button mat-flat-button (click)="openDialog()" href=" " color="primary"> 
       <mat-icon class="small-icon">add</mat-icon>
       Request a map</button>
   </div>
   <div class="profile-icon">
     <ng-container *ngIf="isLoggedIn; else loginButton">
-      <button mat-icon-button>
+      <button mat-button>
         <img *ngIf="userAvatarUrl" [src]="userAvatarUrl" alt="User Avatar" class="user-avatar">
         <mat-icon>arrow_drop_down</mat-icon>
       </button>

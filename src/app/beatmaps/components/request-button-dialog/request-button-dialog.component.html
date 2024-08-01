@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Request a Beatmap</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-form-field class="example-form-field">
+        <mat-label>Beatmap Link</mat-label>
+        <input matInput type="text" [(ngModel)]="value">
+        @if (value) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+      
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="secondary">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="primary">Confirm</button>
+</mat-dialog-actions>

@@ -1,10 +1,11 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ServicesService } from '../../services.service';
-
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'; 
+import { RequestButtonDialogComponent } from '../request-button-dialog/request-button-dialog.component';
 
 @Component({
   selector: 'app-searchbar',
@@ -13,11 +14,15 @@ import { ServicesService } from '../../services.service';
     AsyncPipe,
     CommonModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule,
+    RequestButtonDialogComponent
   ],
   templateUrl: './searchbar.component.html',
   styleUrl: './searchbar.component.scss',
-  providers: [ServicesService],
+  providers: [ServicesService,
+    MatButtonModule, MatDialogModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchbarComponent {
   userAvatarUrl: string | null = null;
@@ -64,5 +69,15 @@ export class SearchbarComponent {
     this.servicesService.logout();
     this.isLoggedIn = false;
     this.userAvatarUrl = null;
+  }
+
+  readonly dialog = inject(MatDialog);
+
+  openDialog() {
+    const dialogRef = this.dialog.open(RequestButtonDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
