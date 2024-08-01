@@ -36,7 +36,7 @@ Have you ever wanted to see your score saved on a cool graveyard map that you li
   - Back-end devs: Responsible for managing the APIs and out database as well as developing future features such as the algorithms.
   - Front-end devs: Responsible for creating and maitanence of the graveboards website and possible future front end applications.
   - Designers: Responsible for creating visual concepts aimed to improve the UX of the project.
-  - Testers: Players and mappers willing to spend the time activelly using the project and giving the team detailed feedback on what can be improved from their user experience. 
+  - Testers: Players and mappers willing to spend the time activelly using the project and giving the team detailed feedback on what can be improved from their user experience.
 
 - **Contribution Guidelines:** [How to contribute]
   - Open Source: We're open for anyone to join and become a Contributor as long as they're willing to spend the time to get up to date with the entire scope of the project and the veteran contributors.
