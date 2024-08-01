@@ -39,7 +39,7 @@ export class LatestRequestsComponent implements OnInit {
   }
 
   refresh() {
-  this.beatmaps$ = this.servicesService.getBeatmapsetListing();
+    this.beatmaps$ = this.servicesService.getBeatmapsetListing();
   }
 
   getCategory(difficulty: number): string {

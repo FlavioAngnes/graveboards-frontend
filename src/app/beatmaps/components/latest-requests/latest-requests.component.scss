@@ -5,7 +5,20 @@ body, .mat-app-background, .mat-typography {
     font-family: 'Nunito', sans-serif !important;
   }
 
-.grid-container {
+  /* keyframes animation */
+
+  @keyframes expand {
+    0% {
+      height: 100%;
+    }
+    100% {
+      height: 110%;
+    }
+  }
+
+  /* css */
+
+  .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 16px;
@@ -34,7 +47,7 @@ body, .mat-app-background, .mat-typography {
   .image-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%; /* 16:9 aspect ratio 100% */
   }
   
   .image-wrapper img {
@@ -47,11 +60,13 @@ body, .mat-app-background, .mat-typography {
   }
 
   .map-info{
+    order: 2;
     box-sizing: border-box;
     display: flex;
     align-items: flex-start;
     text-align: start;
     width: 100%;
+    height: 100%;
     font-size: 15px;
     padding: 12px;
     background-color: #F9F9F9;
@@ -94,4 +109,9 @@ body, .mat-app-background, .mat-typography {
     width: 16px;
     height: 16px;
     margin-right: 4px;
+  }
+
+  .map-info:hover ~ .image-wrapper {
+    padding-bottom: 39.37%; /* 16:9 aspect ratio 70%*/
+    transition: padding-bottom 0.3s;
   }

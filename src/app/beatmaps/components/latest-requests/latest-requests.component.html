@@ -1,8 +1,5 @@
 <div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
   <div class="grid-item" *ngFor="let beatmapetListing of beatmaps">
-    <div class="image-wrapper">
-      <img [src]="beatmapetListing.display_data.thumbnail"/>
-    </div>
     <div class="map-info">
       <img [src]="beatmapetListing.display_data.mapper_avatar"/>
       <div class="map-into-text">
@@ -17,6 +14,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="image-wrapper">
+      <img [src]="beatmapetListing.display_data.thumbnail"/>
     </div>
   </div>
 </div>
