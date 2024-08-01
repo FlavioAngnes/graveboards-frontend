@@ -9,7 +9,7 @@
           <p>Mapped by {{ beatmapetListing.display_data.mapper }}</p>
           <div class="difficulties">
             <ng-container *ngFor="let difficulty of beatmapetListing.display_data.difficulties">
-              <img [src]="getCategory(difficulty)" />
+              <div [ngClass]="getCategory(difficulty)" class="difficulty-box"></div>
             </ng-container>
           </div>
         </div>

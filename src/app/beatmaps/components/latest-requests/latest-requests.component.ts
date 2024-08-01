@@ -43,18 +43,28 @@ export class LatestRequestsComponent implements OnInit {
   }
 
   getCategory(difficulty: number): string {
-    if (difficulty < 2) {
-      return '../../assets/icons/easy.png';
+    if (difficulty < 0) {
+      return 'beginner';
+    } else if (difficulty >= 1 && difficulty < 2) {
+      return 'easy';
     } else if (difficulty >= 2 && difficulty < 3) {
-      return './../assets/icons/normal.png';
+      return 'normal';
     } else if (difficulty >= 3 && difficulty < 4) {
-      return './../assets/icons/hard.png';
+      return 'hard';
     } else if (difficulty >= 4 && difficulty < 5) {
-      return './../assets/icons/insane.png';
+      return 'insane';
     } else if (difficulty >= 5 && difficulty < 6) {
-      return '../../assets/icons/expert.png';
-    } else if (difficulty >= 6) {
-      return '../../assets/icons/expertplus.png';
+      return 'expert';
+    } else if (difficulty >= 6 && difficulty < 7) {
+      return 'extra';
+    } else if (difficulty >= 7 && difficulty < 8) {
+      return 'extra-plus';
+    } else if (difficulty >= 8 && difficulty < 9) {
+      return 'ultra';
+    } else if (difficulty >= 9 && difficulty < 10) {
+      return 'impossible';
+    } else if (difficulty >= 10) {
+      return 'unrankeable';
     } else {
       return ''; 
     }
