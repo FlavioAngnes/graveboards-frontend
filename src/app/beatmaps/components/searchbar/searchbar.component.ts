@@ -10,7 +10,8 @@ import { RequestButtonDialogComponent } from '../request-button-dialog/request-b
 @Component({
   selector: 'app-searchbar',
   standalone: true,
-  imports: [MatIconModule,
+  imports: [
+    MatIconModule,
     AsyncPipe,
     CommonModule,
     MatButtonModule,
@@ -20,15 +21,14 @@ import { RequestButtonDialogComponent } from '../request-button-dialog/request-b
   ],
   templateUrl: './searchbar.component.html',
   styleUrl: './searchbar.component.scss',
-  providers: [ServicesService,
-    MatButtonModule, MatDialogModule],
+  providers: [ServicesService, MatButtonModule, MatDialogModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchbarComponent {
   userAvatarUrl: string | null = null;
   isLoggedIn: boolean = false;
 
-  constructor(private servicesService: ServicesService) { }
+  constructor(private servicesService: ServicesService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.checkLoginStatus();
@@ -71,13 +71,14 @@ export class SearchbarComponent {
     this.userAvatarUrl = null;
   }
 
-  readonly dialog = inject(MatDialog);
-
-  openDialog() {
-    const dialogRef = this.dialog.open(RequestButtonDialogComponent);
+  openDialog(): void {
+    const dialogRef = this.dialog.open(RequestButtonDialogComponent, {
+      data: {}
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      console.log('The dialog was closed');
+      console.log(result);
     });
   }
 }

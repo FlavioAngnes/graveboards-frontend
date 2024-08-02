@@ -1,32 +1,45 @@
 import { Component } from '@angular/core';
-import { ServicesService } from '../../services.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatInputModule } from '@angular/material/input'; 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-request-button-dialog',
-  standalone: true,
-  imports: [MatIconModule,
-    AsyncPipe,
-    CommonModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatDialogModule,
-    MatInputModule,
-    RequestButtonDialogComponent,
-    MatFormFieldModule,
-    FormsModule],
-  providers: [ServicesService,
-    MatButtonModule, MatDialogModule],
   templateUrl: './request-button-dialog.component.html',
-  styleUrl: './request-button-dialog.component.scss'
+  styleUrls: ['./request-button-dialog.component.scss'],
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    MatInputModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    CommonModule
+  ],
 })
 export class RequestButtonDialogComponent {
-  value = '';
+  form: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<RequestButtonDialogComponent>
+  ) {
+    this.form = this.fb.group({
+      url: ['', [Validators.required, Validators.pattern('^(https?:\\/\\/)?osu\\.ppy\\.sh\\/beatmapsets\\/\\d+(#(osu|taiko|fruits|mania)\\/\\d+)?$')]],
+      text: [''],
+      checkbox: [false]
+    });
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.dialogRef.close(this.form.value);
+    }
+  }
 }

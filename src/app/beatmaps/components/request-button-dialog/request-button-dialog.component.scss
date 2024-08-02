@@ -1,0 +1,38 @@
+@import '@angular/material/core/theming/theming';
+
+.mat-dialog-container {
+    padding: 20px;
+    width: 400px;
+
+    h2 {
+        text-align: center;
+        background-color: #ffcccc;
+        padding: 6px;
+        border-radius: 20px;
+        margin-top: 0;
+        margin-bottom: 16px;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+}
+  
+mat-form-field {
+    margin-top: 16px;
+}
+
+mat-checkbox {
+    margin-bottom: 16px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    :last-child {
+        color: #E82025;
+    }
+}
