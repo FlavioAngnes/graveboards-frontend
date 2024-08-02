@@ -3,6 +3,6 @@ import { LatestRequestsComponent } from './beatmaps/components/latest-requests/l
 import { CallbackComponent } from './beatmaps/components/callback/callback.component';
 
 export const routes: Routes = [
-    {path: '', component: LatestRequestsComponent},
+    { path: '', component: LatestRequestsComponent },
     { path: 'callback', component: CallbackComponent },
 ];

@@ -14,7 +14,7 @@ interface TokenResponse {
   refresh_token: string;
   expires_in: number;
   expires_at: number;
-  user_id: string;
+  user_id: number;
 }
 
 @Injectable({
@@ -76,13 +76,4 @@ export class ServicesService {
   
     return this.httpClient.post<TokenResponse>((`${this.baseUrl}${EndpointEnum.TOKEN}`), body.toString(), { headers });
   };
-
-  isLoggedIn(): boolean {
-    return !!sessionStorage.getItem('user_id');
-  }
-
-  logout(): void {
-    sessionStorage.clear();
-    localStorage.clear();
-  }
 }

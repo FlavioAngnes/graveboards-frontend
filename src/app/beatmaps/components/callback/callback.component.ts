@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ServicesService } from '../../services.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-callback',
@@ -10,27 +10,17 @@ import { ServicesService } from '../../services.service';
 })
 export class CallbackComponent implements OnInit {
 
-  constructor(
-    private route: ActivatedRoute,
-    private servicesService: ServicesService,
-    private router: Router
-  ) { }
+  constructor(private authService: AuthService, private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.route.queryParams.subscribe(params => {
-        const code = params["code"];
-        
-        if (code) {
-          this.servicesService.postToken(code).subscribe(
-            response => {
-              sessionStorage.setItem('user_id', `${response.user_id}`);
+        const code = params['code'];
 
-              this.router.navigate(['/']);
-            }
-          );
+        if (code) {
+          this.authService.handleCallback(code);
         } else {
-          console.error('No code parameter found');
+          console.error('code not found in query parameters');
         }
       });
     }

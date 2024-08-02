@@ -1,0 +1,6 @@
+<div class="profile-button" appClickOutside (clickOutside)="closeDropdown()">
+    <img [src]="avatarUrl" class="avatar" (click)="onProfileButtonClick()" [matTooltip]="tooltipText">
+    <div *ngIf="dropdownVisible" class="dropdown-menu">
+      <button (click)="logout()">Logout</button>
+    </div>
+</div>
