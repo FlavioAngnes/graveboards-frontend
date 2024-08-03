@@ -15,7 +15,7 @@ import { TokenResponse, RequestFilter } from './interfaces';
 })
 export class ServicesService {
 
-  private baseUrl: string = 'http://localhost:4200/';
+  private baseUrl: string = environment.baseUrl;
   private apiKey: string = environment.apiKey;
   private state: string | null = null;
 
