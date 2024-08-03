@@ -34,7 +34,7 @@ html, body {
     grid-template-areas: 
       "sidebar header"
       "sidebar main"
-      "sidebar footer";
+      "footer main";
     height: 100vh;
   }
 
@@ -48,11 +48,6 @@ html, body {
     padding: 16px;
     overflow-y: auto;
   }
-
-  .latest-requests{
-    font-size: 20px;
-    font-weight: 100;
-}
 
   .latest-maps{
     background-color: gray;

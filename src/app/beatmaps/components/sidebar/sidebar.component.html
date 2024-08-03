@@ -2,9 +2,11 @@
     <mat-list>
         <p class="title">Graveboards</p>
         <p class="discover">Discover:</p>
-        <mat-list-item>
-        <button class="home-button" mat-flat-button color="primary" target="_blank">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>Home</button>
-        </mat-list-item>
+        <div class="discover-buttons">
+            <button (click)="navigateTo('')" mat-flat-button color="primary" target="_blank">
+                <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>Home</button>
+            <button (click)="navigateTo('myrequests')" mat-flat-button color="secondary" target="_blank">
+                <mat-icon aria-hidden="true" fontIcon="checklist"></mat-icon>My requests</button>
+            </div>
     </mat-list>
 </div>

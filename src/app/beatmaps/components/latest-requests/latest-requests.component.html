@@ -1,26 +1,29 @@
-<div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
-  <div class="grid-item" *ngFor="let beatmapetListing of beatmaps">
-    <div class="map-info">
-      <img [src]="beatmapetListing.display_data.mapper_avatar"/>
-      <div class="map-into-text">
-        <p>{{ beatmapetListing.display_data.title }}</p>
-        <div class="font-color">
-          <p>by {{ beatmapetListing.display_data.artist }}</p>
-          <p>Mapped by {{ beatmapetListing.display_data.mapper }}</p>
-          <div class="difficulties">
-            <ng-container *ngFor="let difficulty of beatmapetListing.display_data.difficulties">
-              <div [ngClass]="getCategory(difficulty)" class="difficulty-box"></div>
-            </ng-container>
+<div class="latest-requests">
+  Latest Requests
+</div>  
+  <div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
+    <div class="grid-item" *ngFor="let beatmapetListing of beatmaps">
+      <div class="map-info">
+        <img [src]="beatmapetListing.display_data.mapper_avatar"/>
+        <div class="map-into-text">
+          <p>{{ beatmapetListing.display_data.title }}</p>
+          <div class="font-color">
+            <p>by {{ beatmapetListing.display_data.artist }}</p>
+            <p>Mapped by {{ beatmapetListing.display_data.mapper }}</p>
+            <div class="difficulties">
+              <ng-container *ngFor="let difficulty of beatmapetListing.display_data.difficulties">
+                <div [ngClass]="getCategory(difficulty)" class="difficulty-box"></div>
+              </ng-container>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="image-wrapper">
-      <img [src]="beatmapetListing.display_data.thumbnail"/>
+      <div class="image-wrapper">
+        <img [src]="beatmapetListing.display_data.thumbnail"/>
+      </div>
     </div>
   </div>
-</div>
-  
-<ng-template #loading>
-  <p>Loading beatmaps...</p>
-</ng-template>
+    
+  <ng-template #loading>
+    <p>Loading beatmaps...</p>
+  </ng-template>

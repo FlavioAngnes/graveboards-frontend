@@ -4,23 +4,27 @@
   }
 
 .title{
-    margin: 10px;
+    margin: 24px;
     font-size: 20px;
     font-weight: 100;
     text-align: center;
 }
 
 .discover{
-    margin-left: 25px;
-    margin-bottom: 5px;
+    margin-left: 24px;
+    margin-bottom: 16px;
 }
 
-.home-button{
-    width: 95%;
+.discover-buttons {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    text-align: left;
-    background-color: #ffcccc !important;
-    color: black !important;
+    align-self: stretch;
 }
+
+.discover-buttons button{
+    display: block;
+    width: 85%;
+    text-align: start;
+
+  }
