@@ -7,15 +7,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EndpointEnum } from './endpoint.enum';
 import { environment } from '../../environments/environment.development';
+import { TokenResponse, RequestFilter } from './interfaces';
 
-interface TokenResponse {
-  token_type: string;
-  access_token: string;
-  refresh_token: string;
-  expires_in: number;
-  expires_at: number;
-  user_id: number;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +21,16 @@ export class ServicesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getBeatmapsetListing(): Observable<BeatmapsetListing[]> {
-    return this.httpClient.get<BeatmapsetListing[]>(`${this.baseUrl}${EndpointEnum.LISTINGS}`);
+  getBeatmapsetListing(requestFilter?: RequestFilter | null): Observable<BeatmapsetListing[]> {
+    let url = `${this.baseUrl}${EndpointEnum.LISTINGS}`;
+
+    if (requestFilter) {
+      const jsonRequestFilter = JSON.stringify(requestFilter);
+      const encodedRequestFilter = encodeURIComponent(jsonRequestFilter);
+      url += `?request_filter=${encodedRequestFilter}`;
+    }
+
+    return this.httpClient.get<BeatmapsetListing[]>(url);
   }
 
   getBeatmapsetSnapshot(): Observable<BeatmapsetSnapshot[]> {

@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { ServicesService } from '../../services.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'; 
 import { RequestButtonDialogComponent } from '../request-button-dialog/request-button-dialog.component';
 import { ProfileButtonComponent } from '../profile-button/profile-button.component';
@@ -23,14 +22,14 @@ import { ProfileButtonComponent } from '../profile-button/profile-button.compone
   ],
   templateUrl: './searchbar.component.html',
   styleUrl: './searchbar.component.scss',
-  providers: [ServicesService, MatButtonModule, MatDialogModule],
+  providers: [MatButtonModule, MatDialogModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchbarComponent {
   userAvatarUrl: string | null = null;
   isLoggedIn: boolean = false;
 
-  constructor(private servicesService: ServicesService, private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() { }
 
