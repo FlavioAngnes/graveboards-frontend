@@ -201,3 +201,9 @@ body, .mat-app-background, .mat-typography {
   padding-bottom: 39.37%; /* 16:9 aspect ratio 70%*/
   transition: padding-bottom 0.3s;
 }
+
+.map-info{
+  &:hover .difficulties{
+    flex-direction: row;
+  }
+}

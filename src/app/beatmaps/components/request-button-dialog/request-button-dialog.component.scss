@@ -6,7 +6,6 @@
 
     h2 {
         text-align: center;
-        background-color: #ffcccc;
         padding: 6px;
         border-radius: 20px;
         margin-top: 0;
@@ -32,7 +31,18 @@ mat-checkbox {
     display: flex;
     justify-content: flex-end;
 
+    :first-child {
+        padding: 10px 24px;
+        border-radius: 100px;
+        background-color: #ffcccc;
+
+    }
+
     :last-child {
-        color: #E82025;
+        margin-left: 10px;
+        background-color: #E82025;
+        color: white;
+        padding: 10px 24px;
+        border-radius: 100px;
     }
 }

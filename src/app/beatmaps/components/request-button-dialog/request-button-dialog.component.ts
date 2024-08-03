@@ -27,9 +27,9 @@ export class RequestButtonDialogComponent {
     private dialogRef: MatDialogRef<RequestButtonDialogComponent>
   ) {
     this.form = this.fb.group({
-      url: ['', [Validators.required, Validators.pattern('^(https?:\\/\\/)?osu\\.ppy\\.sh\\/beatmapsets\\/\\d+(#(osu|taiko|fruits|mania)\\/\\d+)?$')]],
-      text: [''],
-      checkbox: [false]
+      link: ['', [Validators.required, Validators.pattern('^(https?:\\/\\/)?osu\\.ppy\\.sh\\/beatmapsets\\/\\d+(#(osu|taiko|fruits|mania)\\/\\d+)?$')]],
+      comment: [''],
+      mv_checked: [false]
     });
   }
 
