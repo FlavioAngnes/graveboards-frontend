@@ -6,7 +6,7 @@ import { BeatmapsetDisplayData } from './models/beatmap';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EndpointEnum } from './endpoint.enum';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { TokenResponse, RequestFilter } from './interfaces';
 
 
