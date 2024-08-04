@@ -1,15 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BeatmapsetListing } from '../../models/beatmap';
-import { BeatmapsetSnapshot } from '../../models/beatmap';
-import { BeatmapsetDisplayData } from '../../models/beatmap';
 import { ServicesService } from '../../services.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-latest-requests',
   standalone: true,
-  imports: [CommonModule, AsyncPipe],
+  imports: [CommonModule, AsyncPipe, NgOptimizedImage],
   templateUrl: './latest-requests.component.html',
   styleUrl: './latest-requests.component.scss',
   providers: [ServicesService]
@@ -24,7 +22,7 @@ export class LatestRequestsComponent implements OnInit {
   ) {
     this.refresh();
   }
-  
+
   ngOnInit(): void {
     this.servicesService.getBeatmapsetListing().subscribe(
       (data: BeatmapsetListing[]) => {
@@ -66,7 +64,7 @@ export class LatestRequestsComponent implements OnInit {
     } else if (difficulty >= 10) {
       return 'unrankeable';
     } else {
-      return ''; 
+      return '';
     }
   }
 }
