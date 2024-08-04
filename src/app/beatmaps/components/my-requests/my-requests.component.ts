@@ -3,12 +3,12 @@ import { BeatmapsetListing } from '../../models/beatmap';
 import { ServicesService } from '../../services.service';
 import { Observable } from 'rxjs';
 import { RequestFilter } from '../../interfaces';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-my-requests',
   standalone: true,
-  imports: [CommonModule, AsyncPipe],
+  imports: [CommonModule, AsyncPipe, NgOptimizedImage],
   templateUrl: './my-requests.component.html',
   styleUrl: './my-requests.component.scss',
   providers: [ServicesService]
@@ -23,7 +23,7 @@ export class MyRequestsComponent implements OnInit {
   ) {
     this.refresh();
   }
-  
+
   ngOnInit(): void {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       const requestFilter = this.getRequestFilter();
@@ -89,7 +89,7 @@ export class MyRequestsComponent implements OnInit {
     } else if (difficulty >= 10) {
       return 'unrankeable';
     } else {
-      return ''; 
+      return '';
     }
   }
 }
