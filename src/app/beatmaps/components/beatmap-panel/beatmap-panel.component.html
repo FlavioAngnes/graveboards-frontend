@@ -1,0 +1,50 @@
+<div class="beatmap-panel" *ngIf="beatmap">
+    <div class="cover"
+         [style.background]="'url('+ beatmap.thumbnail + ') lightgray 50% / 215% no-repeat'"></div>
+    <div class="content">
+        <div class="mapper-avatar"
+             [style.background]="'url('+ beatmap.mapper_avatar + ') lightgray 50% / cover no-repeat'"></div>
+        <div class="info">
+            <div class="big-info no-wrap-ellipsis">{{ beatmap.title }}</div>
+            <div class="small-info no-wrap-ellipsis">by {{ beatmap.artist }}</div>
+            <div class="small-info no-wrap-ellipsis">Mapped by
+                <a [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
+                   target="_blank">{{ beatmap.mapper }}</a>
+            </div>
+            <div class="difficulty-info">
+                <div class="difficulty-list">
+                    <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                    <div class="difficulties">
+                        <div *ngFor="let difficulty of beatmap.difficulties"
+                             [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty)}"
+                             class="difficulty"></div>
+                    </div>
+                </div>
+
+                <div class="difficulties-list-detailed__animation-wrapper">
+                    <div class="difficulties-list-detailed">
+                        <div class="difficulty-detailed"
+                             *ngFor="let difficulty of beatmap.difficulties | slice:(beatmap.difficulties.length > 6 ? -5 : -6)">
+                            <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                            <div [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty), 'color': difficulty > 6.5 ? 'white' : 'black'}"
+                                 class="difficulty-expanded">
+                                <div class="star-rating">
+                                    ★ {{ difficulty.toFixed(2) }}
+                                </div>
+                            </div>
+                            <div class="difficulty-name">
+                                Very long Test Difficulty Name
+                            </div>
+                        </div>
+                        <div class="difficulty-detailed" *ngIf="beatmap.difficulties.length > 6">
+                            <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                            <div class="more-difficulties">
+                                + {{ beatmap.difficulties.length - 6 }} more...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
