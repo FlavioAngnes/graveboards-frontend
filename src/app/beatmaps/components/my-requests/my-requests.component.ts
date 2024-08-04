@@ -4,11 +4,12 @@ import { ServicesService } from '../../services.service';
 import { Observable } from 'rxjs';
 import { RequestFilter } from '../../interfaces';
 import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
+import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
 
 @Component({
   selector: 'app-my-requests',
   standalone: true,
-  imports: [CommonModule, AsyncPipe, NgOptimizedImage],
+    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BeatmapPanelComponent],
   templateUrl: './my-requests.component.html',
   styleUrl: './my-requests.component.scss',
   providers: [ServicesService]

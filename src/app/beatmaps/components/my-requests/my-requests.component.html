@@ -2,32 +2,11 @@
     My Requests
 </div>
 <div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
-  <div class="beatmap-panel" *ngFor="let beatmapetListing of beatmaps">
-    <div class="beatmap-panel__cover"
-         [style.background]="'url('+ beatmapetListing.display_data.thumbnail + ') lightgray 50% / cover no-repeat'"></div>
-    <div class="beatmap-panel__content">
-      <div class="beatmap-panel__content__mapper-avatar"
-           [style.background]="'url('+ beatmapetListing.display_data.mapper_avatar + ') lightgray 50% / cover no-repeat'"></div>
-      <div class="beatmap-panel__content__info">
-        <div class="beatmap-panel__content__info__title">{{ beatmapetListing.display_data.title }}</div>
-        <div class="beatmap-panel__content__info__artist">by {{ beatmapetListing.display_data.artist }}</div>
-        <div class="beatmap-panel__content__info__mapper">Mapped by <a
-          [href]="'https://osu.ppy.sh/users/' + beatmapetListing.display_data.mapper"
-          target="_blank">{{ beatmapetListing.display_data.mapper }}</a>
-        </div>
-        <div class="beatmap-panel__content__info__details">
-          <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
-          <div class="beatmap-panel__content__info__details__difficulties">
-            <ng-container *ngFor="let difficulty of beatmapetListing.display_data.difficulties">
-              <div [ngClass]="getCategory(difficulty)" class="difficulty"></div>
-            </ng-container>
-          </div>
-        </div>
-      </div>
+    <div *ngFor="let beatmap of beatmaps">
+        <beatmap-panel [beatmap]="beatmap"></beatmap-panel>
     </div>
-  </div>
 </div>
 
-  <ng-template #loading>
+<ng-template #loading>
     <p>Loading beatmaps...</p>
-  </ng-template>
+</ng-template>
