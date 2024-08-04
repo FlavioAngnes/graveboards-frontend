@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
-  selector: 'app-callback',
-  standalone: true,
-  templateUrl: './callback.component.html',
-  styleUrls: ['./callback.component.scss']
+    selector: 'app-callback',
+    standalone: true,
+    templateUrl: './callback.component.html',
+    imports: [
+        NgOptimizedImage
+    ],
+    styleUrls: ['./callback.component.scss']
 })
 export class CallbackComponent implements OnInit {
 

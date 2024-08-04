@@ -1,4 +1,4 @@
-<div class="latest-requests">
+<div class="header">
     Latest Requests
 </div>
 <div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
@@ -8,5 +8,8 @@
 </div>
 
 <ng-template #loading>
-    <p>Loading beatmaps...</p>
+    <div class="loading">
+        <img ngSrc="/assets/icons/loading-circle.svg" alt="loading-circle" height="64" width="64">
+        Loading beatmaps...
+    </div>
 </ng-template>
