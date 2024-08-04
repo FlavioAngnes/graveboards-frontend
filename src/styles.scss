@@ -3,31 +3,36 @@
 
 @include mat.core();
 
-html, body { height: 100%;
-    font-family: 'Nunito', sans-serif; }
-    
-body { margin: 0; font-family: 'Nunito', sans-serif; }
+html, body {
+  height: 100%;
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+}
 
 $custom-primary-palette: (
-    50: #FFFFFF,
-  100: #FFDAD6,
-  200: #FFB4AB,
-  300: #FF897E,
-  400: #FF544B,
-  500: #E82025,
-  600: #C00013,
-  700: #A90010,
-  800: #93000C,
-  900: #7D0009,
-    contrast:(
-        50: #000,
-        100: #000,
-        200: #000,
-        300: #fff,
-        400: #fff,
-        500: #fff,
-        600: #fff,
-    )
+        50: #FFFFFF,
+        100: #FFDAD6,
+        200: #FFB4AB,
+        300: #FF897E,
+        400: #FF544B,
+        500: #E82025,
+        600: #C00013,
+        700: #A90010,
+        800: #93000C,
+        900: #7D0009,
+        contrast:(
+                50: #000,
+                100: #000,
+                200: #000,
+                300: #fff,
+                400: #fff,
+                500: #fff,
+                600: #fff,
+        )
 );
 
 $custom-primary: mat.define-palette($custom-primary-palette);
@@ -35,13 +40,58 @@ $custom-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $custom-warn: mat.define-palette(mat.$red-palette);
 
 $my-app-theme: mat.define-light-theme(
-    (
-        color: (
-            primary: $custom-primary,
-            accent: $custom-accent,
-            warn: $custom-warn
-        ),
-    )
+                (
+                        color: (
+                                primary: $custom-primary,
+                                accent: $custom-accent,
+                                warn: $custom-warn
+                        ),
+                )
 );
 
 @include mat.all-component-themes($my-app-theme);
+
+.header {
+  color: #000;
+  /* material-theme/headline/small */
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  color: #777;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.loading img {
+  opacity: 50%;
+  animation: spin 4s linear infinite;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
