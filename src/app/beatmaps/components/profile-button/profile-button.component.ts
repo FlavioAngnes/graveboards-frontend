@@ -9,7 +9,7 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 
 @Component({
   standalone: true,
-  selector: 'app-profile-button',
+  selector: 'profile-button',
   templateUrl: './profile-button.component.html',
   styleUrls: ['./profile-button.component.scss'],
   imports: [
@@ -20,7 +20,7 @@ import { ClickOutsideDirective } from '../../directives/click-outside.directive'
 })
 export class ProfileButtonComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
-  avatarUrl: string = './assets/icons/person.svg';
+  avatarUrl!: string;
   tooltipText: string = 'Click to Login';
   dropdownVisible = false;
   private subscriptions: Subscription = new Subscription();

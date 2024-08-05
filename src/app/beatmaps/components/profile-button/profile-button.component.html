@@ -1,6 +1,9 @@
-<div class="profile-button" appClickOutside (clickOutside)="closeDropdown()">
-    <img [src]="avatarUrl" class="avatar" (click)="onProfileButtonClick()" [matTooltip]="tooltipText">
+<div class="profile-button-wrapper">
+    <div class="profile-button" appClickOutside (clickOutside)="closeDropdown()"
+         (click)=onProfileButtonClick() [matTooltip]=tooltipText
+         [ngStyle]="{'background-image': 'url(' + (isLoggedIn ? avatarUrl : './assets/icons/person.svg') + ')','background-size': isLoggedIn ? 'cover' : '36px'}">
+    </div>
     <div *ngIf="dropdownVisible" class="dropdown-menu">
-      <button (click)="logout()">Logout</button>
+        <button (click)="logout()">Logout</button>
     </div>
 </div>
