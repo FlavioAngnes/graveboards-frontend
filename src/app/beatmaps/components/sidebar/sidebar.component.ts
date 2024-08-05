@@ -7,6 +7,7 @@ import {SidebarLinkComponent} from "./sidebar-link/sidebar-link.component";
 import {SidebarSectionComponent} from "./sidebar-section/sidebar-section.component";
 import {AuthService} from "../../auth.service";
 import {Observable, Subscription} from "rxjs";
+import {SidebarFooterComponent} from "./sidebar-footer/sidebar-footer.component";
 
 @Component({
     selector: 'sidebar',
@@ -14,7 +15,7 @@ import {Observable, Subscription} from "rxjs";
     imports: [CommonModule, AsyncPipe,
         MatListModule,
         MatButtonModule,
-        MatIconModule, SidebarLinkComponent, SidebarSectionComponent
+        MatIconModule, SidebarLinkComponent, SidebarSectionComponent, SidebarFooterComponent
     ],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss'

@@ -2,8 +2,11 @@
     <div class="title">
         Net0's Queue
     </div>
-    <sidebar-section title="Discover">
-        <sidebar-link label="Home" href="/" icon="home"></sidebar-link>
-        <sidebar-link label="My Requests" href="/myrequests" icon="checklist" *ngIf=isLoggedIn></sidebar-link>
-    </sidebar-section>
+    <div class="sidebar-content">
+        <sidebar-section title="Discover">
+            <sidebar-link label="Home" href="/" icon="home"></sidebar-link>
+            <sidebar-link label="My Requests" href="/myrequests" icon="checklist" *ngIf=isLoggedIn></sidebar-link>
+        </sidebar-section>
+    </div>
+    <sidebar-footer></sidebar-footer>
 </div>
