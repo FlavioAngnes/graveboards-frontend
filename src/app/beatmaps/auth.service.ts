@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ServicesService } from './services.service';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {ServicesService} from './services.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +30,8 @@ export class AuthService {
   }
 
   login(): void {
-    const authorizationUrl = this.servicesService.getAuthorizationUrl().subscribe(response => {
-        const authorizationUrl = response.authorization_url;
-        window.location.href = authorizationUrl;
+    this.servicesService.getAuthorizationUrl().subscribe(response => {
+      window.location.href = response.authorization_url;
     });
   }
 
