@@ -12,7 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {SidebarComponent} from './beatmaps/components/sidebar/sidebar.component';
 import {MatCardModule} from '@angular/material/card';
-import {SearchbarComponent} from "./beatmaps/components/searchbar/searchbar.component";
+import {TopbarComponent} from "./beatmaps/components/topbar/topbar.component";
 import {CallbackComponent} from './beatmaps/components/callback/callback.component';
 import {SidebarLinkComponent} from "./beatmaps/components/sidebar/sidebar-link/sidebar-link.component";
 
@@ -35,7 +35,7 @@ import {SidebarLinkComponent} from "./beatmaps/components/sidebar/sidebar-link/s
         RouterLinkActive,
         SidebarComponent,
         MatCardModule,
-        SearchbarComponent,
+        TopbarComponent,
         CallbackComponent,
         SidebarLinkComponent
     ],
