@@ -12,7 +12,13 @@ type BeatmapPanelData = {
     mapper: string,
     mapper_avatar: string,
     length: number,
-    difficulties: number[],
+    star_ratings: number[],
+    difficulties: BeatmapPanelDifficultyData[],
+}
+
+type BeatmapPanelDifficultyData = {
+    difficulty_rating: number,
+    version: string,
 }
 
 function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
@@ -25,7 +31,13 @@ function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
         mapper: value.display_data.mapper,
         mapper_avatar: value.display_data.mapper_avatar,
         length: value.display_data.length,
-        difficulties: value.display_data.difficulties,
+        star_ratings: value.beatmapset_snapshot.beatmap_snapshots.map(snapshot => snapshot.difficulty_rating).sort((a, b) => a - b),
+        difficulties: value.beatmapset_snapshot.beatmap_snapshots.map(snapshot => {
+            return {
+                difficulty_rating: snapshot.difficulty_rating,
+                version: snapshot.version
+            }
+        }).sort((a, b) => a.difficulty_rating - b.difficulty_rating).reverse(),
     }
 }
 
@@ -52,6 +64,7 @@ export class BeatmapPanelComponent {
 
     getColorForStarDifficulty(starDifficulty: number): string {
         const stops: ColorStop[] = [
+            [0.0, "#aaaaaa"],
             [0.1, "#aaaaaa"],
             [0.1, "#4290fb"],
             [1.25, "#4fc0ff"],

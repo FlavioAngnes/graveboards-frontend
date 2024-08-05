@@ -15,25 +15,26 @@
                 <div class="difficulty-list">
                     <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
                     <div class="difficulties">
-                        <div *ngFor="let difficulty of beatmap.difficulties"
+                        <div *ngFor="let difficulty of beatmap.star_ratings | slice:0:16"
                              [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty)}"
                              class="difficulty"></div>
+                        <div *ngIf="beatmap.difficulties.length > 16" class="more-difficulties">+{{ beatmap.difficulties.length - 16 }}</div>
                     </div>
                 </div>
 
                 <div class="difficulties-list-detailed__animation-wrapper">
                     <div class="difficulties-list-detailed">
                         <div class="difficulty-detailed"
-                             *ngFor="let difficulty of beatmap.difficulties | slice:(beatmap.difficulties.length > 6 ? -5 : -6)">
+                             *ngFor="let difficulty of beatmap.difficulties | slice:0:(beatmap.difficulties.length > 6 ? 5 : 6)">
                             <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
-                            <div [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty), 'color': difficulty > 6.5 ? 'white' : 'black'}"
+                            <div [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty.difficulty_rating), 'color': difficulty.difficulty_rating > 6.5 ? 'white' : 'black'}"
                                  class="difficulty-expanded">
                                 <div class="star-rating">
-                                    ★ {{ difficulty.toFixed(2) }}
+                                    ★ {{ difficulty.difficulty_rating.toFixed(2) }}
                                 </div>
                             </div>
                             <div class="difficulty-name">
-                                Very long Test Difficulty Name
+                                {{ difficulty.version }}
                             </div>
                         </div>
                         <div class="difficulty-detailed" *ngIf="beatmap.difficulties.length > 6">
