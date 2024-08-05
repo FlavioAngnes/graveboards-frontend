@@ -74,7 +74,7 @@ export class ProfileButtonComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout();
     this.dropdownVisible = false;
+    this.authService.logout();
   }
 }

@@ -39,8 +39,11 @@ export class AuthService {
   logout(): void {
     sessionStorage.clear();
     localStorage.clear();
+
     this.loggedIn.next(false);
     this.avatarUrl.next('./assets/icons/person.svg');
+    
+    this.router.navigate(['/']);
   }
 
   handleCallback(code: string): void {
