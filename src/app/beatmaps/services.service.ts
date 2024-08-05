@@ -21,7 +21,7 @@ export class ServicesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getBeatmapsetListing(requestFilter?: RequestFilter | null): Observable<BeatmapsetListing[]> {
+  getBeatmapsetListings(requestFilter?: RequestFilter | null): Observable<BeatmapsetListing[]> {
     let url = `${this.baseUrl}${EndpointEnum.LISTINGS}`;
 
     if (requestFilter) {

@@ -9,7 +9,7 @@ import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
 @Component({
   selector: 'app-my-requests',
   standalone: true,
-    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BeatmapPanelComponent],
+  imports: [CommonModule, AsyncPipe, NgOptimizedImage, BeatmapPanelComponent],
   templateUrl: './my-requests.component.html',
   styleUrl: './my-requests.component.scss',
   providers: [ServicesService]
@@ -21,36 +21,21 @@ export class MyRequestsComponent implements OnInit {
 
   constructor(
     private servicesService: ServicesService,
-  ) {
-    this.refresh();
-  }
+  ) { }
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined' && window.sessionStorage) {
-      const requestFilter = this.getRequestFilter();
-
-      this.servicesService.getBeatmapsetListing(requestFilter).subscribe(
-        (data: BeatmapsetListing[]) => {
-          this.isLoading = false;
-        },
-        (error) => {
-          this.errorMessage = 'Error fetching beatmaps';
-          this.isLoading = false;
-          console.error('Error fetching beatmaps:', error); // Log error if any
-        }
-      );
-    }
+    this.refresh();
   }
 
   refresh() {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       const requestFilter = this.getRequestFilter();
 
-      this.beatmaps$ = this.servicesService.getBeatmapsetListing(requestFilter);
+      this.beatmaps$ = this.servicesService.getBeatmapsetListings(requestFilter);
     }
   }
 
-  getRequestFilter(): RequestFilter | null {
+  getRequestFilter(): RequestFilter {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       const userInfo = sessionStorage.getItem('user')
       const user = userInfo ? JSON.parse(userInfo) : null;
@@ -62,7 +47,7 @@ export class MyRequestsComponent implements OnInit {
 
       return requestFilter;
     } else {
-      return null;
+      return {};
     }
   }
 

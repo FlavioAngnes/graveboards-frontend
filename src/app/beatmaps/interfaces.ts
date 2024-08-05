@@ -17,5 +17,5 @@ export interface RelationalOperators {
 }
   
 export interface RequestFilter {
-    user_id: RelationalOperators;
+    user_id?: RelationalOperators;
 }

@@ -23,30 +23,20 @@ export class LatestRequestsComponent implements OnInit {
     constructor(
         private servicesService: ServicesService,
         private refreshService: RefreshService
-    ) {
-        this.refresh();
-    }
+    ) { }
 
     ngOnInit(): void {
         this.refreshService.refresh$.subscribe(() => {
             this.refresh();
           });
 
-        this.servicesService.getBeatmapsetListing().subscribe(
-            (data: BeatmapsetListing[]) => {
-                this.isLoading = false;
-            },
-            (error) => {
-                this.errorMessage = 'Error fetching beatmaps';
-                this.isLoading = false;
-                console.error('Error fetching beatmaps:', error); // Log error if any
-            }
-        );
+        this.refresh();
     }
 
     refresh() {
         this.isLoading = true;
-        this.beatmaps$ = this.servicesService.getBeatmapsetListing();
+        const requestFilter = {}
+        this.beatmaps$ = this.servicesService.getBeatmapsetListings(requestFilter);
         this.isLoading = false;
     }
 }
