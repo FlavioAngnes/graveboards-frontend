@@ -12,7 +12,8 @@ import { RefreshService } from '../../refresh.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from '../../interfaces';
 import { ErrorResponseType } from '../../request-response.enum';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-searchbar',
@@ -41,7 +42,8 @@ export class SearchbarComponent {
     private servicesService: ServicesService,
     private router: Router,
     private refreshService: RefreshService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   ngOnInit() { }
@@ -53,6 +55,18 @@ export class SearchbarComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && typeof window !== 'undefined' && window.sessionStorage) {
+        const userInfo = sessionStorage.getItem('user');
+        const user = userInfo ? JSON.parse(userInfo) : null;
+
+        if (!user) {
+          this._snackBar.open('You must be loged in first!', 'Error', {
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+          });
+
+          return;
+        }
+
         this._snackBar.open('Request submitted!', 'Confirm', {
           horizontalPosition: 'end',
           verticalPosition: 'bottom',
@@ -65,10 +79,7 @@ export class SearchbarComponent {
           return;
         }
 
-        const userInfo = sessionStorage.getItem('user');
-        const user = userInfo ? JSON.parse(userInfo) : null;
         const userId = user.id;
-
         const queueId = 2;
 
         this.servicesService.postRequest(beatmapsetId, result.comment, result.mvChecked, userId, queueId).subscribe({
