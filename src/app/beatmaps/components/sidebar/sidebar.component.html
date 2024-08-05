@@ -1,16 +1,9 @@
-<div class="side-bar">
-    <mat-list>
-        <p class="title">Net0's Queue</p>
-        <p class="discover">Discover</p>
-        <div class="discover-buttons">
-            <button (click)="navigateTo('')" mat-flat-button color="primary">
-                <mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
-                Home
-            </button>
-            <button (click)="navigateTo('myrequests')" mat-flat-button color="secondary">
-                <mat-icon aria-hidden="true" fontIcon="checklist"></mat-icon>
-                My requests
-            </button>
-        </div>
-    </mat-list>
+<div class="sidebar">
+    <div class="title">
+        Net0's Queue
+    </div>
+    <sidebar-section title="Discover">
+        <sidebar-link label="Home" href="/" icon="home"></sidebar-link>
+        <sidebar-link label="My Requests" href="/myrequests" icon="checklist" *ngIf=isLoggedIn></sidebar-link>
+    </sidebar-section>
 </div>

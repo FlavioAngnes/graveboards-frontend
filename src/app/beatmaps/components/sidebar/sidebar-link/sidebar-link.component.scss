@@ -1,0 +1,19 @@
+.link.active {
+  background-color: #FFDAD6;
+  color: #000000;
+}
+
+.link {
+  color: #919191;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 8px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
