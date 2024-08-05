@@ -4,6 +4,7 @@ import {ServicesService} from '../../services.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
 import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
+import { RefreshService } from '../../refresh.service';
 
 @Component({
     selector: 'app-latest-requests',
@@ -21,11 +22,16 @@ export class LatestRequestsComponent implements OnInit {
 
     constructor(
         private servicesService: ServicesService,
+        private refreshService: RefreshService
     ) {
         this.refresh();
     }
 
     ngOnInit(): void {
+        this.refreshService.refresh$.subscribe(() => {
+            this.refresh();
+          });
+
         this.servicesService.getBeatmapsetListing().subscribe(
             (data: BeatmapsetListing[]) => {
                 this.isLoading = false;
@@ -39,7 +45,9 @@ export class LatestRequestsComponent implements OnInit {
     }
 
     refresh() {
+        this.isLoading = true;
         this.beatmaps$ = this.servicesService.getBeatmapsetListing();
+        this.isLoading = false;
     }
 }
 

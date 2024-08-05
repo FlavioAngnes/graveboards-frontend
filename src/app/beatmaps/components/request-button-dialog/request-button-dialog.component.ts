@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-request-button-dialog',
@@ -16,7 +17,7 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
   ],
 })
 export class RequestButtonDialogComponent {
@@ -24,12 +25,13 @@ export class RequestButtonDialogComponent {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<RequestButtonDialogComponent>
+    private dialogRef: MatDialogRef<RequestButtonDialogComponent>,
+    private _snackBar: MatSnackBar
   ) {
     this.form = this.fb.group({
-      link: ['', [Validators.required, Validators.pattern('^(https?:\\/\\/)?osu\\.ppy\\.sh\\/beatmapsets\\/\\d+(#(osu|taiko|fruits|mania)\\/\\d+)?$')]],
+      beatmapsetLink: ['', [Validators.required, Validators.pattern('^(https?:\\/\\/)?osu\\.ppy\\.sh\\/beatmapsets\\/\\d+(#(osu|taiko|fruits|mania)\\/\\d+)?$')]],
       comment: [''],
-      mv_checked: [false]
+      mvChecked: [false]
     });
   }
 
@@ -37,9 +39,17 @@ export class RequestButtonDialogComponent {
     this.dialogRef.close();
   }
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
   onSubmit(): void {
     if (this.form.valid) {
       this.dialogRef.close(this.form.value);
+
+      this._snackBar.open('Request submitted!', 'Confirm', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 }
