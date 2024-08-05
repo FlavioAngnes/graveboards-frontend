@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {NgForOf, NgIf, NgOptimizedImage, NgStyle, SlicePipe} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgOptimizedImage, NgStyle, SlicePipe} from "@angular/common";
 import {BeatmapsetListing} from "../../models/beatmap";
 import {MatIconModule} from '@angular/material/icon';
 
@@ -11,7 +11,7 @@ type BeatmapPanelData = {
     thumbnail: string,
     mapper: string,
     mapper_avatar: string,
-    length: number,
+    length: string,
     star_ratings: number[],
     difficulties: BeatmapPanelDifficultyData[],
 }
@@ -30,7 +30,7 @@ function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
         thumbnail: value.display_data.thumbnail,
         mapper: value.display_data.mapper,
         mapper_avatar: value.display_data.mapper_avatar,
-        length: value.display_data.length,
+        length: formatTime(value.display_data.length),
         star_ratings: value.beatmapset_snapshot.beatmap_snapshots.map(snapshot => snapshot.difficulty_rating).sort((a, b) => a - b),
         difficulties: value.beatmapset_snapshot.beatmap_snapshots.map(snapshot => {
             return {
@@ -50,7 +50,8 @@ function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
         NgOptimizedImage,
         SlicePipe,
         NgStyle,
-        MatIconModule
+        MatIconModule,
+        NgClass
     ],
     templateUrl: './beatmap-panel.component.html',
     styleUrl: './beatmap-panel.component.scss'
@@ -61,6 +62,15 @@ export class BeatmapPanelComponent {
         transform:
             (value: BeatmapsetListing): BeatmapPanelData => beatmapListingToPanelData(value)
     }) beatmap!: BeatmapPanelData;
+    isHovered: boolean = false;
+
+    onMouseEnter() {
+        this.isHovered = true;
+    }
+
+    onMouseLeave() {
+        this.isHovered = false;
+    }
 
     getColorForStarDifficulty(starDifficulty: number): string {
         const stops: ColorStop[] = [
@@ -127,4 +137,14 @@ class Color4 {
         const to255 = (c: number) => Math.round(c * 255);
         return `#${((1 << 24) + (to255(r) << 16) + (to255(g) << 8) + to255(b)).toString(16).slice(1)}`;
     }
+}
+
+function formatTime(seconds: number): string {
+    const minutes: number = Math.floor(seconds / 60);
+    const remainingSeconds: number = seconds % 60;
+
+    // Format seconds to always be two digits
+    const formattedSeconds: string = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds.toString();
+
+    return `${minutes}:${formattedSeconds}`;
 }

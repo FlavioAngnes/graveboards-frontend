@@ -1,11 +1,17 @@
 <div class="beatmap-panel" *ngIf="beatmap">
     <div class="cover"
-         [style.background]="'url('+ beatmap.thumbnail + ') lightgray 50% / 215% no-repeat'"></div>
-    <div class="content">
+         [style.background]="'url('+ beatmap.thumbnail + ') lightgray 50% / 215% no-repeat'"
+         [ngClass]="isHovered ? 'hovered' : ''">
+        <div class="length">
+            {{ beatmap.length }}
+        </div>
+    </div>
+    <div class="content" (mouseenter)=onMouseEnter() (mouseleave)=onMouseLeave()>
         <div class="mapper-avatar"
              [style.background]="'url('+ beatmap.mapper_avatar + ') lightgray 50% / cover no-repeat'"></div>
         <div class="info">
-            <a class="big-info no-wrap-ellipsis" [href]="'https://osu.ppy.sh/beatmapsets/' + beatmap.beatmapset_id" target="_blank">{{ beatmap.title }}</a>
+            <a class="big-info no-wrap-ellipsis" [href]="'https://osu.ppy.sh/beatmapsets/' + beatmap.beatmapset_id"
+               target="_blank">{{ beatmap.title }}</a>
             <div class="small-info no-wrap-ellipsis">by {{ beatmap.artist }}</div>
             <div class="small-info no-wrap-ellipsis">Mapped by
                 <a [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
@@ -18,7 +24,9 @@
                         <div *ngFor="let difficulty of beatmap.star_ratings | slice:0:16"
                              [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty)}"
                              class="difficulty"></div>
-                        <div *ngIf="beatmap.difficulties.length > 16" class="more-difficulties">+{{ beatmap.difficulties.length - 16 }}</div>
+                        <div *ngIf="beatmap.difficulties.length > 16" class="more-difficulties">
+                            +{{ beatmap.difficulties.length - 16 }}
+                        </div>
                     </div>
                 </div>
 
