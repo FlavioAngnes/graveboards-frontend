@@ -22,14 +22,11 @@ input {
   appearance: none;
 }
 
-.side-bar {
-  grid-area: sidebar;
-}
-
 .main-grid {
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 240px 1fr;
+  column-gap: 22px;
   grid-template-areas:
       "sidebar header"
       "sidebar main";
@@ -44,4 +41,8 @@ input {
 .main-content {
   grid-area: main;
   padding: 0 22px;
+}
+
+.sidebar-content {
+  grid-area: sidebar;
 }
