@@ -22,6 +22,7 @@
   align-self: stretch;
   z-index: -1;
   transition: filter 0.3s ease-in-out;
+  background: lightgray 50% / 215% no-repeat
 }
 
 .content {
@@ -37,6 +38,7 @@
 .info {
   max-width: 100%;
   overflow: hidden;
+  flex: 1;
 }
 
 .big-info {
@@ -71,6 +73,7 @@
   height: 40px;
   border-radius: 50%;
   flex: none;
+  background: lightgray 50% / cover no-repeat;
 }
 
 .difficulty-list {
@@ -153,7 +156,7 @@
   grid-template-rows: 1fr;
 }
 
-.content:hover .difficulties-list-detailed__animation-wrapper {
+.info:hover .difficulties-list-detailed__animation-wrapper {
   grid-template-rows: 1fr;
   transition-delay: 0.3s;
 }
@@ -166,7 +169,7 @@
   transition: gap 0.4s 0.35s ease-out;
 }
 
-.content:hover .difficulty-info {
+.info:hover .difficulty-info {
   gap: 8px;
   transition-delay: 0.15s;
 }
