@@ -42,7 +42,7 @@
 
   /* material-theme/body/medium */
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 20px; /* 142.857% */
   letter-spacing: 0.25px;
 }
@@ -167,4 +167,9 @@
 
 .content:hover {
   background-color: #eaeaea;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }

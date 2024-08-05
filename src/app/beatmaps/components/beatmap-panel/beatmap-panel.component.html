@@ -5,7 +5,7 @@
         <div class="mapper-avatar"
              [style.background]="'url('+ beatmap.mapper_avatar + ') lightgray 50% / cover no-repeat'"></div>
         <div class="info">
-            <div class="big-info no-wrap-ellipsis">{{ beatmap.title }}</div>
+            <a class="big-info no-wrap-ellipsis" [href]="'https://osu.ppy.sh/beatmapsets/' + beatmap.beatmapset_id" target="_blank">{{ beatmap.title }}</a>
             <div class="small-info no-wrap-ellipsis">by {{ beatmap.artist }}</div>
             <div class="small-info no-wrap-ellipsis">Mapped by
                 <a [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
