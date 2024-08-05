@@ -33,16 +33,16 @@ input {
   height: 100vh;
 }
 
-.header-content {
+.header-section-content {
   grid-area: header;
   padding: 36px 22px 0 22px;
 }
 
-.main-content {
+.main-section-content {
   grid-area: main;
   padding: 0 22px;
 }
 
-.sidebar-content {
+.sidebar-section-content {
   grid-area: sidebar;
 }
