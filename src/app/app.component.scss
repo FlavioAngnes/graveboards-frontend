@@ -2,83 +2,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
 html, body {
-    height: 100%;
-    margin: 0;
-  }
+  height: 100%;
+  margin: 0;
+}
 
-  body, .mat-app-background, .mat-typography {
-    font-family: 'Nunito', sans-serif !important;
-  }
+body, .mat-app-background, .mat-typography {
+  font-family: 'Nunito', sans-serif !important;
+}
 
-  input {
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-    background: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
+input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 
-  .side-bar{
-    grid-area: sidebar;
-    overflow-y: auto;
-  }
+.side-bar {
+  grid-area: sidebar;
+}
 
-  .main-grid {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 200px 1fr;
-    grid-template-areas: 
+.main-grid {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 220px 1fr;
+  grid-template-areas:
       "sidebar header"
-      "sidebar main"
-      "footer main";
-    height: 100vh;
-  }
+      "sidebar main";
+  height: 100vh;
+}
 
-  .header-content{
-    grid-area: header;
-    width: 100%;
-  }
+.header-content {
+  grid-area: header;
+  padding: 36px 22px 0 22px;
+}
 
-  .main-content{
-    grid-area: main;
-    padding: 16px;
-    overflow-y: auto;
-  }
-
-  .latest-maps{
-    background-color: gray;
-  }
-
-  .mat-tab{
-  }
-
-  .footer-content {
-    grid-area: footer;
-    display: flex;
-    text-align: center;
-    align-content: center;
-    justify-content: center; 
-    align-items: center;   
-    background-color: #E82025; 
-    margin: 0;
-    padding: 0;
-  }
-
-  .footer-content {
-    .github {
-      display: inline-block;
-      padding: 5px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      text-decoration: none;
-  
-      img {
-        display: block;
-      }
-    }
-  }
+.main-content {
+  grid-area: main;
+  padding: 0 22px;
+}
