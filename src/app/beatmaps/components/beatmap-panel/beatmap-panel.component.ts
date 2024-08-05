@@ -63,11 +63,6 @@ export class BeatmapPanelComponent {
             (value: BeatmapsetListing): BeatmapPanelData => beatmapListingToPanelData(value)
     }) beatmap!: BeatmapPanelData;
     isHovered: boolean = false;
-    thumbnail_source!: string;
-
-    ngOnInit() {
-        this.thumbnail_source = this.beatmap.thumbnail;
-    }
 
     onMouseEnter() {
         this.isHovered = true;
@@ -75,6 +70,11 @@ export class BeatmapPanelComponent {
 
     onMouseLeave() {
         this.isHovered = false;
+    }
+
+    getBackgroundImageUrl(): string {
+        const placeholder = 'assets/default-bg.png';
+        return `url(${this.beatmap.thumbnail}), url(${placeholder})`;
     }
 
     getColorForStarDifficulty(starDifficulty: number): string {
@@ -115,10 +115,6 @@ export class BeatmapPanelComponent {
         }
 
         return stops[stops.length - 1][1];
-    }
-
-    handleError() {
-        this.thumbnail_source = '/assets/default-bg.png';
     }
 }
 
