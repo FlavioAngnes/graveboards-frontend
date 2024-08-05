@@ -1,0 +1,77 @@
+.search-bar {
+  display: flex;
+  gap: 8px;
+  border-radius: 24px;
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border: 1px solid #868484;
+  flex-grow: 1;
+  color: #868484;
+}
+
+.search-bar.disabled {
+  cursor: not-allowed;
+  background: #e0e0e0;
+  color: #868484;
+  border: 1px solid #e0e0e0;
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  pointer-events: fill;
+  color: #868484;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.search-bar input {
+  display: block;
+  font-size: 16px;
+  width: 100%;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-family: Nunito, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.5px;
+}
+
+.search-bar button {
+  height: 36px;
+  width: 36px;
+  border-radius: 18px;
+  border: none;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  margin: 6px 0;
+}
+
+.search-bar button:hover:not(:disabled) {
+  background: #eaeaea;
+}
+
+.search-bar button:active:not(:disabled) {
+  background: #d9d9d9;
+  color: #676767;
+}
+
+.search-bar button:disabled {
+  cursor: not-allowed;
+}
+
+.search-bar input:disabled {
+  cursor: not-allowed;
+}
