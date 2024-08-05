@@ -1,9 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {NgForOf, NgIf, NgOptimizedImage, NgStyle, SlicePipe} from "@angular/common";
 import {BeatmapsetListing} from "../../models/beatmap";
+import {MatIconModule} from '@angular/material/icon';
 
 type BeatmapPanelData = {
     id: number,
+    beatmapset_id: number,
     title: string,
     artist: string,
     thumbnail: string,
@@ -16,6 +18,7 @@ type BeatmapPanelData = {
 function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
     return {
         id: value.id,
+        beatmapset_id: value.beatmapset_snapshot.beatmapset_id,
         title: value.display_data.title,
         artist: value.beatmapset_snapshot.artist,
         thumbnail: value.display_data.thumbnail,
@@ -34,7 +37,8 @@ function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
         NgIf,
         NgOptimizedImage,
         SlicePipe,
-        NgStyle
+        NgStyle,
+        MatIconModule
     ],
     templateUrl: './beatmap-panel.component.html',
     styleUrl: './beatmap-panel.component.scss'
