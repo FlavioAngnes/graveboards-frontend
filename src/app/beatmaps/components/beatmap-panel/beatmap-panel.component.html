@@ -1,5 +1,6 @@
 <div class="beatmap-panel" *ngIf="beatmap">
-    <div class="cover" [ngClass]="{hovered: isHovered}" [ngStyle]="{'background-image': 'url(' + beatmap.thumbnail + ')'}">
+    <div class="cover" [ngClass]="{hovered: isHovered}"  [ngStyle]="{'background-image': 'url(' + thumbnail_source + ')'}">
+        <img [ngSrc]=beatmap.thumbnail (error)="handleError()" style="display: none;" alt="" fill>
         <div class="length">
             {{ beatmap.length }}
         </div>
