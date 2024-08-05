@@ -77,4 +77,21 @@ export class ServicesService {
   
     return this.httpClient.post<TokenResponse>((`${this.baseUrl}${EndpointEnum.TOKEN}`), body.toString(), { headers });
   };
+
+  postRequest(beatmapsetId: number, comment: string, mvChecked: boolean, userId: number, queueId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'X-API-KEY': `${this.apiKey}`,
+      'Content-Type': 'application/json'
+    });
+
+    const body = {
+      beatmapset_id: beatmapsetId,
+      comment: comment,
+      mv_checked: mvChecked,
+      user_id: userId,
+      queue_id: queueId
+    }
+
+    return this.httpClient.post(`${this.baseUrl}${EndpointEnum.REQUESTS}`, body, { headers: headers });    
+  }
 }
