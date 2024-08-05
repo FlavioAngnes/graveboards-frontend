@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BeatmapsetListing } from './models/beatmap';
 import { BeatmapsetSnapshot } from './models/beatmap';
@@ -78,7 +78,7 @@ export class ServicesService {
     return this.httpClient.post<TokenResponse>((`${this.baseUrl}${EndpointEnum.TOKEN}`), body.toString(), { headers });
   };
 
-  postRequest(beatmapsetId: number, comment: string, mvChecked: boolean, userId: number, queueId: number): Observable<any> {
+  postRequest(beatmapsetId: number, comment: string, mvChecked: boolean, userId: number, queueId: number): Observable<HttpResponse<any>> {
     const headers = new HttpHeaders({
       'X-API-KEY': `${this.apiKey}`,
       'Content-Type': 'application/json'
@@ -92,6 +92,6 @@ export class ServicesService {
       queue_id: queueId
     }
 
-    return this.httpClient.post(`${this.baseUrl}${EndpointEnum.REQUESTS}`, body, { headers: headers });    
+    return this.httpClient.post<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}`, body, { headers: headers, observe: 'response' });    
   }
 }

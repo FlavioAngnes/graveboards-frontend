@@ -9,6 +9,10 @@ import { ProfileButtonComponent } from '../profile-button/profile-button.compone
 import { ServicesService } from '../../services.service';
 import { Router } from '@angular/router';
 import { RefreshService } from '../../refresh.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorResponse } from '../../interfaces';
+import { ErrorResponseType } from '../../request-response.enum';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-searchbar',
@@ -36,7 +40,8 @@ export class SearchbarComponent {
     private dialog: MatDialog, 
     private servicesService: ServicesService,
     private router: Router,
-    private refreshService: RefreshService
+    private refreshService: RefreshService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() { }
@@ -48,6 +53,11 @@ export class SearchbarComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && typeof window !== 'undefined' && window.sessionStorage) {
+        this._snackBar.open('Request submitted!', 'Confirm', {
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
+        });
+
         const beatmapsetId = this.parseBeatmapsetId(result.beatmapsetLink);
 
         if (!beatmapsetId) {
@@ -61,8 +71,37 @@ export class SearchbarComponent {
 
         const queueId = 2;
 
-        this.servicesService.postRequest(beatmapsetId, result.comment, result.mvChecked, userId, queueId).subscribe(response => {
-          this.refreshService.triggerRefresh();
+        this.servicesService.postRequest(beatmapsetId, result.comment, result.mvChecked, userId, queueId).subscribe({
+          next: response => {
+            switch (response.status) {
+              case 201:
+                this.refreshService.triggerRefresh();
+                break;
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            const response: ErrorResponse = error.error;
+
+            switch (error.status) {
+              case 400:
+                if (response.error_type == ErrorResponseType.ALREADY_RANKED) {
+                  this._snackBar.open('The map is already ranked on osu!', 'Error', {
+                    horizontalPosition: 'end',
+                    verticalPosition: 'bottom',
+                  });
+                }
+                break;
+
+              case 409:
+                if (response.error_type == ErrorResponseType.ALREADY_REQUESTED) {
+                  this._snackBar.open('The map has already been requested!', 'Error', {
+                    horizontalPosition: 'end',
+                    verticalPosition: 'bottom',
+                  });
+                }
+                break;
+            }
+          }
         });
       }
     });

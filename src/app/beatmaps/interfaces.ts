@@ -1,3 +1,5 @@
+import { ErrorResponseType } from "./request-response.enum";
+
 export interface TokenResponse {
     token_type: string;
     access_token: string;
@@ -18,4 +20,9 @@ export interface RelationalOperators {
   
 export interface RequestFilter {
     user_id?: RelationalOperators;
+}
+
+export interface ErrorResponse {
+    error_type: ErrorResponseType,
+    message: string
 }
