@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {BeatmapsetListing} from '../../models/beatmap';
 import {ServicesService} from '../../services.service';
-import {combineLatest, Observable} from 'rxjs';
+import {catchError, combineLatest, Observable, of} from 'rxjs';
 import {RequestFilter} from '../../interfaces';
 import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
 import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
 import {QueueRequest, QueueRequestWithBeatmap} from "../../models/queueRequest";
 import {map} from "rxjs/operators";
+import {RefreshService} from "../../refresh.service";
 
 
 @Component({
@@ -22,48 +23,60 @@ export class MyRequestsComponent implements OnInit {
     requests$: Observable<QueueRequest[]> | null = null;
     combined$: Observable<QueueRequestWithBeatmap[]> | null = null;
     isLoading = true;
-    errorMessage: string | null = null;
-
 
     constructor(
         private servicesService: ServicesService,
+        private refreshService: RefreshService
     ) {
     }
 
     ngOnInit(): void {
+        this.refreshService.refresh$.subscribe(() => {
+            this.refresh();
+        });
+
         this.refresh();
-
-        // Combined observable to connect requests with their corresponding beatmaps
-        if (this.beatmaps$ && this.requests$) {
-            this.combined$ = combineLatest([this.beatmaps$, this.requests$]).pipe(
-                map(([beatmaps, requests]) => {
-                    return requests.map(request => {
-                        const beatmap = beatmaps.find(b => b.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
-                        console.log(beatmap);
-
-                        return {
-                            ...request,
-                            beatmap
-                        };
-                    });
-                })
-            );
-
-            // Usage example (subscribe to the combined observable)
-            this.combined$.subscribe((result: QueueRequestWithBeatmap[]) => {
-                console.log(result);
-                // You can now work with the combined result
-            });
-        }
     }
 
     refresh() {
-        if (typeof window !== 'undefined' && window.sessionStorage) {
-            const requestFilter = this.getRequestFilter();
+        this.isLoading = true;
 
-            this.beatmaps$ = this.servicesService.getBeatmapsetListings(requestFilter);
-            this.requests$ = this.servicesService.getRequests();
-        }
+        this.beatmaps$ = this.servicesService.getBeatmapsetListings({}).pipe(
+            catchError(err => {
+                console.error(err);
+                return of([]); // Return an empty array on error
+            })
+        );
+
+        this.requests$ = this.servicesService.getRequests().pipe(
+            catchError(err => {
+                console.error(err);
+                return of([]); // Return an empty array on error
+            })
+        );
+
+        this.combined$ = combineLatest([this.beatmaps$, this.requests$]).pipe(
+            map(([beatmaps, requests]) => {
+                return requests.map(request => {
+                    const beatmap = beatmaps.find(b => b.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
+                    return {
+                        ...request,
+                        beatmap
+                    };
+                });
+            }),
+            catchError(err => {
+                console.error(err);
+                return of([]); // Return an empty array on error
+            })
+        );
+
+        // Automatically handle loading state
+        this.combined$.subscribe(() => {
+            this.isLoading = false;
+        }, () => {
+            this.isLoading = false;
+        });
     }
 
     getRequestFilter(): RequestFilter {
@@ -72,11 +85,9 @@ export class MyRequestsComponent implements OnInit {
             const user = userInfo ? JSON.parse(userInfo) : null;
             const userId = user.id;
 
-            const requestFilter: RequestFilter = {
+            return {
                 user_id: {eq: userId}
             };
-
-            return requestFilter;
         } else {
             return {};
         }
