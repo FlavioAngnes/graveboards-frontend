@@ -2,7 +2,7 @@
     <searchbar class="flex"></searchbar>
     <button mat-flat-button (click)="openDialog()" color="primary" class="request-button" [disabled]=!isLoggedIn>
         <mat-icon class="small-icon">add</mat-icon>
-        Request a map
+        {{ isLoggedIn ? "Request a Map" : "Log in to Request" }}
     </button>
     <profile-button></profile-button>
 </div>
