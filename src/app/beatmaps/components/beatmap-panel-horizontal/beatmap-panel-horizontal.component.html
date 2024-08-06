@@ -1,0 +1,42 @@
+<div class="beatmap-panel" *ngIf="beatmap">
+    <div class="cover" [ngClass]="{hovered: isHovered}"
+         [ngStyle]="{'background-image': 'url(' + beatmap.thumbnail + ')'}">
+    </div>
+    <div class="content" (mouseenter)=onMouseEnter() (mouseleave)=onMouseLeave()>
+        <div class="beatmap-metadata grid-item no-wrap-ellipsis">
+            <a class="big-info" [href]="'https://osu.ppy.sh/beatmapsets/' + beatmap.beatmapset_id"
+               target="_blank">
+                {{ beatmap.title }}
+            </a>
+            <div class="small-info no-wrap-ellipsis">
+                by {{ beatmap.artist }}
+            </div>
+        </div>
+        <div class="mapper grid-item">
+            <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
+               [ngStyle]="{'background-image': 'url(' + beatmap.mapper_avatar + ')'}" target="_blank"></a>
+            <div class="big-info no-wrap-ellipsis">
+                <a [href]="'https://osu.ppy.sh/users/' + beatmap.mapper" target="_blank">
+                    {{ beatmap.mapper }}
+                </a>
+            </div>
+        </div>
+        <div class="difficulty-info grid-item">
+            <div class="difficulty-list">
+                <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                <div class="difficulties">
+                    <div class="difficulty" *ngFor="let difficulty of beatmap.star_ratings | slice:0:16"
+                         [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty)}"></div>
+                    <div class="more-difficulties" *ngIf="beatmap.star_ratings.length > 16">
+                        +{{ beatmap.star_ratings.length - 16 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>{{ beatmap.length }}</div>
+        <div class="editing grid-item">
+            <verification-button></verification-button>
+            <queue-status-button class="status-button" [beatmapId]="beatmap.id" [current_status]="beatmap.queue_status"></queue-status-button>
+        </div>
+    </div>
+</div>

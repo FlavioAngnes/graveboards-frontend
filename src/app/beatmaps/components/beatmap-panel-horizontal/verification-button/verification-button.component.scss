@@ -1,0 +1,31 @@
+.verification-badge {
+  border-radius: 14px;
+  padding: 2px 12px;
+  text-transform: uppercase;
+
+  font-family: Nunito, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 200% */
+  letter-spacing: 0.1px;
+  text-align: center;
+
+
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  transition: width 0.2s ease-in-out;
+}
+
+.unverified {
+  background: #FFDAD6;
+  color: #444E55;
+  width: 110px;
+}
+
+.verified {
+  background: #E71F24;
+  color: #FFF;
+  width: 90px;
+}

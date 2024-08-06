@@ -1,0 +1,13 @@
+<div class="header">
+    Manage Requests
+</div>
+<div *ngIf="combined$ | async as requestWithBeatmaps; else loading" class="grid-container">
+    <beatmap-panel-horizontal [beatmap]="requestWithBeatmap" *ngFor="let requestWithBeatmap of requestWithBeatmaps"></beatmap-panel-horizontal>
+</div>
+
+<ng-template #loading>
+    <div class="loading">
+        <img ngSrc="/assets/icons/loading-circle.svg" alt="loading-circle" height="64" width="64">
+        Loading beatmaps...
+    </div>
+</ng-template>
