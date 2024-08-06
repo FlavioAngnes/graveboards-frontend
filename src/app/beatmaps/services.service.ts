@@ -121,4 +121,22 @@ export class ServicesService {
             observe: 'response'
         });
     }
+
+    patchRequest(requestId: number, status: number): Observable<HttpResponse<any>> {
+        console.log('patchRequest', requestId, status);
+
+        const headers = new HttpHeaders({
+            'X-API-KEY': `${this.apiKey}`,
+            'Content-Type': 'application/json'
+        });
+
+        const body = {
+            status: status
+        }
+
+        return this.httpClient.patch<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}/${requestId}`, body, {
+            headers: headers,
+            observe: 'response'
+        });
+    }
 }
