@@ -11,14 +11,25 @@
             <div class="small-info no-wrap-ellipsis">
                 by {{ beatmap.artist }}
             </div>
-        </div>
-        <div class="mapper grid-item">
-            <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
-               [ngStyle]="{'background-image': 'url(' + beatmap.mapper_avatar + ')'}" target="_blank"></a>
-            <div class="big-info no-wrap-ellipsis">
-                <a [href]="'https://osu.ppy.sh/users/' + beatmap.mapper" target="_blank">
+            <div class="small-info no-wrap-ellipsis">
+                Mapped by
+                <a [href]="'https://osu.ppy.sh/users/' + beatmap.user_name" target="_blank">
                     {{ beatmap.mapper }}
                 </a>
+            </div>
+        </div>
+        <div class="mapper grid-item">
+            <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap.user_name"
+               [ngStyle]="{'background-image': 'url(' + beatmap.user_avatar + ')'}" target="_blank"></a>
+            <div>
+                <div class="small-info no-wrap-ellipsis">
+                    Requested by
+                </div>
+                <div class="big-info no-wrap-ellipsis">
+                    <a [href]="'https://osu.ppy.sh/users/' + beatmap.user_name" target="_blank">
+                        {{ beatmap.user_name }}
+                    </a>
+                </div>
             </div>
         </div>
         <div class="difficulty-info grid-item">
@@ -36,7 +47,8 @@
         <div>{{ beatmap.length }}</div>
         <div class="editing grid-item">
             <verification-button></verification-button>
-            <queue-status-button class="status-button" [beatmapId]="beatmap.id" [current_status]="beatmap.queue_status"></queue-status-button>
+            <queue-status-button class="status-button" [beatmapId]="beatmap.id"
+                                 [current_status]="beatmap.queue_status"></queue-status-button>
         </div>
     </div>
 </div>
