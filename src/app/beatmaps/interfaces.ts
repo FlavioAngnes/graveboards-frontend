@@ -20,6 +20,7 @@ export interface RelationalOperators {
   
 export interface RequestFilter {
     user_id?: RelationalOperators;
+    status?: RelationalOperators;
 }
 
 export interface ErrorResponse {
