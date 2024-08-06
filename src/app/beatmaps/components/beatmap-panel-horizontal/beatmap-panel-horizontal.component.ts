@@ -1,8 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf, NgOptimizedImage, NgStyle, SlicePipe} from "@angular/common";
 import {VerificationButtonComponent} from "./verification-button/verification-button.component";
 import {QueueStatusButtonComponent} from "./queue-status-button/queue-status-button.component";
 import {QueueRequestWithBeatmap} from "../../models/queueRequest";
+import {ServicesService} from "../../services.service";
 
 type BeatmapPanelHorizontalData = {
     id: number,
@@ -15,11 +16,14 @@ type BeatmapPanelHorizontalData = {
     length: string,
     star_ratings: number[],
     queue_status: number,
+    user_id: number,
+    user_name: string,
+    user_avatar: string,
 }
 
-function beatmapListingToPanelData({beatmap, id, status}: QueueRequestWithBeatmap): BeatmapPanelHorizontalData {
+function QueueRequestWithBeatmapToBeatmapPanelHorizontalData({beatmap, id, status, user_id}: QueueRequestWithBeatmap): BeatmapPanelHorizontalData {
     if (beatmap === undefined) {
-        throw new Error('beatmapListingToPanelData requires a beatmap object');
+        throw new Error('QueueRequestWithBeatmapToBeatmapPanelHorizontalData requires a beatmap object');
     }
 
     return {
@@ -32,7 +36,10 @@ function beatmapListingToPanelData({beatmap, id, status}: QueueRequestWithBeatma
         mapper_avatar: beatmap.display_data.mapper_avatar,
         length: formatTime(beatmap.display_data.length),
         star_ratings: beatmap.beatmapset_snapshot.beatmap_snapshots.map(snapshot => snapshot.difficulty_rating).sort((a, b) => a - b),
-        queue_status: status
+        queue_status: status,
+        user_avatar: "",
+        user_name: "",
+        user_id: user_id,
     }
 }
 
@@ -52,13 +59,23 @@ function beatmapListingToPanelData({beatmap, id, status}: QueueRequestWithBeatma
     templateUrl: './beatmap-panel-horizontal.component.html',
     styleUrl: './beatmap-panel-horizontal.component.scss'
 })
-export class BeatmapPanelHorizontalComponent {
+export class BeatmapPanelHorizontalComponent implements OnInit {
     @Input({
         transform:
-            (value: QueueRequestWithBeatmap): BeatmapPanelHorizontalData => beatmapListingToPanelData(value)
+            (value: QueueRequestWithBeatmap): BeatmapPanelHorizontalData => QueueRequestWithBeatmapToBeatmapPanelHorizontalData(value)
     }) beatmap!: BeatmapPanelHorizontalData;
     isHovered: boolean = false;
 
+    constructor(private servicesService: ServicesService) {
+    }
+
+    ngOnInit(): void {
+        // Fetch user avatar
+        this.servicesService.getUserOsuProfile(this.beatmap.user_id).subscribe(user => {
+            this.beatmap.user_avatar = user.avatar_url;
+            this.beatmap.user_name = user.username;
+        });
+    }
 
     onMouseEnter() {
         this.isHovered = true;
