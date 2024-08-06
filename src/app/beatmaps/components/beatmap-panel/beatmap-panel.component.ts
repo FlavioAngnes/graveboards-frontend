@@ -73,9 +73,6 @@ export class BeatmapPanelComponent implements OnInit {
     statusIcon: string = '/assets/icons/modqueue/default-stamp.svg';
 
     constructor(private router: Router) {
-        if (this.beatmap === undefined) {
-            throw new Error('BeatmapPanelComponent requires a beatmap input');
-        }
     }
 
     ngOnInit() {
