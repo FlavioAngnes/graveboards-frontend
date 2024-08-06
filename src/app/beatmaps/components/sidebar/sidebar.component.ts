@@ -23,6 +23,7 @@ import {SidebarFooterComponent} from "./sidebar-footer/sidebar-footer.component"
 
 export class SidebarComponent {
     isLoggedIn!: boolean;
+    isAdmin!: boolean;
     private subscriptions: Subscription = new Subscription();
 
     constructor(private authService: AuthService) {
@@ -31,6 +32,10 @@ export class SidebarComponent {
     ngOnInit(): void {
         this.subscriptions.add(this.authService.isLoggedIn().subscribe(isLoggedIn => {
             this.isLoggedIn = isLoggedIn;
+        }));
+
+        this.subscriptions.add(this.authService.isAdmin().subscribe(isAdmin => {
+            this.isAdmin = isAdmin;
         }));
     }
 }
