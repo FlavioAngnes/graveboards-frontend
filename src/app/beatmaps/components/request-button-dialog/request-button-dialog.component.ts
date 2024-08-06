@@ -5,19 +5,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @Component({
   selector: 'app-request-button-dialog',
   templateUrl: './request-button-dialog.component.html',
   styleUrls: ['./request-button-dialog.component.scss'],
   standalone: true,
-  imports: [
-    MatButtonModule,
-    MatInputModule,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    CommonModule,
-  ],
+    imports: [
+        MatButtonModule,
+        MatInputModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        CommonModule,
+        MatSelect,
+        MatOption,
+    ],
 })
 export class RequestButtonDialogComponent {
   form: FormGroup;
