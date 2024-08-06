@@ -40,8 +40,9 @@ export class MyRequestsComponent implements OnInit {
 
     refresh() {
         this.isLoading = true;
+        const requestFilter = this.getRequestFilter();
 
-        this.beatmaps$ = this.servicesService.getBeatmapsetListings({}).pipe(
+        this.beatmaps$ = this.servicesService.getBeatmapsetListings(requestFilter).pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error
