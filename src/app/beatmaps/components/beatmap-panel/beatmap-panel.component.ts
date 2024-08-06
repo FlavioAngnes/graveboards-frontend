@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf, NgOptimizedImage, NgStyle, SlicePipe} from "@angular/common";
-import {BeatmapsetListing} from "../../models/beatmap";
 import {MatIconModule} from '@angular/material/icon';
+import {Router} from "@angular/router";
+import {QueueRequestWithBeatmap} from "../../models/queueRequest";
 
 type BeatmapPanelData = {
     id: number,
@@ -14,6 +15,7 @@ type BeatmapPanelData = {
     length: string,
     star_ratings: number[],
     difficulties: BeatmapPanelDifficultyData[],
+    queue_status: number,
 }
 
 type BeatmapPanelDifficultyData = {
@@ -21,23 +23,28 @@ type BeatmapPanelDifficultyData = {
     version: string,
 }
 
-function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
+function beatmapListingToPanelData({beatmap, id, status}: QueueRequestWithBeatmap): BeatmapPanelData {
+    if (beatmap === undefined) {
+        throw new Error('beatmapListingToPanelData requires a beatmap object');
+    }
+
     return {
-        id: value.id,
-        beatmapset_id: value.beatmapset_snapshot.beatmapset_id,
-        title: value.display_data.title,
-        artist: value.beatmapset_snapshot.artist,
-        thumbnail: value.display_data.thumbnail,
-        mapper: value.display_data.mapper,
-        mapper_avatar: value.display_data.mapper_avatar,
-        length: formatTime(value.display_data.length),
-        star_ratings: value.beatmapset_snapshot.beatmap_snapshots.map(snapshot => snapshot.difficulty_rating).sort((a, b) => a - b),
-        difficulties: value.beatmapset_snapshot.beatmap_snapshots.map(snapshot => {
+        id: id,
+        beatmapset_id: beatmap.beatmapset_snapshot.beatmapset_id,
+        title: beatmap.display_data.title,
+        artist: beatmap.beatmapset_snapshot.artist,
+        thumbnail: beatmap.display_data.thumbnail,
+        mapper: beatmap.display_data.mapper,
+        mapper_avatar: beatmap.display_data.mapper_avatar,
+        length: formatTime(beatmap.display_data.length),
+        star_ratings: beatmap.beatmapset_snapshot.beatmap_snapshots.map(snapshot => snapshot.difficulty_rating).sort((a, b) => a - b),
+        difficulties: beatmap.beatmapset_snapshot.beatmap_snapshots.map(snapshot => {
             return {
                 difficulty_rating: snapshot.difficulty_rating,
                 version: snapshot.version
             }
         }).sort((a, b) => a.difficulty_rating - b.difficulty_rating).reverse(),
+        queue_status: status
     }
 }
 
@@ -57,12 +64,33 @@ function beatmapListingToPanelData(value: BeatmapsetListing): BeatmapPanelData {
     styleUrl: './beatmap-panel.component.scss'
 })
 
-export class BeatmapPanelComponent {
+export class BeatmapPanelComponent implements OnInit {
     @Input({
         transform:
-            (value: BeatmapsetListing): BeatmapPanelData => beatmapListingToPanelData(value)
+            (value: QueueRequestWithBeatmap): BeatmapPanelData => beatmapListingToPanelData(value)
     }) beatmap!: BeatmapPanelData;
     isHovered: boolean = false;
+    statusIcon: string = '/assets/icons/modqueue/default-stamp.svg';
+
+    constructor(private router: Router) {
+        if (this.beatmap === undefined) {
+            throw new Error('BeatmapPanelComponent requires a beatmap input');
+        }
+    }
+
+    ngOnInit() {
+        switch (this.beatmap.queue_status) {
+            case -1:
+                this.statusIcon = '/assets/icons/modqueue/rejected-stamp.svg';
+                break;
+            case 0:
+                this.statusIcon = '/assets/icons/modqueue/default-stamp.svg';
+                break;
+            case 1:
+                this.statusIcon = '/assets/icons/modqueue/accepted-stamp.svg';
+                break;
+        }
+    }
 
     onMouseEnter() {
         this.isHovered = true;
@@ -75,6 +103,10 @@ export class BeatmapPanelComponent {
     getBackgroundImageUrl(): string {
         const placeholder = 'assets/default-bg.png';
         return `url(${this.beatmap.thumbnail}), url(${placeholder})`;
+    }
+
+    getCurrentPath(): string {
+        return this.router.url;
     }
 
     getColorForStarDifficulty(starDifficulty: number): string {

@@ -5,6 +5,9 @@
         </div>
     </div>
     <div class="content">
+        <div class="stamp" *ngIf="getCurrentPath() === '/myrequests'">
+            <img [ngSrc]=statusIcon alt="" width="150" height="150">
+        </div>
         <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
            [ngStyle]="{'background-image': 'url(' + beatmap.mapper_avatar + ')'}" target="_blank"></a>
         <div class="info" (mouseenter)=onMouseEnter() (mouseleave)=onMouseLeave()>

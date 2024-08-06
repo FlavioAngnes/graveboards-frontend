@@ -76,6 +76,15 @@ export class ServicesService {
         return this.httpClient.get<any>(`${this.baseUrl}${EndpointEnum.USER.replace('{userId}', userId.toString())}`, {headers});
     }
 
+    getRequests(): Observable<any> {
+        const headers = new HttpHeaders({
+            'X-API-KEY': `${this.apiKey}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
+        return this.httpClient.get<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}`, {headers});
+    }
+
     postToken(code: string): Observable<TokenResponse> {
         if (typeof window !== 'undefined' && window.sessionStorage) {
             this.state = sessionStorage.getItem('state');
