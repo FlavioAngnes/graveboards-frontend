@@ -76,13 +76,21 @@ export class ServicesService {
         return this.httpClient.get<any>(`${this.baseUrl}${EndpointEnum.USER.replace('{userId}', userId.toString())}`, {headers});
     }
 
-    getRequests(): Observable<any> {
+    getRequests(requestFilter?: RequestFilter | null): Observable<any> {
         const headers = new HttpHeaders({
             'X-API-KEY': `${this.apiKey}`,
             'Content-Type': 'application/x-www-form-urlencoded'
         });
 
-        return this.httpClient.get<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}`, {headers});
+        let url = `${this.baseUrl}${EndpointEnum.REQUESTS}`;
+
+        if (requestFilter) {
+            const jsonRequestFilter = JSON.stringify(requestFilter);
+            const encodedRequestFilter = encodeURIComponent(jsonRequestFilter);
+            url += `?request_filter=${encodedRequestFilter}`;
+        }
+
+        return this.httpClient.get<any>(url, {headers});
     }
 
     postToken(code: string): Observable<TokenResponse> {

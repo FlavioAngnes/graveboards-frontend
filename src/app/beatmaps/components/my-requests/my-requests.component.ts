@@ -49,7 +49,7 @@ export class MyRequestsComponent implements OnInit {
             })
         );
 
-        this.requests$ = this.servicesService.getRequests().pipe(
+        this.requests$ = this.servicesService.getRequests(requestFilter).pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error
