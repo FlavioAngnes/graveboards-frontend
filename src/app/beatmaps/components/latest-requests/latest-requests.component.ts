@@ -12,8 +12,8 @@ import {map} from "rxjs/operators";
     selector: 'app-latest-requests',
     standalone: true,
     imports: [CommonModule, AsyncPipe, NgOptimizedImage, BeatmapPanelComponent],
-    templateUrl: './my-requests.component.html',
-    styleUrl: './my-requests.component.scss',
+    templateUrl: './latest-requests.component.html',
+    styleUrl: './latest-requests.component.scss',
     providers: [ServicesService]
 })
 export class LatestRequestsComponent implements OnInit {

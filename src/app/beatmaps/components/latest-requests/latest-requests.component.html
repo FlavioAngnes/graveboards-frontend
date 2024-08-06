@@ -1,5 +1,5 @@
 <div class="header">
-    My Requests
+    Latest Requests
 </div>
 <div *ngIf="combined$ | async as requestWithBeatmaps; else loading" class="grid-container">
     <beatmap-panel [beatmap]="requestWithBeatmap" *ngFor="let requestWithBeatmap of requestWithBeatmaps"></beatmap-panel>
