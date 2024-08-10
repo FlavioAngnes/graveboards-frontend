@@ -44,8 +44,11 @@
                 </div>
             </div>
         </div>
-        <div>{{ beatmap.length }}</div>
+        <div class="grid-item">{{ beatmap.length }}</div>
         <div class="editing grid-item">
+            <div class="comment">
+                <mat-icon fontIcon="comment" [matTooltip]=beatmap.comment *ngIf="beatmap.comment"></mat-icon>
+            </div>
             <verification-button></verification-button>
             <queue-status-button class="status-button" [beatmapId]="beatmap.id"
                                  [current_status]="beatmap.queue_status"></queue-status-button>
