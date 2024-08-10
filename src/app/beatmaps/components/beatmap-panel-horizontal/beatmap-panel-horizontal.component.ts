@@ -4,6 +4,9 @@ import {VerificationButtonComponent} from "./verification-button/verification-bu
 import {QueueStatusButtonComponent} from "./queue-status-button/queue-status-button.component";
 import {QueueRequestWithBeatmap} from "../../models/queueRequest";
 import {ServicesService} from "../../services.service";
+import {ClickOutsideDirective} from "../../directives/click-outside.directive";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatIcon} from "@angular/material/icon";
 
 type BeatmapPanelHorizontalData = {
     id: number,
@@ -19,9 +22,10 @@ type BeatmapPanelHorizontalData = {
     user_id: number,
     user_name: string,
     user_avatar: string,
+    comment: string,
 }
 
-function QueueRequestWithBeatmapToBeatmapPanelHorizontalData({beatmap, id, status, user_id}: QueueRequestWithBeatmap): BeatmapPanelHorizontalData {
+function QueueRequestWithBeatmapToBeatmapPanelHorizontalData({beatmap, id, status, user_id, comment}: QueueRequestWithBeatmap): BeatmapPanelHorizontalData {
     if (beatmap === undefined) {
         throw new Error('QueueRequestWithBeatmapToBeatmapPanelHorizontalData requires a beatmap object');
     }
@@ -40,6 +44,7 @@ function QueueRequestWithBeatmapToBeatmapPanelHorizontalData({beatmap, id, statu
         user_avatar: "",
         user_name: "",
         user_id: user_id,
+        comment: comment ?? "No comment provided",
     }
 }
 
@@ -54,7 +59,10 @@ function QueueRequestWithBeatmapToBeatmapPanelHorizontalData({beatmap, id, statu
         NgClass,
         NgStyle,
         VerificationButtonComponent,
-        QueueStatusButtonComponent
+        QueueStatusButtonComponent,
+        ClickOutsideDirective,
+        MatTooltipModule,
+        MatIcon
     ],
     templateUrl: './beatmap-panel-horizontal.component.html',
     styleUrl: './beatmap-panel-horizontal.component.scss'
@@ -75,6 +83,8 @@ export class BeatmapPanelHorizontalComponent implements OnInit {
             this.beatmap.user_avatar = user.avatar_url;
             this.beatmap.user_name = user.username;
         });
+
+
     }
 
     onMouseEnter() {
