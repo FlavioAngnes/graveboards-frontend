@@ -3,10 +3,9 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {EndpointEnum} from "../enums/endpoint.enum";
 import {map} from "rxjs/operators";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {TokenResponse} from "../interfaces";
 import {environment} from "../../environments/environment";
-import {UserService} from "./user.service";
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +18,7 @@ export class AuthService {
     private avatarUrl = new BehaviorSubject<string>('./assets/icons/person.svg');
     private admin = new BehaviorSubject<boolean>(false);
 
-    constructor(private http: HttpClient, private router: Router, private user: UserService) {
+    constructor(private http: HttpClient, private router: Router) {
         if (typeof window !== 'undefined' && window.sessionStorage) {
             const osuUser = sessionStorage.getItem('osuUser');
 
@@ -69,6 +68,24 @@ export class AuthService {
         this.router.navigate(['/']);
     }
 
+    getUserOsuProfile(userId: number): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${this.getJWT()}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
+        return this.http.get<any>(`${this.baseUrl}${EndpointEnum.USER.replace('{userId}', userId.toString())}/profile`, {headers});
+    }
+
+    getUser(userId: number): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${this.getJWT()}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
+        return this.http.get<any>(`${this.baseUrl}${EndpointEnum.USER.replace('{userId}', userId.toString())}`, {headers});
+    }
+
     getJWT(): string | null {
         if (typeof window !== 'undefined' && window.sessionStorage) {
             return sessionStorage.getItem('token')
@@ -76,7 +93,6 @@ export class AuthService {
             return null;
         }
     }
-
 
     getAuthorizationUrl(): Observable<any> {
         return this.http.get<any>(`${this.baseUrl}${EndpointEnum.LOGIN}`).pipe(
@@ -113,14 +129,14 @@ export class AuthService {
             
             sessionStorage.setItem('token', token);
 
-            this.user.getUserOsuProfile(userId).subscribe(userInfo => {
+            this.getUserOsuProfile(userId).subscribe(userInfo => {
                 sessionStorage.setItem('osuUser', JSON.stringify(userInfo));
                 this.loggedIn.next(true);
                 this.avatarUrl.next(userInfo.avatar_url);
                 this.router.navigate(['/']);
             });
 
-            this.user.getUser(userId).subscribe(userInfo => {
+            this.getUser(userId).subscribe(userInfo => {
                 sessionStorage.setItem('user', JSON.stringify(userInfo));
             });
         });
