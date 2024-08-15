@@ -16,10 +16,20 @@ import {TokenResponse, RequestFilter} from './interfaces';
 export class ServicesService {
 
     private baseUrl: string = environment.baseUrl;
-    private apiKey: string = environment.apiKey;
     private state: string | null = null;
+    
 
     constructor(private httpClient: HttpClient) {
+    }
+
+    getJWT(): string | null {
+        if (typeof window !== 'undefined' && window.sessionStorage) {
+            const token = sessionStorage.getItem('token');
+            
+            return token
+        } else {
+            return null;
+        }
     }
 
     getBeatmapsetListings(requestFilter?: RequestFilter | null): Observable<BeatmapsetListing[]> {
@@ -60,7 +70,7 @@ export class ServicesService {
 
     getUserOsuProfile(userId: number): Observable<any> {
         const headers = new HttpHeaders({
-            'X-API-KEY': `${this.apiKey}`,
+            'Authorization': `Bearer ${this.getJWT()}`,
             'Content-Type': 'application/x-www-form-urlencoded'
         });
 
@@ -69,7 +79,7 @@ export class ServicesService {
 
     getUser(userId: number): Observable<any> {
         const headers = new HttpHeaders({
-            'X-API-KEY': `${this.apiKey}`,
+            'Authorization': `Bearer ${this.getJWT()}`,
             'Content-Type': 'application/x-www-form-urlencoded'
         });
 
@@ -78,7 +88,7 @@ export class ServicesService {
 
     getRequests(requestFilter?: RequestFilter | null): Observable<any> {
         const headers = new HttpHeaders({
-            'X-API-KEY': `${this.apiKey}`,
+            'Authorization': `Bearer ${this.getJWT()}`,
             'Content-Type': 'application/x-www-form-urlencoded'
         });
 
@@ -102,17 +112,12 @@ export class ServicesService {
             .set('code', code)
             .set('state', `${this.state}`);
 
-        const headers = new HttpHeaders({
-            'X-API-KEY': `${this.apiKey}`,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        });
-
-        return this.httpClient.post<TokenResponse>(`${this.baseUrl}${EndpointEnum.TOKEN}`, body.toString(), {headers});
+        return this.httpClient.post<TokenResponse>(`${this.baseUrl}${EndpointEnum.TOKEN}`, body.toString());
     };
 
     postRequest(beatmapsetId: number, comment: string, mvChecked: boolean, userId: number, queueId: number): Observable<HttpResponse<any>> {
         const headers = new HttpHeaders({
-            'X-API-KEY': `${this.apiKey}`,
+            'Authorization': `Bearer ${this.getJWT()}`,
             'Content-Type': 'application/json'
         });
 
@@ -134,7 +139,7 @@ export class ServicesService {
         console.log('patchRequest', requestId, status);
 
         const headers = new HttpHeaders({
-            'X-API-KEY': `${this.apiKey}`,
+            'Authorization': `Bearer ${this.getJWT()}`,
             'Content-Type': 'application/json'
         });
 

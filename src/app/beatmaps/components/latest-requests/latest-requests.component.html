@@ -1,8 +1,8 @@
 <div class="header">
     Latest Requests
 </div>
-<div *ngIf="combined$ | async as requestWithBeatmaps; else loading" class="grid-container">
-    <beatmap-panel [beatmap]="requestWithBeatmap" *ngFor="let requestWithBeatmap of requestWithBeatmaps"></beatmap-panel>
+<div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
+    <beatmap-panel [beatmapListing]="beatmapListing" *ngFor="let beatmapListing of beatmaps"></beatmap-panel>
 </div>
 
 <ng-template #loading>

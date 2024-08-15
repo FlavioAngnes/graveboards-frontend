@@ -18,8 +18,8 @@ import {RefreshService} from "../../refresh.service";
 })
 export class LatestRequestsComponent implements OnInit {
     beatmaps$: Observable<BeatmapsetListing[]> | null = null;
-    requests$: Observable<QueueRequest[]> | null = null;
-    combined$: Observable<QueueRequestWithBeatmap[]> | null = null;
+    // requests$: Observable<QueueRequest[]> | null = null;
+    // combined$: Observable<QueueRequestWithBeatmap[]> | null = null;
     isLoading = true;
     errorMessage: string | null = null;
 
@@ -47,34 +47,34 @@ export class LatestRequestsComponent implements OnInit {
             })
         );
 
-        this.requests$ = this.servicesService.getRequests().pipe(
-            catchError(err => {
-                console.error(err);
-                return of([]); // Return an empty array on error
-            })
-        );
+        // this.requests$ = this.servicesService.getRequests().pipe(
+        //     catchError(err => {
+        //         console.error(err);
+        //         return of([]); // Return an empty array on error
+        //     })
+        // );
 
-        this.combined$ = combineLatest([this.beatmaps$, this.requests$]).pipe(
-            map(([beatmaps, requests]) => {
-                return requests.map(request => {
-                    const beatmap = beatmaps.find(b => b.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
-                    return {
-                        ...request,
-                        beatmap
-                    };
-                }).reverse(); // Reverse the array here
-            }),
-            catchError(err => {
-                console.error(err);
-                return of([]); // Return an empty array on error
-            })
-        );
+        // this.combined$ = combineLatest([this.beatmaps$, this.requests$]).pipe(
+        //     map(([beatmaps, requests]) => {
+        //         return requests.map(request => {
+        //             const beatmap = beatmaps.find(b => b.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
+        //             return {
+        //                 ...request,
+        //                 beatmap
+        //             };
+        //         }).reverse(); // Reverse the array here
+        //     }),
+        //     catchError(err => {
+        //         console.error(err);
+        //         return of([]); // Return an empty array on error
+        //     })
+        // );
 
         // Automatically handle loading state
-        this.combined$.subscribe(() => {
-            this.isLoading = false;
-        }, () => {
-            this.isLoading = false;
-        });
+    //     this.combined$.subscribe(() => {
+    //         this.isLoading = false;
+    //     }, () => {
+    //         this.isLoading = false;
+    //     });
     }
 }

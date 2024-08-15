@@ -64,6 +64,9 @@ export class AuthService {
     handleCallback(code: string): void {
         this.servicesService.postToken(code).subscribe(response => {
             const userId = response.user_id;
+            const token = response.token;
+            
+            sessionStorage.setItem('token', token);
 
             this.servicesService.getUserOsuProfile(userId).subscribe(userInfo => {
                 sessionStorage.setItem('osuUser', JSON.stringify(userInfo));

@@ -1,12 +1,8 @@
 import { ErrorResponseType } from "./request-response.enum";
 
 export interface TokenResponse {
-    token_type: string;
-    access_token: string;
-    refresh_token: string;
-    expires_in: number;
-    expires_at: number;
     user_id: number;
+    token: string;
 }
   
 export interface RelationalOperators {
