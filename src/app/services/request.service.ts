@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RequestFilter} from "../interfaces";
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
@@ -7,65 +7,64 @@ import {AuthService} from "./auth.service";
 import {environment} from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class RequestService {
-  private baseUrl: string = environment.baseUrl;
+    private baseUrl: string = environment.baseUrl;
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
-
-  getRequests(requestFilter?: RequestFilter | null): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getJWT()}`,
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-
-    let url = `${this.baseUrl}${EndpointEnum.REQUESTS}`;
-
-    if (requestFilter) {
-      const jsonRequestFilter = JSON.stringify(requestFilter);
-      const encodedRequestFilter = encodeURIComponent(jsonRequestFilter);
-      url += `?request_filter=${encodedRequestFilter}`;
+    constructor(private http: HttpClient, private auth: AuthService) {
     }
 
-    return this.http.get<any>(url, {headers});
-  }
+    getRequests(requestFilter?: RequestFilter | null): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${this.auth.getJWT()}`,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
 
-  postRequest(beatmapsetId: number, comment: string, mvChecked: boolean, userId: number, queueId: number): Observable<HttpResponse<any>> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getJWT()}`,
-      'Content-Type': 'application/json'
-    });
+        let url = `${this.baseUrl}${EndpointEnum.REQUESTS}`;
 
-    const body = {
-      beatmapset_id: beatmapsetId,
-      comment: comment,
-      mv_checked: mvChecked,
-      user_id: userId,
-      queue_id: queueId
+        if (requestFilter) {
+            const jsonRequestFilter = JSON.stringify(requestFilter);
+            const encodedRequestFilter = encodeURIComponent(jsonRequestFilter);
+            url += `?request_filter=${encodedRequestFilter}`;
+        }
+
+        return this.http.get<any>(url, {headers});
     }
 
-    return this.http.post<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}`, body, {
-      headers: headers,
-      observe: 'response'
-    });
-  }
+    postRequest(beatmapsetId: number, comment: string, mvChecked: boolean, userId: number, queueId: number): Observable<HttpResponse<any>> {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${this.auth.getJWT()}`,
+            'Content-Type': 'application/json'
+        });
 
-  patchRequest(requestId: number, status: number): Observable<HttpResponse<any>> {
-    console.log('patchRequest', requestId, status);
+        const body = {
+            beatmapset_id: beatmapsetId,
+            comment: comment,
+            mv_checked: mvChecked,
+            user_id: userId,
+            queue_id: queueId
+        }
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.auth.getJWT()}`,
-      'Content-Type': 'application/json'
-    });
-
-    const body = {
-      status: status
+        return this.http.post<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}`, body, {
+            headers: headers,
+            observe: 'response'
+        });
     }
 
-    return this.http.patch<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}/${requestId}`, body, {
-      headers: headers,
-      observe: 'response'
-    });
-  }
+    patchRequest(requestId: number, status: number): Observable<HttpResponse<any>> {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${this.auth.getJWT()}`,
+            'Content-Type': 'application/json'
+        });
+
+        const body = {
+            status: status
+        }
+
+        return this.http.patch<any>(`${this.baseUrl}${EndpointEnum.REQUESTS}/${requestId}`, body, {
+            headers: headers,
+            observe: 'response'
+        });
+    }
 }
