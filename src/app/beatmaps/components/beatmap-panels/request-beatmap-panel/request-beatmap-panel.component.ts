@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {BeatmapQueueRequest, QueueRequest} from "../../../../models/QueueRequest";
 import {DetailedDifficultyListComponent} from "../detailed-difficulty-list/detailed-difficulty-list.component";
 import {DifficultyListComponent} from "../difficulty-list/difficulty-list.component";
+import {AudioService} from "../../../../services/audio.service";
 
 export interface RequestBeatmapPanelData extends BaseBeatmapPanelData {
     request_data: QueueRequest,
@@ -45,8 +46,8 @@ export class RequestBeatmapPanelComponent extends BaseBeatmapPanelComponent impl
     
     protected icon: string = '/assets/icons/modqueue/default-stamp.svg';
 
-    constructor(router: Router) {
-        super(router);
+    constructor(router: Router, audio: AudioService) {
+        super(router, audio);
     }
 
     override ngOnInit() {

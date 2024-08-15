@@ -13,6 +13,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../../../services/auth.service";
 import {BeatmapQueueRequest} from "../../../../models/QueueRequest";
 import {DifficultyListComponent} from "../difficulty-list/difficulty-list.component";
+import {AudioService} from "../../../../services/audio.service";
 
 export interface RequesterData {
     id: number;
@@ -48,8 +49,8 @@ export class RequestBeatmapPanelHorizontalComponent extends RequestBeatmapPanelC
 
     protected requester: RequesterData;
 
-    constructor(router: Router, private auth: AuthService) {
-        super(router);
+    constructor(router: Router, audio: AudioService, private auth: AuthService) {
+        super(router, audio);
 
         this.requester = {
             id: 0,

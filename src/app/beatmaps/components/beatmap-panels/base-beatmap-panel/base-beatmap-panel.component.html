@@ -4,8 +4,9 @@
         <div class="length">
             {{ time.formatTime(this.beatmap.length) }}
         </div>
-        <div class="preview-button">
-            <mat-icon fontIcon="play_arrow" class="preview-button-icon"></mat-icon>
+        <div class="preview-button" [ngClass]="{'playing': audioProgress > 0}">
+            <mat-icon [fontIcon]="audioIcon" class="preview-button-icon" (click)=toggleAudio()></mat-icon>
+            <mat-progress-bar class="progress-bar" mode="determinate" [value]="audioProgress"></mat-progress-bar>
         </div>
     </div>
     <div class="content">
@@ -28,7 +29,8 @@
             <div class="difficulty-info">
                 <difficulty-list [difficulties]="beatmap.difficulties"></difficulty-list>
                 <div class="difficulties-list-detailed__animation-wrapper">
-                    <detailed-difficulty-list [difficulties_details]="beatmap.difficulties_details"></detailed-difficulty-list>
+                    <detailed-difficulty-list
+                            [difficulties_details]="beatmap.difficulties_details"></detailed-difficulty-list>
                 </div>
             </div>
         </div>
