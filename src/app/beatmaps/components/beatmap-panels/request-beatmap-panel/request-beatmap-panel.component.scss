@@ -1,0 +1,217 @@
+.beatmap-panel {
+  display: flex;
+  align-self: stretch;
+  min-width: 270px;
+  height: 260px;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: 100%;
+}
+
+.cover {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+  flex: 1 0 0;
+  align-self: stretch;
+  z-index: -1;
+  transition: filter 0.3s ease-in-out;
+  background: lightgray 50% / 215% no-repeat;
+}
+
+.content {
+  display: flex;
+  gap: 12px;
+  padding: 12px 10px;
+  align-self: stretch;
+  background: #f5f5f5;
+  min-width: 100px;
+  transition: background-color 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.info {
+  max-width: 100%;
+  overflow: hidden;
+  flex: 1;
+  z-index: 2;
+}
+
+.big-info {
+  color: #000;
+
+  /* material-theme/body/medium */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.25px;
+}
+
+.small-info {
+  color: #777;
+
+  /* material-theme/body/small */
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+  letter-spacing: 0.4px;
+}
+
+.no-wrap-ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mapper-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: none;
+  background: lightgray 50% / cover no-repeat;
+}
+
+.difficulty-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+}
+
+.difficulties {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.difficulties-list-detailed {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.difficulty {
+  width: 6px;
+  height: 16px;
+  border-radius: 6px;
+}
+
+.small-info a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+}
+
+.difficulty-expanded {
+  display: inline-block;
+  padding: 0 8px;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.star-rating {
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 16px;
+}
+
+.difficulty-name {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.difficulty-detailed {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.more-difficulties {
+  color: #797979;
+  font-size: 12px;
+}
+
+.difficulties .more-difficulties {
+  padding-left: 2px;
+}
+
+.difficulties-list-detailed__animation-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease-in-out;
+}
+
+.difficulties-list-detailed__animation-wrapper > * {
+  overflow: hidden;
+  grid-template-rows: 1fr;
+}
+
+.info:hover .difficulties-list-detailed__animation-wrapper {
+  grid-template-rows: 1fr;
+  transition-delay: 0.3s;
+}
+
+.difficulty-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  gap: 0;
+  transition: gap 0.4s 0.35s ease-out;
+}
+
+.info:hover .difficulty-info {
+  gap: 8px;
+  transition-delay: 0.15s;
+}
+
+.content:hover {
+  background-color: #eaeaea;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cover.hovered {
+  filter: blur(2px) brightness(0.8);
+  transition-delay: 0.3s;
+}
+
+.length {
+  background-color: rgba(0, 0, 0, 0.8);
+  max-height: 20px;
+  color: white;
+  border-radius: 6px;
+  padding: 3px 5px;
+  font-size: 14px;
+  overflow: hidden;
+  transition: all 0.3s 0.3s ease-in-out;
+}
+
+.cover.hovered .length {
+  opacity: 0;
+  max-height: 0;
+}
+
+.stamp {
+  position: absolute;
+  top: -25px;
+  right: -20px;
+  transform: rotate(-15deg);
+  z-index: 1;
+  opacity: 0.3;
+}

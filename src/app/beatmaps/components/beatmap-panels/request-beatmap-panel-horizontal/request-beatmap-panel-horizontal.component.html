@@ -13,45 +13,45 @@
             </div>
             <div class="small-info no-wrap-ellipsis">
                 Mapped by
-                <a [href]="'https://osu.ppy.sh/users/' + beatmap.user_name" target="_blank">
+                <a [href]="'https://osu.ppy.sh/users/' + beatmap.mapper" target="_blank">
                     {{ beatmap.mapper }}
                 </a>
             </div>
         </div>
         <div class="mapper grid-item">
-            <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap.user_name"
-               [ngStyle]="{'background-image': 'url(' + beatmap.user_avatar + ')'}" target="_blank"></a>
+            <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap"
+               [ngStyle]="{'background-image': 'url(' + requester.avatar_url + ')'}" target="_blank"></a>
             <div>
                 <div class="small-info no-wrap-ellipsis">
                     Requested by
                 </div>
                 <div class="big-info no-wrap-ellipsis">
-                    <a [href]="'https://osu.ppy.sh/users/' + beatmap.user_name" target="_blank">
-                        {{ beatmap.user_name }}
+                    <a [href]="'https://osu.ppy.sh/users/' + requester.username" target="_blank">
+                        {{ requester.username }}
                     </a>
                 </div>
             </div>
         </div>
         <div class="difficulty-info grid-item">
             <div class="difficulty-list">
-                <img ngSrc="/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                <img ngSrc="/src/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
                 <div class="difficulties">
-                    <div class="difficulty" *ngFor="let difficulty of beatmap.star_ratings | slice:0:16"
-                         [ngStyle]="{'background-color': getColorForStarDifficulty(difficulty)}"></div>
-                    <div class="more-difficulties" *ngIf="beatmap.star_ratings.length > 16">
-                        +{{ beatmap.star_ratings.length - 16 }}
+                    <div class="difficulty" *ngFor="let difficulty of beatmap.difficulties | slice:0:16"
+                         [ngStyle]="{'background-color': color.forStarRating(difficulty)}"></div>
+                    <div class="more-difficulties" *ngIf="beatmap.difficulties.length > 16">
+                        +{{ beatmap.difficulties.length - 16 }}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="grid-item">{{ beatmap.length }}</div>
+        <div class="grid-item">{{ time.formatTime(beatmap.length) }}</div>
         <div class="editing grid-item">
             <div class="comment">
-                <mat-icon fontIcon="comment" [matTooltip]=beatmap.comment *ngIf="beatmap.comment"></mat-icon>
+                <mat-icon fontIcon="comment" [matTooltip]=beatmap.request_data.comment *ngIf="beatmap.request_data.comment"></mat-icon>
             </div>
             <verification-button></verification-button>
             <queue-status-button class="status-button" [beatmapId]="beatmap.id"
-                                 [current_status]="beatmap.queue_status"></queue-status-button>
+                                 [current_status]="beatmap.request_data.status"></queue-status-button>
         </div>
     </div>
 </div>

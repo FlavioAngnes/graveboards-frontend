@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BeatmapPanelHorizontalComponent } from './beatmap-panel-horizontal.component';
+import { RequestBeatmapPanelHorizontalComponent } from './request-beatmap-panel-horizontal.component';
 
 describe('BeatmapPanelHorizontalComponent', () => {
-  let component: BeatmapPanelHorizontalComponent;
-  let fixture: ComponentFixture<BeatmapPanelHorizontalComponent>;
+  let component: RequestBeatmapPanelHorizontalComponent;
+  let fixture: ComponentFixture<RequestBeatmapPanelHorizontalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BeatmapPanelHorizontalComponent]
+      imports: [RequestBeatmapPanelHorizontalComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(BeatmapPanelHorizontalComponent);
+    fixture = TestBed.createComponent(RequestBeatmapPanelHorizontalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

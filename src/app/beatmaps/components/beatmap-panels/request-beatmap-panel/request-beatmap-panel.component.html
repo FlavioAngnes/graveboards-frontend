@@ -1,0 +1,65 @@
+<div class="beatmap-panel" *ngIf="beatmap">
+    <div class="cover" [ngClass]="{hovered: isHovered}"
+         [ngStyle]="{'background-image': 'url(' + this.beatmap.thumbnail + '), url(\'assets/default-bg.png\')'}">
+        <div class="length">
+            {{ time.formatTime(beatmap.length) }}
+        </div>
+    </div>
+    <div class="content">
+        <div class="stamp">
+            <img [ngSrc]=icon alt="" width="150" height="150">
+        </div>
+        <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
+           [ngStyle]="{'background-image': 'url(' + beatmap.mapper_avatar + ')'}" target="_blank"></a>
+        <div class="info" (mouseenter)=onMouseEnter() (mouseleave)=onMouseLeave()>
+            <a class="big-info no-wrap-ellipsis" [href]="'https://osu.ppy.sh/beatmapsets/' + beatmap.beatmapset_id"
+               target="_blank">
+                {{ beatmap.title }}
+            </a>
+            <div class="small-info no-wrap-ellipsis">
+                by {{ beatmap.artist }}
+            </div>
+            <div class="small-info no-wrap-ellipsis">
+                Mapped by
+                <a [href]="'https://osu.ppy.sh/users/' + beatmap.mapper" target="_blank">
+                    {{ beatmap.mapper }}
+                </a>
+            </div>
+            <div class="difficulty-info">
+                <div class="difficulty-list">
+                    <img ngSrc="/src/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                    <div class="difficulties">
+                        <div class="difficulty" *ngFor="let difficulty of beatmap.difficulties | slice:0:16"
+                             [ngStyle]="{'background-color': color.forStarRating(difficulty)}"></div>
+                        <div class="more-difficulties" *ngIf="beatmap.difficulties.length > 16">
+                            +{{ beatmap.difficulties.length - 16 }}
+                        </div>
+                    </div>
+                </div>
+                <div class="difficulties-list-detailed__animation-wrapper">
+                    <div class="difficulties-list-detailed">
+                        <div class="difficulty-detailed"
+                             *ngFor="let difficulty of beatmap.difficulties_details | slice:0:(beatmap.difficulties.length > 6 ? 5 : 6)">
+                            <img ngSrc="/src/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                            <div class="difficulty-expanded"
+                                 [ngStyle]="{'background-color': color.forStarRating(difficulty.difficulty_rating), 'color': difficulty.difficulty_rating > 6.5 ? 'white' : 'black'}">
+                                <div class="star-rating">
+                                    ★ {{ difficulty.difficulty_rating.toFixed(2) }}
+                                </div>
+                            </div>
+                            <div class="difficulty-name">
+                                {{ difficulty.version }}
+                            </div>
+                        </div>
+                        <div class="difficulty-detailed" *ngIf="beatmap.difficulties.length > 6">
+                            <img ngSrc="/src/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
+                            <div class="more-difficulties">
+                                + {{ beatmap.difficulties.length - 6 }} more...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
