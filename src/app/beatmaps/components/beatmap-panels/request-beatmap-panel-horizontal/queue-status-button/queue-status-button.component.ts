@@ -1,12 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgOptimizedImage} from "@angular/common";
-import {RequestService} from "../../../../services/request.service";
+import {NgIf, NgOptimizedImage} from "@angular/common";
+import {RequestService} from "../../../../../services/request.service";
 
 @Component({
     selector: 'queue-status-button',
     standalone: true,
     imports: [
-        NgOptimizedImage
+        NgOptimizedImage,
+        NgIf
     ],
     templateUrl: './queue-status-button.component.html',
     styleUrl: './queue-status-button.component.scss'
@@ -16,6 +17,8 @@ export class QueueStatusButtonComponent implements OnInit {
     @Input() current_status: QueueRequestStatus = QueueRequestStatus.Pending;
     @Input() beatmapId!: number;
 
+    isAwaitingResponse: boolean = false;
+
     constructor(private request: RequestService) {
     }
 
@@ -23,33 +26,41 @@ export class QueueStatusButtonComponent implements OnInit {
         this.updateStatusIcon();
     }
 
-    cycleStatus() {
-        switch (this.current_status) {
-            case QueueRequestStatus.Pending:
-                this.current_status = QueueRequestStatus.Rejected;
-                break;
-            case QueueRequestStatus.Rejected:
-                this.current_status = QueueRequestStatus.Accepted;
-                break;
-            case QueueRequestStatus.Accepted:
-                this.current_status = QueueRequestStatus.Pending;
-                break;
-        }
-
-        this.updateStatusIcon()
-        this.patchStatus();
+    onClick() {
+        this.sendStatusPatchRequest();
     }
 
-    patchStatus() {
+    private updateStatus() {
+        this.current_status = this.getNextStatus(this.current_status);
+        this.updateStatusIcon();
+    }
+
+    private sendStatusPatchRequest() {
+        this.isAwaitingResponse = true;
+
+        const new_status = this.getNextStatus(this.current_status);
+
         // Call the API to update the status of the beatmap
-        this.request.patchRequest(this.beatmapId, this.current_status).subscribe(
-            response => {
-                console.log(response);
+        this.request.patchRequest(this.beatmapId, new_status).subscribe(
+            () => {
+                this.updateStatus();
+                this.isAwaitingResponse = false;
             },
             error => {
                 console.error(error);
             }
         );
+    }
+
+    private getNextStatus(status: QueueRequestStatus): QueueRequestStatus {
+        switch (status) {
+            case QueueRequestStatus.Pending:
+                return QueueRequestStatus.Rejected;
+            case QueueRequestStatus.Rejected:
+                return QueueRequestStatus.Accepted;
+            case QueueRequestStatus.Accepted:
+                return QueueRequestStatus.Pending;
+        }
     }
 
     private updateStatusIcon() {
