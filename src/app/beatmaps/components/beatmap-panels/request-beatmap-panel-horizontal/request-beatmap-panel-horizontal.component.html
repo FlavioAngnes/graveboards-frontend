@@ -33,16 +33,7 @@
             </div>
         </div>
         <div class="difficulty-info grid-item">
-            <div class="difficulty-list">
-                <img ngSrc="/src/assets/icons/Diff.svg" alt="Ruleset" height="16" width="16">
-                <div class="difficulties">
-                    <div class="difficulty" *ngFor="let difficulty of beatmap.difficulties | slice:0:16"
-                         [ngStyle]="{'background-color': color.forStarRating(difficulty)}"></div>
-                    <div class="more-difficulties" *ngIf="beatmap.difficulties.length > 16">
-                        +{{ beatmap.difficulties.length - 16 }}
-                    </div>
-                </div>
-            </div>
+            <difficulty-list [difficulties]="beatmap.difficulties"></difficulty-list>
         </div>
         <div class="grid-item">{{ time.formatTime(beatmap.length) }}</div>
         <div class="editing grid-item">

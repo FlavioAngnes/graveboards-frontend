@@ -1,0 +1,27 @@
+.difficulty-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+}
+
+.difficulties {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.difficulty {
+  width: 6px;
+  height: 16px;
+  border-radius: 6px;
+}
+
+.difficulties .more-difficulties {
+  padding-left: 2px;
+}
+
+.more-difficulties {
+  color: #797979;
+  font-size: 12px;
+}

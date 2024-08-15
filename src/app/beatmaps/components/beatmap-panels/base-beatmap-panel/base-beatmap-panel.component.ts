@@ -5,6 +5,11 @@ import {Router} from "@angular/router";
 import {BeatmapsetListing} from "../../../../models/Beatmapset";
 import {ColorUtils} from "../../../../utils/ColorUtils";
 import {TimeUtils} from "../../../../utils/TimeUtils";
+import {DifficultyListComponent} from "../difficulty-list/difficulty-list.component";
+import {
+    DetailedDifficultyListComponent,
+    DifficultyDetails
+} from "../detailed-difficulty-list/detailed-difficulty-list.component";
 
 export interface BaseBeatmapPanelData {
     id: number,
@@ -16,12 +21,7 @@ export interface BaseBeatmapPanelData {
     mapper_avatar: string,
     length: number,
     difficulties: number[],
-    difficulties_details: BaseBeatmapPanelDifficultyData[],
-}
-
-export interface BaseBeatmapPanelDifficultyData {
-    difficulty_rating: number,
-    version: string,
+    difficulties_details: DifficultyDetails[],
 }
 
 export function toBaseBeatmapPanelData({id, beatmapset_snapshot, display_data}: BeatmapsetListing): BaseBeatmapPanelData {
@@ -52,7 +52,9 @@ export function toBaseBeatmapPanelData({id, beatmapset_snapshot, display_data}: 
         SlicePipe,
         NgStyle,
         MatIconModule,
-        NgClass
+        NgClass,
+        DifficultyListComponent,
+        DetailedDifficultyListComponent
     ],
     templateUrl: './base-beatmap-panel.component.html',
     styleUrl: './base-beatmap-panel.component.scss'

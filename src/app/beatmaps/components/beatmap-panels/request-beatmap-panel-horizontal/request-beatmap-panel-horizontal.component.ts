@@ -12,6 +12,7 @@ import {
 import {Router} from "@angular/router";
 import {AuthService} from "../../../../services/auth.service";
 import {BeatmapQueueRequest} from "../../../../models/QueueRequest";
+import {DifficultyListComponent} from "../difficulty-list/difficulty-list.component";
 
 export interface RequesterData {
     id: number;
@@ -33,7 +34,8 @@ export interface RequesterData {
         QueueStatusButtonComponent,
         ClickOutsideDirective,
         MatTooltipModule,
-        MatIcon
+        MatIcon,
+        DifficultyListComponent
     ],
     templateUrl: './request-beatmap-panel-horizontal.component.html',
     styleUrl: './request-beatmap-panel-horizontal.component.scss'

@@ -1,0 +1,39 @@
+.difficulties-list-detailed {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.difficulty-expanded {
+  display: inline-block;
+  padding: 0 8px;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.star-rating {
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 16px;
+}
+
+.difficulty-name {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.difficulty-detailed {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.more-difficulties {
+  color: #797979;
+  font-size: 12px;
+}

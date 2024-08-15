@@ -7,6 +7,8 @@ import {
 } from "../base-beatmap-panel/base-beatmap-panel.component";
 import {Router} from "@angular/router";
 import {BeatmapQueueRequest, QueueRequest} from "../../../../models/QueueRequest";
+import {DetailedDifficultyListComponent} from "../detailed-difficulty-list/detailed-difficulty-list.component";
+import {DifficultyListComponent} from "../difficulty-list/difficulty-list.component";
 
 export interface RequestBeatmapPanelData extends BaseBeatmapPanelData {
     request_data: QueueRequest,
@@ -28,7 +30,9 @@ export function toRequestBeatmapPanelData({beatmap, request}: BeatmapQueueReques
         NgOptimizedImage,
         SlicePipe,
         NgClass,
-        NgStyle
+        NgStyle,
+        DetailedDifficultyListComponent,
+        DifficultyListComponent
     ],
     templateUrl: './request-beatmap-panel.component.html',
     styleUrl: './request-beatmap-panel.component.scss'
