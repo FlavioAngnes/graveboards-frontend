@@ -1,4 +1,4 @@
-import {BeatmapsetListing} from "./beatmap";
+import {BeatmapsetListing} from "./Beatmapset";
 
 export interface QueueRequest {
     id: number;
@@ -12,6 +12,7 @@ export interface QueueRequest {
     status: number;
 }
 
-export interface QueueRequestWithBeatmap extends QueueRequest {
-    beatmap: BeatmapsetListing | undefined; // or null if you prefer
+export interface BeatmapQueueRequest {
+    request: QueueRequest;
+    beatmap: BeatmapsetListing;
 }
