@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
-import {ServicesService} from "../../../services.service";
+import {RequestService} from "../../../../services/request.service";
 
 @Component({
     selector: 'queue-status-button',
@@ -16,7 +16,7 @@ export class QueueStatusButtonComponent implements OnInit {
     @Input() current_status: QueueRequestStatus = QueueRequestStatus.Pending;
     @Input() beatmapId!: number;
 
-    constructor(private servicesService: ServicesService) {
+    constructor(private request: RequestService) {
     }
 
     ngOnInit() {
@@ -42,7 +42,7 @@ export class QueueStatusButtonComponent implements OnInit {
 
     patchStatus() {
         // Call the API to update the status of the beatmap
-        this.servicesService.patchRequest(this.beatmapId, this.current_status).subscribe(
+        this.request.patchRequest(this.beatmapId, this.current_status).subscribe(
             response => {
                 console.log(response);
             },

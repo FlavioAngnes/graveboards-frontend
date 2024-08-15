@@ -3,8 +3,8 @@ import { LatestRequestsComponent } from './beatmaps/components/latest-requests/l
 import { CallbackComponent } from './beatmaps/components/callback/callback.component';
 import { MyRequestsComponent } from './beatmaps/components/my-requests/my-requests.component';
 import {ManageRequestsComponent} from './beatmaps/components/manage-requests/manage-requests.component';
-import {authGuard} from "./beatmaps/auth.guard";
-import {adminGuard} from "./beatmaps/admin.guard";
+import {authGuard} from "./guards/auth.guard";
+import {adminGuard} from "./guards/admin.guard";
 
 export const routes: Routes = [
     { path: '', component: LatestRequestsComponent },

@@ -1,22 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {BeatmapsetListing} from '../../models/beatmap';
-import {ServicesService} from '../../services.service';
+import {BeatmapsetListing} from '../../../models/beatmap';
 import {catchError, combineLatest, Observable, of} from 'rxjs';
-import {RequestFilter} from '../../interfaces';
+import {RequestFilter} from '../../../interfaces';
 import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
 import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
-import {QueueRequest, QueueRequestWithBeatmap} from "../../models/queueRequest";
+import {QueueRequest, QueueRequestWithBeatmap} from "../../../models/queueRequest";
 import {map} from "rxjs/operators";
-import {RefreshService} from "../../refresh.service";
+import {RefreshService} from "../../../services/refresh.service";
+import {RequestService} from "../../../services/request.service";
+import {BeatmapService} from "../../../services/beatmap.service";
 
 
 @Component({
-    selector: 'app-my-requests',
+    selector: 'my-requests',
     standalone: true,
     imports: [CommonModule, AsyncPipe, NgOptimizedImage, BeatmapPanelComponent],
     templateUrl: './my-requests.component.html',
     styleUrl: './my-requests.component.scss',
-    providers: [ServicesService]
 })
 export class MyRequestsComponent implements OnInit {
     beatmaps$: Observable<BeatmapsetListing[]> | null = null;
@@ -25,7 +25,8 @@ export class MyRequestsComponent implements OnInit {
     isLoading = true;
 
     constructor(
-        private servicesService: ServicesService,
+        private beatmap: BeatmapService,
+        private request: RequestService,
         private refreshService: RefreshService
     ) {
     }
@@ -42,14 +43,14 @@ export class MyRequestsComponent implements OnInit {
         this.isLoading = true;
         const requestFilter = this.getRequestFilter();
 
-        this.beatmaps$ = this.servicesService.getBeatmapsetListings(requestFilter).pipe(
+        this.beatmaps$ = this.beatmap.getBeatmapsetListings(requestFilter).pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error
             })
         );
 
-        this.requests$ = this.servicesService.getRequests(requestFilter).pipe(
+        this.requests$ = this.request.getRequests(requestFilter).pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error

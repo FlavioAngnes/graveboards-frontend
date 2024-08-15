@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { AuthService } from '../../auth.service'
+import { AuthService } from '../../../services/auth.service'
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { ClickOutsideDirective } from '../../directives/click-outside.directive';
+import { ClickOutsideDirective } from '../../../directives/click-outside.directive';
 
 @Component({
   standalone: true,

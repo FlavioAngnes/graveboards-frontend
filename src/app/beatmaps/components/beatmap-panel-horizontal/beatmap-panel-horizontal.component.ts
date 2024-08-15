@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf, NgOptimizedImage, NgStyle, SlicePipe} from "@angular/common";
 import {VerificationButtonComponent} from "./verification-button/verification-button.component";
 import {QueueStatusButtonComponent} from "./queue-status-button/queue-status-button.component";
-import {QueueRequestWithBeatmap} from "../../models/queueRequest";
-import {ServicesService} from "../../services.service";
-import {ClickOutsideDirective} from "../../directives/click-outside.directive";
+import {QueueRequestWithBeatmap} from "../../../models/queueRequest";
+import {ClickOutsideDirective} from "../../../directives/click-outside.directive";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIcon} from "@angular/material/icon";
+import {UserService} from "../../../services/user.service";
 
 type BeatmapPanelHorizontalData = {
     id: number,
@@ -74,17 +74,15 @@ export class BeatmapPanelHorizontalComponent implements OnInit {
     }) beatmap!: BeatmapPanelHorizontalData;
     isHovered: boolean = false;
 
-    constructor(private servicesService: ServicesService) {
+    constructor(private user: UserService) {
     }
 
     ngOnInit(): void {
         // Fetch user avatar
-        this.servicesService.getUserOsuProfile(this.beatmap.user_id).subscribe(user => {
+        this.user.getUserOsuProfile(this.beatmap.user_id).subscribe(user => {
             this.beatmap.user_avatar = user.avatar_url;
             this.beatmap.user_name = user.username;
         });
-
-
     }
 
     onMouseEnter() {

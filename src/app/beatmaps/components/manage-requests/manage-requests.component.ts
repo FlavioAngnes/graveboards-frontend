@@ -2,12 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {AsyncPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
 import {catchError, combineLatest, Observable, of} from "rxjs";
-import {ServicesService} from "../../services.service";
-import {RefreshService} from "../../refresh.service";
+import {RefreshService} from "../../../services/refresh.service";
 import {BeatmapPanelHorizontalComponent} from "../beatmap-panel-horizontal/beatmap-panel-horizontal.component";
-import {QueueRequest, QueueRequestWithBeatmap} from "../../models/queueRequest";
-import {BeatmapsetListing} from "../../models/beatmap";
+import {QueueRequest, QueueRequestWithBeatmap} from "../../../models/queueRequest";
+import {BeatmapsetListing} from "../../../models/beatmap";
 import {map} from "rxjs/operators";
+import {BeatmapService} from "../../../services/beatmap.service";
+import {RequestService} from "../../../services/request.service";
 
 @Component({
     selector: 'manage-requests',
@@ -30,7 +31,8 @@ export class ManageRequestsComponent implements OnInit {
     isLoading = true;
 
     constructor(
-        private servicesService: ServicesService,
+        private beatmap: BeatmapService,
+        private request: RequestService,
         private refreshService: RefreshService
     ) {
     }
@@ -46,14 +48,14 @@ export class ManageRequestsComponent implements OnInit {
     refresh() {
         this.isLoading = true;
 
-        this.beatmaps$ = this.servicesService.getBeatmapsetListings({}).pipe(
+        this.beatmaps$ = this.beatmap.getBeatmapsetListings({}).pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error
             })
         );
 
-        this.requests$ = this.servicesService.getRequests().pipe(
+        this.requests$ = this.request.getRequests().pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error

@@ -6,17 +6,17 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {RequestButtonDialogComponent} from '../request-button-dialog/request-button-dialog.component';
 import {ProfileButtonComponent} from '../profile-button/profile-button.component';
-import {ServicesService} from '../../services.service';
-import {RefreshService} from '../../refresh.service';
+import {RefreshService} from '../../../services/refresh.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorResponse} from '../../interfaces';
-import {ErrorResponseType} from '../../request-response.enum';
+import {ErrorResponse} from '../../../interfaces';
+import {ErrorResponseType} from '../../../enums/request-response.enum';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SearchbarComponent} from "./searchbar/searchbar.component";
-import {AuthService} from "../../auth.service";
+import {AuthService} from "../../../services/auth.service";
 import {Subscription} from "rxjs";
 import {filter} from "rxjs/operators";
 import {NavigationEnd, Router} from "@angular/router";
+import {RequestService} from "../../../services/request.service";
 
 @Component({
     selector: 'topbar',
@@ -34,7 +34,7 @@ import {NavigationEnd, Router} from "@angular/router";
     ],
     templateUrl: './topbar.component.html',
     styleUrl: './topbar.component.scss',
-    providers: [MatButtonModule, MatDialogModule, ServicesService],
+    providers: [MatButtonModule, MatDialogModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopbarComponent implements OnInit, OnDestroy {
@@ -43,7 +43,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
     constructor(
         private dialog: MatDialog,
-        private servicesService: ServicesService,
+        private request: RequestService,
         private refreshService: RefreshService,
         private _snackBar: MatSnackBar,
         private authService: AuthService,
@@ -102,7 +102,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
                 const userId = user.id;
                 const queueId = 2;
 
-                this.servicesService.postRequest(beatmapsetId, result.comment, result.mvChecked, userId, queueId).subscribe({
+                this.request.postRequest(beatmapsetId, result.comment, result.mvChecked, userId, queueId).subscribe({
                     next: response => {
                         switch (response.status) {
                             case 201:
