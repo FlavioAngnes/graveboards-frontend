@@ -119,7 +119,11 @@ export class AuthService {
             .set('code', code)
             .set('state', `${this.state}`);
 
-        return this.http.post<TokenResponse>(`${this.baseUrl}${EndpointEnum.TOKEN}`, body.toString());
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
+        return this.http.post<TokenResponse>(`${this.baseUrl}${EndpointEnum.TOKEN}`, body.toString(), {headers});
     };
 
     handleCallback(code: string): void {
