@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {AsyncPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
-import {catchError, combineLatest, Observable, of} from "rxjs";
+import {BaseBeatmapPanelComponent} from "../beatmap-panels/base-beatmap-panel/base-beatmap-panel.component";
+import {catchError, combineLatest, combineLatestWith, Observable, of} from "rxjs";
 import {RefreshService} from "../../../services/refresh.service";
-import {BeatmapPanelHorizontalComponent} from "../beatmap-panel-horizontal/beatmap-panel-horizontal.component";
-import {QueueRequest, QueueRequestWithBeatmap} from "../../../models/queueRequest";
-import {BeatmapsetListing} from "../../../models/beatmap";
+import {
+    RequestBeatmapPanelHorizontalComponent
+} from "../beatmap-panels/request-beatmap-panel-horizontal/request-beatmap-panel-horizontal.component";
+import {QueueRequest, BeatmapQueueRequest} from "../../../models/QueueRequest";
+import {BeatmapsetListing} from "../../../models/Beatmapset";
 import {map} from "rxjs/operators";
 import {BeatmapService} from "../../../services/beatmap.service";
 import {RequestService} from "../../../services/request.service";
@@ -15,11 +17,11 @@ import {RequestService} from "../../../services/request.service";
     standalone: true,
     imports: [
         AsyncPipe,
-        BeatmapPanelComponent,
+        BaseBeatmapPanelComponent,
         NgForOf,
         NgIf,
         NgOptimizedImage,
-        BeatmapPanelHorizontalComponent
+        RequestBeatmapPanelHorizontalComponent
     ],
     templateUrl: './manage-requests.component.html',
     styleUrl: './manage-requests.component.scss'
@@ -27,7 +29,7 @@ import {RequestService} from "../../../services/request.service";
 export class ManageRequestsComponent implements OnInit {
     beatmaps$: Observable<BeatmapsetListing[]> | null = null;
     requests$: Observable<QueueRequest[]> | null = null;
-    combined$: Observable<QueueRequestWithBeatmap[]> | null = null;
+    combined$: Observable<BeatmapQueueRequest[]> | null = null;
     isLoading = true;
 
     constructor(
@@ -62,27 +64,15 @@ export class ManageRequestsComponent implements OnInit {
             })
         );
 
-        this.combined$ = combineLatest([this.beatmaps$, this.requests$]).pipe(
-            map(([beatmaps, requests]) => {
-                return requests.map(request => {
-                    const beatmap = beatmaps.find(b => b.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
-                    return {
-                        ...request,
-                        beatmap
-                    };
-                });
-            }),
-            catchError(err => {
-                console.error(err);
-                return of([]); // Return an empty array on error
-            })
+        this.combined$ = this.requests$.pipe(
+            combineLatestWith(this.beatmaps$),
+            map(([requests, beatmaps]) => {
+                    return requests.map((request: QueueRequest) => {
+                        const beatmap = beatmaps.find((beatmap: BeatmapsetListing) => beatmap.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
+                        return {beatmap, request} as BeatmapQueueRequest;
+                    });
+                }
+            )
         );
-
-        // Automatically handle loading state
-        this.combined$.subscribe(() => {
-            this.isLoading = false;
-        }, () => {
-            this.isLoading = false;
-        });
     }
 }

@@ -1,27 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {BeatmapsetListing} from '../../../models/beatmap';
-import {catchError, combineLatest, Observable, of} from 'rxjs';
+import {BeatmapsetListing} from '../../../models/Beatmapset';
+import {catchError, combineLatestWith, Observable, of} from 'rxjs';
 import {RequestFilter} from '../../../interfaces';
 import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
-import {BeatmapPanelComponent} from "../beatmap-panel/beatmap-panel.component";
-import {QueueRequest, QueueRequestWithBeatmap} from "../../../models/queueRequest";
-import {map} from "rxjs/operators";
+import {BaseBeatmapPanelComponent} from "../beatmap-panels/base-beatmap-panel/base-beatmap-panel.component";
+import {BeatmapQueueRequest, QueueRequest} from "../../../models/QueueRequest";
 import {RefreshService} from "../../../services/refresh.service";
 import {RequestService} from "../../../services/request.service";
 import {BeatmapService} from "../../../services/beatmap.service";
+import {RequestBeatmapPanelComponent} from "../beatmap-panels/request-beatmap-panel/request-beatmap-panel.component";
+import {map} from "rxjs/operators";
 
 
 @Component({
     selector: 'my-requests',
     standalone: true,
-    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BeatmapPanelComponent],
+    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BaseBeatmapPanelComponent, RequestBeatmapPanelComponent],
     templateUrl: './my-requests.component.html',
     styleUrl: './my-requests.component.scss',
 })
 export class MyRequestsComponent implements OnInit {
     beatmaps$: Observable<BeatmapsetListing[]> | null = null;
     requests$: Observable<QueueRequest[]> | null = null;
-    combined$: Observable<QueueRequestWithBeatmap[]> | null = null;
+    combined$: Observable<BeatmapQueueRequest[]> | null = null;
     isLoading = true;
 
     constructor(
@@ -57,28 +58,16 @@ export class MyRequestsComponent implements OnInit {
             })
         );
 
-        this.combined$ = combineLatest([this.beatmaps$, this.requests$]).pipe(
-            map(([beatmaps, requests]) => {
-                return requests.map(request => {
-                    const beatmap = beatmaps.find(b => b.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
-                    return {
-                        ...request,
-                        beatmap
-                    };
-                });
-            }),
-            catchError(err => {
-                console.error(err);
-                return of([]); // Return an empty array on error
-            })
+        this.combined$ = this.requests$.pipe(
+            combineLatestWith(this.beatmaps$),
+            map(([requests, beatmaps]) => {
+                    return requests.map((request: QueueRequest) => {
+                        const beatmap = beatmaps.find((beatmap: BeatmapsetListing) => beatmap.beatmapset_snapshot.beatmapset_id === request.beatmapset_id);
+                        return {beatmap, request} as BeatmapQueueRequest;
+                    });
+                }
+            )
         );
-
-        // Automatically handle loading state
-        this.combined$.subscribe(() => {
-            this.isLoading = false;
-        }, () => {
-            this.isLoading = false;
-        });
     }
 
     getRequestFilter(): RequestFilter {

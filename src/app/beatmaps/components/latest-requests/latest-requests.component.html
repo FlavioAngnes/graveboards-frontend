@@ -2,7 +2,7 @@
     Latest Requests
 </div>
 <div *ngIf="beatmaps$ | async as beatmaps; else loading" class="grid-container">
-    <beatmap-panel [beatmapListing]="beatmapListing" *ngFor="let beatmapListing of beatmaps"></beatmap-panel>
+    <base-beatmap-panel [beatmap]="beatmapListing" *ngFor="let beatmapListing of beatmaps"></base-beatmap-panel>
 </div>
 
 <ng-template #loading>

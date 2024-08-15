@@ -1,8 +1,8 @@
 <div class="header">
     Manage Requests
 </div>
-<div *ngIf="combined$ | async as requestWithBeatmaps; else loading" class="grid-container">
-    <beatmap-panel-horizontal [beatmap]="requestWithBeatmap" *ngFor="let requestWithBeatmap of requestWithBeatmaps"></beatmap-panel-horizontal>
+<div *ngIf="combined$ | async as beatmapQueueRequests; else loading" class="grid-container">
+    <request-beatmap-panel-horizontal [beatmap]="beatmapQueueRequest" *ngFor="let beatmapQueueRequest of beatmapQueueRequests"></request-beatmap-panel-horizontal>
 </div>
 
 <ng-template #loading>
