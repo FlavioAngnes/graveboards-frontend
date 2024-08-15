@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {RequestFilter} from "../interfaces";
 import {Observable} from "rxjs";
-import {BeatmapsetDisplayData, BeatmapsetListing, BeatmapsetSnapshot} from "../models/beatmap";
+import {BeatmapsetDisplayData, BeatmapsetListing, BeatmapsetSnapshot} from "../models/Beatmapset";
 import {EndpointEnum} from "../enums/endpoint.enum";
 import {environment} from "../../environments/environment";
 
