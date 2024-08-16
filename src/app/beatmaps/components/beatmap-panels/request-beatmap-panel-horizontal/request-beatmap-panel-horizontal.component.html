@@ -39,7 +39,7 @@
         <div class="difficulty-info grid-item">
             <difficulty-list [difficulties]="beatmap.difficulties"></difficulty-list>
         </div>
-        <div class="grid-item">{{ time.formatTime(beatmap.length) }}</div>
+        <div class="length grid-item">{{ time.formatTime(beatmap.length) }}</div>
         <div class="editing grid-item">
             <div class="comment">
                 <mat-icon fontIcon="comment" [matTooltip]=beatmap.request_data.comment *ngIf="beatmap.request_data.comment"></mat-icon>
