@@ -1,7 +1,7 @@
 <div class="profile-button-wrapper">
     <div class="profile-button" appClickOutside (clickOutside)="closeDropdown()"
          (click)=onProfileButtonClick() [matTooltip]=tooltipText
-         [ngStyle]="{'background-image': 'url(' + (isLoggedIn ? avatarUrl : './assets/icons/person.svg') + ')','background-size': isLoggedIn ? 'cover' : '36px', 'background-color': isLoggedIn ? 'transparent' : '#e82025'}">
+         [ngStyle]="{'background-image': 'url(' + (isLoggedIn ? avatarUrl : './assets/icons/person.svg') + '), url(https://osu.ppy.sh/images/layout/avatar-guest@2x.png)','background-size': isLoggedIn ? 'cover' : '36px', 'background-color': isLoggedIn ? 'transparent' : '#e82025'}">
     </div>
     <div *ngIf="dropdownVisible" class="dropdown-menu">
         <button (click)="logout()">Logout</button>
