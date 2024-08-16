@@ -5,5 +5,6 @@ export enum EndpointEnum {
     LOGIN = "api/v1/login",
     TOKEN = "api/v1/token",
     USER = "api/v1/users/{userId}",
-    REQUESTS = "api/v1/requests"
+    REQUESTS = "api/v1/requests",
+    PROFILE = "api/v1/profiles/{userId}",
   }

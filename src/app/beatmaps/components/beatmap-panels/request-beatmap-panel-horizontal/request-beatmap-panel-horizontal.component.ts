@@ -64,7 +64,7 @@ export class RequestBeatmapPanelHorizontalComponent extends RequestBeatmapPanelC
     override ngOnInit() {
         super.ngOnInit();
 
-        this.auth.getUserOsuProfile(this.beatmap.request_data.user_id).subscribe(user => {
+        this.auth.getUserProfile(this.beatmap.request_data.user_id).subscribe(user => {
             // TODO: Populate requester data when sending request so we don't have to fetch it here
             this.requester.id = user.user_id;
             this.requester.username = user.username;

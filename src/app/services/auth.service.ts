@@ -68,13 +68,8 @@ export class AuthService {
         this.router.navigate(['/']);
     }
 
-    getUserOsuProfile(userId: number): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.getJWT()}`,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        });
-
-        return this.http.get<any>(`${this.baseUrl}${EndpointEnum.USER.replace('{userId}', userId.toString())}/profile`, {headers});
+    getUserProfile(userId: number): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}${EndpointEnum.PROFILE.replace('{userId}', userId.toString())}`);
     }
 
     getUser(userId: number): Observable<any> {
@@ -133,7 +128,7 @@ export class AuthService {
             
             sessionStorage.setItem('token', token);
 
-            this.getUserOsuProfile(userId).subscribe(userInfo => {
+            this.getUserProfile(userId).subscribe(userInfo => {
                 sessionStorage.setItem('osuUser', JSON.stringify(userInfo));
                 this.loggedIn.next(true);
                 this.avatarUrl.next(userInfo.avatar_url);
