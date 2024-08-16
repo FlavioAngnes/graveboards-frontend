@@ -23,14 +23,14 @@
             </div>
         </div>
         <div class="mapper grid-item">
-            <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap"
+            <a class="mapper-avatar" [href]=requester.profile_url
                [ngStyle]="{'background-image': 'url(' + requester.avatar_url + ')'}" target="_blank"></a>
             <div>
                 <div class="small-info no-wrap-ellipsis">
                     Requested by
                 </div>
                 <div class="big-info no-wrap-ellipsis">
-                    <a [href]="'https://osu.ppy.sh/users/' + requester.username" target="_blank">
+                    <a [href]=requester.profile_url target="_blank">
                         {{ requester.username }}
                     </a>
                 </div>

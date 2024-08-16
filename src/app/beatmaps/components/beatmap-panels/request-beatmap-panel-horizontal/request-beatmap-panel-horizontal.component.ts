@@ -10,7 +10,6 @@ import {
     RequestBeatmapPanelData, toRequestBeatmapPanelData
 } from "../request-beatmap-panel/request-beatmap-panel.component";
 import {Router} from "@angular/router";
-import {AuthService} from "../../../../services/auth.service";
 import {BeatmapQueueRequest} from "../../../../models/QueueRequest";
 import {DifficultyListComponent} from "../difficulty-list/difficulty-list.component";
 import {AudioService} from "../../../../services/audio.service";
@@ -20,6 +19,7 @@ export interface RequesterData {
     id: number;
     username: string;
     avatar_url: string;
+    profile_url: string;
 }
 
 @Component({
@@ -49,26 +49,20 @@ export class RequestBeatmapPanelHorizontalComponent extends RequestBeatmapPanelC
             (value: BeatmapQueueRequest): RequestBeatmapPanelData => toRequestBeatmapPanelData(value)
     }) override beatmap!: RequestBeatmapPanelData;
 
-    protected requester: RequesterData;
+    protected requester!: RequesterData;
 
-    constructor(router: Router, audio: AudioService, private auth: AuthService) {
+    constructor(router: Router, audio: AudioService) {
         super(router, audio);
-
-        this.requester = {
-            id: 0,
-            username: "",
-            avatar_url: ""
-        }
     }
 
     override ngOnInit() {
         super.ngOnInit();
 
-        this.auth.getUserProfile(this.beatmap.request_data.user_id).subscribe(user => {
-            // TODO: Populate requester data when sending request so we don't have to fetch it here
-            this.requester.id = user.user_id;
-            this.requester.username = user.username;
-            this.requester.avatar_url = user.avatar_url;
-        });
+        this.requester = {
+            id: this.beatmap.request_data.user_id,
+            username: this.beatmap.request_data.profile.username,
+            avatar_url: this.beatmap.request_data.profile.avatar_url,
+            profile_url: `https://osu.ppy.sh/users/${this.beatmap.request_data.profile.user_id}`
+        }
     }
 }
