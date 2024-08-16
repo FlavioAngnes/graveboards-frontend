@@ -1,5 +1,4 @@
 .sidebar {
-  border-right: 1px #c6c6c6 solid;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -21,4 +20,16 @@
   flex-direction: column;
   flex: 1;
   gap: 24px;
+}
+
+@media (prefers-color-scheme: light) {
+  .sidebar {
+    border-right: 1px #c6c6c6 solid;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    border-right: 1px #3a3a3a solid;
+  }
 }

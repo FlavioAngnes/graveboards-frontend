@@ -52,7 +52,6 @@ $my-app-theme: mat.define-light-theme(
 @include mat.all-component-themes($my-app-theme);
 
 .header {
-  color: #000;
   /* material-theme/headline/small */
   font-size: 24px;
   font-weight: 600;
@@ -68,7 +67,6 @@ $my-app-theme: mat.define-light-theme(
   justify-content: center;
   align-items: center;
   gap: 16px;
-  color: #777;
   font-weight: bold;
   font-size: 24px;
 }
@@ -94,5 +92,27 @@ $my-app-theme: mat.define-light-theme(
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+@media(prefers-color-scheme: dark) {
+  body {
+    background-color: #0F0D13;
+    color: #fff;
+  }
+
+  .loading {
+    color: #000;
+  }
+}
+
+@media(prefers-color-scheme: light) {
+  body {
+    background-color: #fff;
+    color: #0F0D13;
+  }
+
+  .loading {
+    color: #777;
   }
 }

@@ -25,3 +25,15 @@
   color: #797979;
   font-size: 12px;
 }
+
+@media(prefers-color-scheme: dark) {
+  .more-difficulties {
+    color: #939090;
+  }
+}
+
+@media(prefers-color-scheme: light) {
+  .more-difficulties {
+    color: #797979;
+  }
+}

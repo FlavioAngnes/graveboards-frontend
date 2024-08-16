@@ -1,3 +1,47 @@
+@media(prefers-color-scheme: dark) {
+  .cover {
+    background: black 50% / 215% no-repeat;
+  }
+
+  .content {
+    background-color: #1D1B20;
+  }
+
+  .content:hover {
+    background-color: #2B2930;
+  }
+
+  .big-info {
+    color: #fff;
+  }
+
+  .small-info {
+    color: #939090;
+  }
+}
+
+@media(prefers-color-scheme: light) {
+  .cover {
+    background: lightgray 50% / 215% no-repeat;
+  }
+
+  .content {
+    background: #f5f5f5;
+  }
+
+  .content:hover {
+    background-color: #eaeaea;
+  }
+
+  .big-info {
+    color: #000;
+  }
+
+  .small-info {
+    color: #777;
+  }
+}
+
 .beatmap-panel {
   display: flex;
   align-self: stretch;
@@ -22,7 +66,6 @@
   align-self: stretch;
   z-index: -1;
   transition: filter 0.3s ease-in-out;
-  background: lightgray 50% / 215% no-repeat;
 }
 
 .content {
@@ -30,7 +73,6 @@
   gap: 12px;
   padding: 12px 10px;
   align-self: stretch;
-  background: #f5f5f5;
   min-width: 100px;
   transition: background-color 0.3s ease-in-out;
   overflow: hidden;
@@ -45,8 +87,6 @@
 }
 
 .big-info {
-  color: #000;
-
   /* material-theme/body/medium */
   font-size: 14px;
   font-weight: 600;
@@ -55,8 +95,6 @@
 }
 
 .small-info {
-  color: #777;
-
   /* material-theme/body/small */
   font-size: 12px;
   font-weight: 400;
@@ -140,7 +178,6 @@
 }
 
 .more-difficulties {
-  color: #797979;
   font-size: 12px;
 }
 
@@ -178,7 +215,6 @@
 }
 
 .content:hover {
-  background-color: #eaeaea;
 }
 
 a {
@@ -193,8 +229,8 @@ a {
 
 .length {
   background-color: rgba(0, 0, 0, 0.8);
-  max-height: 20px;
   color: white;
+  max-height: 20px;
   border-radius: 6px;
   padding: 3px 5px;
   font-size: 14px;

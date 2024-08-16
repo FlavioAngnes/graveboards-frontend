@@ -1,10 +1,4 @@
-.link.active {
-  background-color: #FFDAD6;
-  color: #000000;
-}
-
 .link {
-  color: #919191;
   display: flex;
   align-items: center;
   padding: 8px 12px;
@@ -14,6 +8,28 @@
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (prefers-color-scheme: light) {
+  .link.active {
+    background-color: #FFDAD6;
+    color: #000000;
+  }
+
+  .link {
+    color: #919191;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .link.active {
+    background-color: #e82025;
+    color: #FFF;
+  }
+
+  .link {
+    color: #8c8c8c;
+  }
 }
