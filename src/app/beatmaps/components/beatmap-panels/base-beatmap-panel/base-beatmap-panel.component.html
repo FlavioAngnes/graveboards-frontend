@@ -11,7 +11,7 @@
     </div>
     <div class="content">
         <a class="mapper-avatar" [href]="'https://osu.ppy.sh/users/' + beatmap.mapper"
-           [ngStyle]="{'background-image': 'url(' + beatmap.mapper_avatar + '), url(https://osu.ppy.sh/images/layout/avatar-guest@2x.png)'}" target="_blank"></a>
+           [ngStyle]="{'background-image': 'url(' + beatmap.mapper_avatar + ')'}" target="_blank"></a>
         <div class="info" (mouseenter)=onMouseEnter() (mouseleave)=onMouseLeave()>
             <a class="big-info no-wrap-ellipsis" [href]="'https://osu.ppy.sh/beatmapsets/' + beatmap.beatmapset_id"
                target="_blank">

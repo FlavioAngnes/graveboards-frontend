@@ -26,11 +26,7 @@ export interface BaseBeatmapPanelData {
     difficulties_details: DifficultyDetails[],
 }
 
-export function toBaseBeatmapPanelData({
-                                           id,
-                                           beatmapset_snapshot,
-                                           display_data
-                                       }: BeatmapsetListing): BaseBeatmapPanelData {
+export function toBaseBeatmapPanelData({id, beatmapset_snapshot,display_data}: BeatmapsetListing): BaseBeatmapPanelData {
     const snapshots = beatmapset_snapshot.beatmap_snapshots;
 
     const difficulties_details = snapshots
@@ -40,11 +36,14 @@ export function toBaseBeatmapPanelData({
         }))
         .sort((a, b) => b.difficulty_rating - a.difficulty_rating);
 
+    const {mapper_avatar, ...rest} = display_data;
+
     return {
         id: id,
         beatmapset_id: beatmapset_snapshot.beatmapset_id,
         preview_url: beatmapset_snapshot.preview_url,
-        ...display_data,
+        mapper_avatar: mapper_avatar ?? "https://osu.ppy.sh/images/layout/avatar-guest@2x.png",
+        ...rest,
         difficulties_details: difficulties_details,
     } as BaseBeatmapPanelData;
 }
