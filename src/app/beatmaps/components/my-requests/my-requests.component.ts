@@ -10,12 +10,15 @@ import {RequestService} from "../../../services/request.service";
 import {BeatmapService} from "../../../services/beatmap.service";
 import {RequestBeatmapPanelComponent} from "../beatmap-panels/request-beatmap-panel/request-beatmap-panel.component";
 import {map} from "rxjs/operators";
+import {
+    BeatmapPanelPlaceholderComponent
+} from "../loading-placeholders/beatmap-panel-placeholder/beatmap-panel-placeholder.component";
 
 
 @Component({
     selector: 'my-requests',
     standalone: true,
-    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BaseBeatmapPanelComponent, RequestBeatmapPanelComponent],
+    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BaseBeatmapPanelComponent, RequestBeatmapPanelComponent, BeatmapPanelPlaceholderComponent],
     templateUrl: './my-requests.component.html',
     styleUrl: './my-requests.component.scss',
 })

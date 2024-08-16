@@ -5,11 +5,14 @@ import {AsyncPipe, CommonModule, NgOptimizedImage} from '@angular/common';
 import {BaseBeatmapPanelComponent} from "../beatmap-panels/base-beatmap-panel/base-beatmap-panel.component";
 import {RefreshService} from "../../../services/refresh.service";
 import {BeatmapService} from "../../../services/beatmap.service";
+import {
+    BeatmapPanelPlaceholderComponent
+} from "../loading-placeholders/beatmap-panel-placeholder/beatmap-panel-placeholder.component";
 
 @Component({
     selector: 'app-latest-requests',
     standalone: true,
-    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BaseBeatmapPanelComponent],
+    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BaseBeatmapPanelComponent, BeatmapPanelPlaceholderComponent],
     templateUrl: './latest-requests.component.html',
     styleUrl: './latest-requests.component.scss',
 })

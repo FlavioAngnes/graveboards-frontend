@@ -6,8 +6,7 @@
 </div>
 
 <ng-template #loading>
-    <div class="loading">
-        <img ngSrc="/assets/icons/loading-circle.svg" alt="loading-circle" height="64" width="64">
-        Loading beatmaps...
+    <div class="grid-container">
+        <beatmap-panel-placeholder *ngFor="let _ of [1, 2]"></beatmap-panel-placeholder>
     </div>
 </ng-template>

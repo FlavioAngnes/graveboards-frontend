@@ -11,6 +11,9 @@ import {BeatmapsetListing} from "../../../models/Beatmapset";
 import {map} from "rxjs/operators";
 import {BeatmapService} from "../../../services/beatmap.service";
 import {RequestService} from "../../../services/request.service";
+import {
+    BeatmapPanelPlaceholderComponent
+} from "../loading-placeholders/beatmap-panel-placeholder/beatmap-panel-placeholder.component";
 
 @Component({
     selector: 'manage-requests',
@@ -21,7 +24,8 @@ import {RequestService} from "../../../services/request.service";
         NgForOf,
         NgIf,
         NgOptimizedImage,
-        RequestBeatmapPanelHorizontalComponent
+        RequestBeatmapPanelHorizontalComponent,
+        BeatmapPanelPlaceholderComponent
     ],
     templateUrl: './manage-requests.component.html',
     styleUrl: './manage-requests.component.scss'
