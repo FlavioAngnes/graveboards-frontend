@@ -1,8 +1,10 @@
 import {BeatmapsetListing} from "./Beatmapset";
+import {Profile} from "./Profile";
 
 export interface QueueRequest {
     id: number;
     user_id: number;
+    profile: Profile;
     beatmapset_id: number;
     queue_id?: number | null;  // Optional field since it can be nullable
     comment?: string | null;   // Optional field since it can be nullable
