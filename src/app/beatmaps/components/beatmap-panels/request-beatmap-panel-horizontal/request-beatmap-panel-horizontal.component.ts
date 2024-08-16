@@ -14,6 +14,7 @@ import {AuthService} from "../../../../services/auth.service";
 import {BeatmapQueueRequest} from "../../../../models/QueueRequest";
 import {DifficultyListComponent} from "../difficulty-list/difficulty-list.component";
 import {AudioService} from "../../../../services/audio.service";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 export interface RequesterData {
     id: number;
@@ -36,7 +37,8 @@ export interface RequesterData {
         ClickOutsideDirective,
         MatTooltipModule,
         MatIcon,
-        DifficultyListComponent
+        DifficultyListComponent,
+        MatProgressBar
     ],
     templateUrl: './request-beatmap-panel-horizontal.component.html',
     styleUrl: './request-beatmap-panel-horizontal.component.scss'

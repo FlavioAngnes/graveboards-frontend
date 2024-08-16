@@ -1,6 +1,6 @@
 <div class="beatmap-panel" *ngIf="beatmap">
     <div class="cover" [ngClass]="{hovered: isHovered}"
-         [ngStyle]="{'background-image': 'url(' + this.beatmap.thumbnail + '), url(\'assets/default-bg.png\')'}">
+         [ngStyle]="{'background-image': 'url(' + beatmap.thumbnail + '), url(\'assets/default-bg.png\')'}">
         <div class="length">
             {{ time.formatTime(this.beatmap.length) }}
         </div>

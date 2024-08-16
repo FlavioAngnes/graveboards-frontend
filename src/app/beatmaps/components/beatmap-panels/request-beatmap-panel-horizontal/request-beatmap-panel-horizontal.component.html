@@ -1,6 +1,10 @@
 <div class="beatmap-panel" *ngIf="beatmap">
     <div class="cover" [ngClass]="{hovered: isHovered}"
-         [ngStyle]="{'background-image': 'url(' + beatmap.thumbnail + ')'}">
+         [ngStyle]="{'background-image': 'url(' + beatmap.thumbnail + '), url(\'assets/default-bg.png\')'}">
+        <div class="preview-button" [ngClass]="{'playing': audioProgress > 0}">
+            <mat-icon [fontIcon]="audioIcon" class="preview-button-icon" (click)=toggleAudio()></mat-icon>
+            <mat-progress-bar class="progress-bar" mode="determinate" [value]="audioProgress"></mat-progress-bar>
+        </div>
     </div>
     <div class="content" (mouseenter)=onMouseEnter() (mouseleave)=onMouseLeave()>
         <div class="beatmap-metadata grid-item no-wrap-ellipsis">

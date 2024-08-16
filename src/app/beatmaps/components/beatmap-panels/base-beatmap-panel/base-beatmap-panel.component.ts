@@ -79,9 +79,9 @@ export class BaseBeatmapPanelComponent implements OnInit, OnDestroy {
     protected audioIcon: string = "play_arrow";
     protected audioProgress: number = 0;
 
-    private songSrcSubscription: any;
-    private playStatusSubscription: any;
-    private currentTimeSubscription: any;
+    protected songSrcSubscription: any;
+    protected playStatusSubscription: any;
+    protected currentTimeSubscription: any;
 
     protected time: TimeUtils;
 
