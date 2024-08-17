@@ -1,12 +1,10 @@
 <div class="header">
     Manage Requests
 </div>
-<div *ngIf="combined$ | async as beatmapQueueRequests; else loading" class="grid-container">
-    <request-beatmap-panel-horizontal [beatmap]="beatmapQueueRequest" *ngFor="let beatmapQueueRequest of beatmapQueueRequests"></request-beatmap-panel-horizontal>
-</div>
+<div *ngIf="visibleRequests as requests" class="grid-container" scrollNearEnd (nearEnd)="loadBeatmaps()">
+    <request-beatmap-panel-horizontal [beatmap]="request" *ngFor="let request of requests"></request-beatmap-panel-horizontal>
 
-<ng-template #loading>
-    <div class="grid-container">
-        <beatmap-panel-placeholder></beatmap-panel-placeholder>
-    </div>
-</ng-template>
+    <ng-container *ngIf="isLoading">
+        <request-beatmap-panel-horizontal-placeholder></request-beatmap-panel-horizontal-placeholder>
+    </ng-container>
+</div>

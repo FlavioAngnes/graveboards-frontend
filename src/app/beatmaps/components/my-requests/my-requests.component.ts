@@ -13,39 +13,50 @@ import {map} from "rxjs/operators";
 import {
     BeatmapPanelPlaceholderComponent
 } from "../loading-placeholders/beatmap-panel-placeholder/beatmap-panel-placeholder.component";
+import {
+    RequestBeatmapPanelHorizontalComponent
+} from "../beatmap-panels/request-beatmap-panel-horizontal/request-beatmap-panel-horizontal.component";
+import {
+    RequestBeatmapPanelHorizontalPlaceholderComponent
+} from "../loading-placeholders/request-beatmap-panel-horizontal-placeholder/request-beatmap-panel-horizontal-placeholder.component";
+import {ScrollNearEndDirective} from "../../../directives/scroll-near-end.directive";
+import {
+    InfiniteScrollBeatmapPanelListDirective
+} from "../../../directives/infinite-scroll-beatmap-panel-list/infinite-scroll-beatmap-panel-list.directive";
 
 
 @Component({
     selector: 'my-requests',
     standalone: true,
-    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BaseBeatmapPanelComponent, RequestBeatmapPanelComponent, BeatmapPanelPlaceholderComponent],
+    imports: [CommonModule, AsyncPipe, NgOptimizedImage, BaseBeatmapPanelComponent, RequestBeatmapPanelComponent, BeatmapPanelPlaceholderComponent, RequestBeatmapPanelHorizontalComponent, RequestBeatmapPanelHorizontalPlaceholderComponent, ScrollNearEndDirective],
     templateUrl: './my-requests.component.html',
     styleUrl: './my-requests.component.scss',
 })
-export class MyRequestsComponent implements OnInit {
-    beatmaps$: Observable<BeatmapsetListing[]> | null = null;
+export class MyRequestsComponent extends InfiniteScrollBeatmapPanelListDirective implements OnInit {
+    visibleRequests: BeatmapQueueRequest[] = [];
+
     requests$: Observable<QueueRequest[]> | null = null;
     combined$: Observable<BeatmapQueueRequest[]> | null = null;
-    isLoading = true;
 
     constructor(
-        private beatmap: BeatmapService,
-        private request: RequestService,
-        private refreshService: RefreshService
+        beatmap: BeatmapService,
+        protected request: RequestService,
+        refreshService: RefreshService
     ) {
+        super(beatmap, refreshService);
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
         this.refreshService.refresh$.subscribe(() => {
             this.refresh();
         });
 
-        this.refresh();
+        this.isLoading = true;
     }
 
-    refresh() {
-        this.isLoading = true;
+    override refresh() {
         const requestFilter = this.getRequestFilter();
+        this.isLoading = true;
 
         this.beatmaps$ = this.beatmap.getBeatmapsetListings(requestFilter).pipe(
             catchError(err => {
@@ -70,6 +81,40 @@ export class MyRequestsComponent implements OnInit {
                     });
                 }
             )
+        );
+
+        this.combined$.subscribe(
+            requests => {
+                this.computePanelsPerScroll();
+                this.visibleRequests = requests.slice(0, this.panels_per_scroll);
+                this.totalBeatmaps = requests.length;
+                this.isLoading = false;
+            }
+        )
+    }
+
+    override loadBeatmaps(offset: number = 0): void {
+        if (this.isLoading || this.visibleRequests.length === this.totalBeatmaps) return;
+
+        this.isLoading = true;
+
+        this.combined$!.pipe(
+            map(requests => {
+                if (this.visibleRequests.length === requests.length) {
+                    return [];
+                }
+
+                return requests.slice(this.visibleRequests.length, this.visibleRequests.length + this.panels_per_scroll - offset);
+            })
+        ).subscribe(
+            newRequests => {
+                this.visibleRequests = [...this.visibleRequests, ...newRequests];
+                this.isLoading = false;
+            },
+            error => {
+                console.error('Error loading beatmaps:', error);
+                this.isLoading = false;  // Reset loading state even if there's an error
+            }
         );
     }
 
