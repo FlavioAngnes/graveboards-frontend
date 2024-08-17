@@ -1,31 +1,40 @@
-<div class="mat-dialog-container">
-    <h2>Request a Beatmap</h2>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-            <mat-label>Beatmap Link</mat-label>
-            <input matInput formControlName="beatmapsetLink">
-            <mat-error *ngIf="form.controls['beatmapsetLink'].hasError('required')">
-                Beatmap link is required
-            </mat-error>
-            <mat-error *ngIf="form.controls['beatmapsetLink'].hasError('pattern')">
-                Invalid beatmap URL
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Queue</mat-label>
-            <mat-select [value]="2">
-                <mat-option [value]="2">Net0's Queue</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Comment</mat-label>
-            <textarea matInput #comment maxlength="160" formControlName="comment"></textarea>
-            <mat-hint align="end">{{ comment.value.length }} / 160</mat-hint>
-        </mat-form-field>
-        <div class="dialog-actions">
-            <button mat-button type="button" (click)="onCancel()">Cancel</button>
-            <button mat-button type="submit" (click)="onSubmit()">Submit</button>
-        </div>
-    </form>
+<div mat-dialog-container>
+    <div mat-dialog-title>
+        Request a Beatmap
+    </div>
+    <div mat-dialog-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Beatmap Link</mat-label>
+                <input matInput formControlName="beatmapsetLink">
+                <button mat-icon-button matSuffix *ngIf="form.controls['beatmapsetLink'].value"
+                        (click)="form.controls['beatmapsetLink'].setValue('')">
+                    <mat-icon fontIcon="cancel"></mat-icon>
+                </button>
+                <mat-error *ngIf="form.controls['beatmapsetLink'].hasError('required')">
+                    Beatmap link is required
+                </mat-error>
+                <mat-error *ngIf="form.controls['beatmapsetLink'].hasError('pattern')">
+                    Invalid beatmap URL
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Queue</mat-label>
+                <mat-select [value]="2">
+                    <mat-option [value]="2">Net0's Queue</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Comment</mat-label>
+                <textarea matInput #comment maxlength="160" formControlName="comment"></textarea>
+                <mat-hint align="end">{{ comment.value.length }} / 160</mat-hint>
+            </mat-form-field>
+            <div mat-dialog-actions align="end">
+                <button mat-button (click)="onCancel()">Cancel</button>
+                <button mat-flat-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+
