@@ -1,5 +1,5 @@
-<div class="profile-button-wrapper">
-    <div class="profile-button" appClickOutside (clickOutside)="closeDropdown()"
+<div class="profile-button-wrapper" appClickOutside (clickOutside)="closeDropdown()">
+    <div class="profile-button"
          (click)=onProfileButtonClick() [matTooltip]=tooltipText
          [ngStyle]="{'background-image': 'url(' + (isLoggedIn ? avatarUrl : './assets/icons/person.svg') + ')','background-size': isLoggedIn ? 'cover' : '36px', 'background-color': isLoggedIn ? 'transparent' : '#e82025'}">
     </div>
