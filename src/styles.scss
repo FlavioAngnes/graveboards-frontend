@@ -56,7 +56,7 @@ $my-app-theme: mat.define-light-theme(
   font-size: 24px;
   font-weight: 600;
   line-height: 32px; /* 133.333% */
-  margin: 32px 0;
+  margin: 0  0 32px 0;
 }
 
 .loading {

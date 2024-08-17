@@ -27,7 +27,9 @@ input {
   width: 100%;
   align-items: center;
   gap: 16px;
+  padding: 36px 22px;
   z-index: 4;
+  box-sizing: border-box;
 }
 
 .request-button {

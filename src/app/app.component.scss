@@ -25,8 +25,7 @@ input {
 .main-grid {
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: 240px 1fr;
-  column-gap: 22px;
+  grid-template-columns: 262px 1fr;
   grid-template-areas:
       "sidebar header"
       "sidebar main";
@@ -35,12 +34,12 @@ input {
 
 .header-section-content {
   grid-area: header;
-  padding: 36px 22px 0 22px;
 }
 
 .main-section-content {
   grid-area: main;
   padding: 0 22px 22px 22px;
+  overflow-y: scroll;
 }
 
 .sidebar-section-content {
