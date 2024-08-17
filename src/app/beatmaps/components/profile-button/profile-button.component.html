@@ -3,7 +3,32 @@
          (click)=onProfileButtonClick() [matTooltip]=tooltipText
          [ngStyle]="{'background-image': 'url(' + (isLoggedIn ? avatarUrl : './assets/icons/person.svg') + ')','background-size': isLoggedIn ? 'cover' : '36px', 'background-color': isLoggedIn ? 'transparent' : '#e82025'}">
     </div>
-    <div *ngIf="dropdownVisible" class="dropdown-menu">
-        <button (click)="logout()">Logout</button>
+    <div class="dropdown-menu" *ngIf="dropdownVisible">
+        <div class="dropdown-menu-section">
+            <div class="dropdown-menu-section-title">
+                General
+            </div>
+            <button class="dropdown-menu-button" (click)="logout()">
+                <mat-icon fontIcon="logout" class="dropdown-menu-link-icon"></mat-icon>
+                Logout
+            </button>
+        </div>
+        <div class="dropdown-menu-section">
+            <div class="dropdown-menu-section-title">
+                Preferences
+            </div>
+            <div class="dropdown-menu-section-item">
+                <div class="dropdown-menu-item">
+                    <mat-icon fontIcon="volume_up" class="dropdown-menu-link-icon"></mat-icon>
+                    Preview Volume
+                </div>
+                <div class="volume-slider">
+                    <div class="current-volume">{{ value }}%</div>
+                    <mat-slider class="slider" min="0" max="100">
+                        <input matSliderThumb [(ngModel)]="value" (valueChange)="audio.setVolume(this.value / 100)">
+                    </mat-slider>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
