@@ -1,0 +1,128 @@
+.beatmap-panel__loading {
+  display: flex;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cover__loading {
+  display: block;
+  width: 160px;
+  height: 90px;
+  flex-shrink: 0;
+}
+
+.content__loading {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) repeat(1, 0.2fr) repeat(1, 1fr);
+  flex-grow: 1;
+  grid-template-rows: 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 36px 12px 24px;
+  align-self: stretch;
+  min-width: 100px;
+  transition: background-color 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.info__loading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mapper__loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mapper-info__loading, .beatmap-metadata__loading {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mapper-avatar__loading {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.big-info__loading {
+  display: block;
+  width: 150px;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.small-info__loading {
+  display: block;
+  width: 100px;
+  height: 12px;
+  border-radius: 8px;
+}
+
+.difficulties__loading {
+  display: flex;
+  gap: 1px;
+}
+
+.difficulty-info__loading {
+  margin-top: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.difficulty-icon__loading {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.difficulty__loading {
+  display: block;
+  width: 6px;
+  height: 16px;
+  border-radius: 6px;
+}
+
+.animated {
+  opacity: 0.5;
+  animation: placeholder-anim 3s infinite;
+}
+
+@keyframes placeholder-anim {
+  0% {
+    opacity: 0.5
+  }
+  50% {
+    opacity: 0.25
+  }
+  100% {
+    opacity: 0.5
+  }
+}
+
+@media(prefers-color-scheme: light) {
+  .animated {
+    background: #f5f5f5;
+  }
+
+  .content__loading {
+    background: #f5f5f5;
+  }
+}
+
+@media(prefers-color-scheme: dark) {
+  .animated {
+    background: #939090;
+  }
+
+  .content__loading {
+    background: #1D1B20;
+  }
+}
