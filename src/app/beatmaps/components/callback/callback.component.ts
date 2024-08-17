@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import {NgOptimizedImage} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
     selector: 'app-callback',
     standalone: true,
     templateUrl: './callback.component.html',
     imports: [
-        NgOptimizedImage
+        NgOptimizedImage,
+        MatIcon
     ],
     styleUrls: ['./callback.component.scss']
 })

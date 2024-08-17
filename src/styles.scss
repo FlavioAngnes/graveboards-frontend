@@ -71,30 +71,6 @@ $my-app-theme: mat.define-light-theme(
   font-size: 24px;
 }
 
-.loading img {
-  opacity: 50%;
-  animation: spin 4s linear infinite;
-}
-
-@-moz-keyframes spin {
-  100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
 @media(prefers-color-scheme: dark) {
   body {
     background-color: #0F0D13;
@@ -102,7 +78,7 @@ $my-app-theme: mat.define-light-theme(
   }
 
   .loading {
-    color: #000;
+    color: #777;
   }
 }
 
