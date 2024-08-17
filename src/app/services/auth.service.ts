@@ -20,22 +20,16 @@ export class AuthService {
 
     constructor(private http: HttpClient, private router: Router) {
         if (typeof window !== 'undefined' && window.sessionStorage) {
-            const osuUser = sessionStorage.getItem('osuUser');
-
-            if (osuUser) {
-                this.loggedIn.next(true);
-                this.avatarUrl.next(JSON.parse(osuUser).avatar_url);
-            }
-
             const user = sessionStorage.getItem('user');
+
             if (user) {
                 const userJson = JSON.parse(user);
 
-                userJson.roles.forEach((role: any) => {
-                    if (role.name === 'admin') {
-                        this.admin.next(true);
-                    }
-                })
+                if (userJson) {
+                    this.loggedIn.next(true);
+                    this.avatarUrl.next(userJson.profile.avatar_url);
+                    this.admin.next(userJson.roles.some((role: any) => role.name === 'admin'));
+                }
             }
         }
     }
@@ -64,6 +58,7 @@ export class AuthService {
 
         this.loggedIn.next(false);
         this.avatarUrl.next('./assets/icons/person.svg');
+        this.admin.next(false);
 
         this.router.navigate(['/']);
     }
@@ -125,18 +120,15 @@ export class AuthService {
         this.postToken(code).subscribe(response => {
             const userId = response.user_id;
             const token = response.token;
-            
-            sessionStorage.setItem('token', token);
 
-            this.getUserProfile(userId).subscribe(userInfo => {
-                sessionStorage.setItem('osuUser', JSON.stringify(userInfo));
-                this.loggedIn.next(true);
-                this.avatarUrl.next(userInfo.avatar_url);
-                this.router.navigate(['/']);
-            });
+            sessionStorage.setItem('token', token);
 
             this.getUser(userId).subscribe(userInfo => {
                 sessionStorage.setItem('user', JSON.stringify(userInfo));
+                this.loggedIn.next(true);
+                this.avatarUrl.next(userInfo.profile.avatar_url);
+                this.admin.next(userInfo.roles.some((role: any) => role.name === 'admin'));
+                this.router.navigate(['/']);
             });
         });
     }
