@@ -8,6 +8,8 @@ import {distinctUntilChanged, startWith} from 'rxjs/operators';
 })
 export class AudioService {
     private readonly song!: HTMLAudioElement;
+    private songVolume: number = 0.05;
+
     private playStatusSubject: Subject<boolean> = new Subject<boolean>();
     private endOfAudioSubject: Subject<void> = new Subject<void>();
     private errorSubject: Subject<string> = new Subject<string>();
@@ -67,7 +69,7 @@ export class AudioService {
         this.startCurrentTimeUpdater();
 
         this.song.src = url;
-        this.song.volume = 0.05;
+        this.song.volume = this.songVolume;
 
         this.song.load();
 
@@ -88,5 +90,28 @@ export class AudioService {
         // Clear the song URL and current time when stopped
         this.songSrcSubject.next(null);
         this.currentTimeSubject.next(0);
+    }
+
+    getVolume() {
+        if (!isPlatformBrowser(this.platformId)) return 0;
+
+        const localVolume = localStorage.getItem("volume");
+
+        if (localVolume) {
+            this.songVolume = parseFloat(localVolume);
+        } else {
+            localStorage.setItem("volume", this.songVolume.toString());
+        }
+
+        return this.songVolume;
+    }
+
+    setVolume(volume: number) {
+        this.songVolume = volume;
+        localStorage.setItem("volume", this.songVolume.toString());
+
+        if (this.song) {
+            this.song.volume = this.songVolume;
+        }
     }
 }
