@@ -27,6 +27,7 @@ input {
   width: 100%;
   align-items: center;
   gap: 16px;
+  z-index: 4;
 }
 
 .request-button {
@@ -50,4 +51,16 @@ input {
 .flex {
   display: flex;
   flex: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .content {
+    background-color: #0F0D13;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .content {
+    background-color: #fff;
+  }
 }
