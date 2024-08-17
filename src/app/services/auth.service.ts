@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {EndpointEnum} from "../enums/endpoint.enum";
 import {map} from "rxjs/operators";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {TokenResponse} from "../interfaces";
+import {TokenResponse} from "../models/interfaces";
 import {environment} from "../../environments/environment";
 
 @Injectable({

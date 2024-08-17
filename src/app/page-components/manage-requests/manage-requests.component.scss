@@ -1,0 +1,22 @@
+@import '../../../../node_modules/@angular/material/core/theming/theming';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+body, .mat-app-background, .mat-typography {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+/* css */
+
+.grid-container {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
+  max-width: 100%;
+  gap: 16px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

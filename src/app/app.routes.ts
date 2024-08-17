@@ -1,8 +1,8 @@
-import { Routes } from '@angular/router';
-import { LatestRequestsComponent } from './beatmaps/components/latest-requests/latest-requests.component';
-import { CallbackComponent } from './beatmaps/components/callback/callback.component';
-import { MyRequestsComponent } from './beatmaps/components/my-requests/my-requests.component';
-import {ManageRequestsComponent} from './beatmaps/components/manage-requests/manage-requests.component';
+import {Routes} from '@angular/router';
+import {LatestRequestsComponent} from './page-components/latest-requests/latest-requests.component';
+import {CallbackComponent} from './page-components/callback/callback.component';
+import {MyRequestsComponent} from './page-components/my-requests/my-requests.component';
+import {ManageRequestsComponent} from './page-components/manage-requests/manage-requests.component';
 import {authGuard} from "./guards/auth.guard";
 import {adminGuard} from "./guards/admin.guard";
 

@@ -1,0 +1,15 @@
+<div class="sidebar">
+    <div class="title">
+        Net0's Queue
+    </div>
+    <div class="sidebar-content">
+        <sidebar-section title="Discover">
+            <sidebar-link label="Home" href="/" icon="home"></sidebar-link>
+            <sidebar-link label="My Requests" href="/myrequests" icon="checklist" *ngIf=isLoggedIn></sidebar-link>
+        </sidebar-section>
+        <sidebar-section title="Management" *ngIf=isAdmin>
+            <sidebar-link label="Manage Requests" href="/managerequests" icon="edit_note"></sidebar-link>
+        </sidebar-section>
+    </div>
+    <sidebar-footer></sidebar-footer>
+</div>

@@ -1,0 +1,35 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  padding: 38px 24px 18px 24px;
+  width: 262px;
+  gap: 24px;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.title {
+  font-size: 24px;
+  align-self: center;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 24px;
+}
+
+@media (prefers-color-scheme: light) {
+  .sidebar {
+    border-right: 1px #c6c6c6 solid;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    border-right: 1px #3a3a3a solid;
+  }
+}

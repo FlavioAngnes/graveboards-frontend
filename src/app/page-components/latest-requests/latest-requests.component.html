@@ -1,0 +1,10 @@
+<div class="header">
+    Latest Requests
+</div>
+<div *ngIf="visibleBeatmaps as beatmaps" class="grid-container" scrollNearEnd (nearEnd)="loadBeatmaps()">
+    <base-beatmap-panel [beatmap]="beatmap" *ngFor="let beatmap of beatmaps"></base-beatmap-panel>
+
+    <ng-container *ngIf="isLoading">
+        <beatmap-panel-placeholder></beatmap-panel-placeholder>
+    </ng-container>
+</div>

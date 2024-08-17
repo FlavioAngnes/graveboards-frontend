@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {RequestFilter} from "../interfaces";
+import {RequestFilter} from "../models/interfaces";
 import {Observable} from "rxjs";
 import {BeatmapsetDisplayData, BeatmapsetListing, BeatmapsetSnapshot} from "../models/Beatmapset";
 import {EndpointEnum} from "../enums/endpoint.enum";

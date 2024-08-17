@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {RequestFilter} from "../interfaces";
+import {RequestFilter} from "../models/interfaces";
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {EndpointEnum} from "../enums/endpoint.enum";
