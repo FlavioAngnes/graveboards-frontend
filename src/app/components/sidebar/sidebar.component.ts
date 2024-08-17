@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {SidebarLinkComponent} from "./sidebar-link/sidebar-link.component";
 import {SidebarSectionComponent} from "./sidebar-section/sidebar-section.component";
-import {AuthService} from "../../../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 import {Subscription} from "rxjs";
 import {SidebarFooterComponent} from "./sidebar-footer/sidebar-footer.component";
 

@@ -1,40 +1,32 @@
-import {Component, OnInit} from '@angular/core';
-import {AsyncPipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {BaseBeatmapPanelComponent} from "../../beatmaps/components/beatmap-panels/base-beatmap-panel/base-beatmap-panel.component";
-import {catchError, combineLatestWith, Observable, of} from "rxjs";
-import {RefreshService} from "../../services/refresh.service";
-import {
-    RequestBeatmapPanelHorizontalComponent
-} from "../../beatmaps/components/beatmap-panels/request-beatmap-panel-horizontal/request-beatmap-panel-horizontal.component";
-import {QueueRequest, BeatmapQueueRequest} from "../../models/QueueRequest";
-import {BeatmapsetListing} from "../../models/Beatmapset";
-import {map} from "rxjs/operators";
-import {BeatmapService} from "../../services/beatmap.service";
-import {RequestService} from "../../services/request.service";
-import {
-    BeatmapPanelPlaceholderComponent
-} from "../../beatmaps/components/beatmap-panel-placeholder/beatmap-panel-placeholder.component";
+import {Component, OnInit} from "@angular/core";
 import {
     InfiniteScrollBeatmapPanelListDirective
 } from "../../directives/infinite-scroll-beatmap-panel-list/infinite-scroll-beatmap-panel-list.directive";
-import {ScrollNearEndDirective} from "../../directives/scroll-near-end.directive";
+import {BeatmapQueueRequest, QueueRequest} from "../../models/QueueRequest";
+import {catchError, combineLatestWith, Observable, of} from "rxjs";
+import {BeatmapService} from "../../services/beatmap.service";
+import {RequestService} from "../../services/request.service";
+import {RefreshService} from "../../services/refresh.service";
+import {map} from "rxjs/operators";
+import {BeatmapsetListing} from "../../models/Beatmapset";
 import {
     RequestBeatmapPanelHorizontalPlaceholderComponent
-} from "../../beatmaps/components/request-beatmap-panel-horizontal-placeholder/request-beatmap-panel-horizontal-placeholder.component";
+} from "../../components/loading-placeholders/request-beatmap-panel-horizontal-placeholder/request-beatmap-panel-horizontal-placeholder.component";
+import {
+    RequestBeatmapPanelHorizontalComponent
+} from "../../components/beatmap-panels/request-beatmap-panel-horizontal/request-beatmap-panel-horizontal.component";
+import {NgForOf, NgIf} from "@angular/common";
+import {ScrollNearEndDirective} from "../../directives/scroll-near-end.directive";
 
 @Component({
     selector: 'manage-requests',
     standalone: true,
     imports: [
-        AsyncPipe,
-        BaseBeatmapPanelComponent,
-        NgForOf,
-        NgIf,
-        NgOptimizedImage,
+        RequestBeatmapPanelHorizontalPlaceholderComponent,
         RequestBeatmapPanelHorizontalComponent,
-        BeatmapPanelPlaceholderComponent,
+        NgIf,
         ScrollNearEndDirective,
-        RequestBeatmapPanelHorizontalPlaceholderComponent
+        NgForOf
     ],
     templateUrl: './manage-requests.component.html',
     styleUrl: './manage-requests.component.scss'
