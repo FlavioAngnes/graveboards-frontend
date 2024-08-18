@@ -1,7 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {
-    InfiniteScrollBeatmapPanelListDirective
-} from "../../directives/infinite-scroll-beatmap-panel-list/infinite-scroll-beatmap-panel-list.directive";
 import {BeatmapQueueRequest, QueueRequest} from "../../models/QueueRequest";
 import {catchError, combineLatestWith, Observable, of} from "rxjs";
 import {BeatmapService} from "../../services/beatmap.service";
@@ -17,6 +14,9 @@ import {
 } from "../../components/beatmap-panels/request-beatmap-panel-horizontal/request-beatmap-panel-horizontal.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {ScrollNearEndDirective} from "../../directives/scroll-near-end.directive";
+import {
+    InfiniteScrollBeatmapPanelListComponent
+} from "../../components/infinite-scroll-beatmap-panel-list/infinite-scroll-beatmap-panel-list.component";
 
 @Component({
     selector: 'manage-requests',
@@ -31,7 +31,7 @@ import {ScrollNearEndDirective} from "../../directives/scroll-near-end.directive
     templateUrl: './manage-requests.component.html',
     styleUrl: './manage-requests.component.scss'
 })
-export class ManageRequestsComponent extends InfiniteScrollBeatmapPanelListDirective implements OnInit {
+export class ManageRequestsComponent extends InfiniteScrollBeatmapPanelListComponent implements OnInit {
     override panels_per_scroll: number = 16; // Number of panels to load per scroll
     override panel_height: number = 106; // panel height + gap in pixels
 

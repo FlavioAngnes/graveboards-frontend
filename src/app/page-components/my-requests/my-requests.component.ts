@@ -1,7 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {
-    InfiniteScrollBeatmapPanelListDirective
-} from "../../directives/infinite-scroll-beatmap-panel-list/infinite-scroll-beatmap-panel-list.directive";
 import {BeatmapQueueRequest, QueueRequest} from "../../models/QueueRequest";
 import {catchError, combineLatestWith, Observable, of} from "rxjs";
 import {BeatmapService} from "../../services/beatmap.service";
@@ -18,6 +15,9 @@ import {
 } from "../../components/beatmap-panels/request-beatmap-panel/request-beatmap-panel.component";
 import {ScrollNearEndDirective} from "../../directives/scroll-near-end.directive";
 import {NgForOf, NgIf} from "@angular/common";
+import {
+    InfiniteScrollBeatmapPanelListComponent
+} from "../../components/infinite-scroll-beatmap-panel-list/infinite-scroll-beatmap-panel-list.component";
 
 @Component({
     selector: 'my-requests',
@@ -32,7 +32,7 @@ import {NgForOf, NgIf} from "@angular/common";
     templateUrl: './my-requests.component.html',
     styleUrl: './my-requests.component.scss',
 })
-export class MyRequestsComponent extends InfiniteScrollBeatmapPanelListDirective implements OnInit {
+export class MyRequestsComponent extends InfiniteScrollBeatmapPanelListComponent implements OnInit {
     visibleRequests: BeatmapQueueRequest[] = [];
 
     requests$: Observable<QueueRequest[]> | null = null;

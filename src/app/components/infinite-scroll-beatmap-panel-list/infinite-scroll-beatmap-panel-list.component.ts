@@ -1,15 +1,18 @@
-import {AfterViewInit, Directive, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {BeatmapsetListing} from "../../models/Beatmapset";
 import {catchError, Observable, of} from "rxjs";
 import {BeatmapService} from "../../services/beatmap.service";
 import {RefreshService} from "../../services/refresh.service";
 import {map} from "rxjs/operators";
 
-@Directive({
+@Component({
     selector: 'infinite-scroll-beatmap-panel-list',
-    standalone: true
+    standalone: true,
+    imports: [],
+    templateUrl: './infinite-scroll-beatmap-panel-list.component.html',
+    styleUrl: './infinite-scroll-beatmap-panel-list.component.scss'
 })
-export abstract class InfiniteScrollBeatmapPanelListDirective implements OnInit, AfterViewInit {
+export class InfiniteScrollBeatmapPanelListComponent implements OnInit, AfterViewInit {
     protected panels_per_scroll: number = 16; // Number of panels to load per scroll
     protected panel_height: number = 276; // panel height + gap in pixels
 
