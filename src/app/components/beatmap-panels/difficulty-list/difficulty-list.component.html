@@ -1,10 +1,12 @@
 <div class="difficulty-list">
     <img ngSrc="/assets/icons/diff.svg" alt="Ruleset" height="16" width="16">
     <div class="difficulties">
-        <div class="difficulty" *ngFor="let difficulty of difficulties | slice:0:difficulties_to_show"
+        <div class="difficulty" *ngFor="let difficulty of difficulties | slice:0:difficultiesToShow"
              [ngStyle]="{'background-color': color.forStarRating(difficulty)}"></div>
-        <div class="more-difficulties" *ngIf="difficulties.length > difficulties_to_show">
-            +{{ difficulties.length - difficulties_to_show }}
+        <div class="more-difficulties">
+            <ng-container *ngIf="difficulties.length > difficultiesToShow">
+                +{{ difficulties.length - difficultiesToShow }}
+            </ng-container>
         </div>
     </div>
 </div>
