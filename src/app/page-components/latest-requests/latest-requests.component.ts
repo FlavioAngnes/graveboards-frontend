@@ -8,8 +8,9 @@ import {
 import {ScrollNearEndDirective} from "../../directives/scroll-near-end.directive";
 import {NgForOf, NgIf} from "@angular/common";
 import {
-    InfiniteScrollBeatmapPanelListComponent
-} from "../../components/infinite-scroll-beatmap-panel-list/infinite-scroll-beatmap-panel-list.component";
+  InfiniteBeatmapsetListingComponent
+} from "../../components/infinite-beatmapset-listing/infinite-beatmapset-listing.component";
+
 
 @Component({
     selector: 'app-latest-requests',
@@ -24,5 +25,5 @@ import {
     templateUrl: './latest-requests.component.html',
     styleUrl: './latest-requests.component.scss',
 })
-export class LatestRequestsComponent extends InfiniteScrollBeatmapPanelListComponent implements OnInit {
+export class LatestRequestsComponent extends InfiniteBeatmapsetListingComponent implements OnInit {
 }

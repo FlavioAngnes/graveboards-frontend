@@ -5,17 +5,20 @@ import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {EndpointEnum} from "../enums/endpoint.enum";
 import {AuthService} from "./auth.service";
 import {environment} from "../../environments/environment";
+import {QueueRequest} from "../models/QueueRequest";
 
 @Injectable({
     providedIn: 'root'
 })
 export class RequestService {
+    requests$: Observable<QueueRequest[]> | null = null;
+
     private baseUrl: string = environment.baseUrl;
 
     constructor(private http: HttpClient, private auth: AuthService) {
     }
 
-    getRequests(requestFilter?: RequestFilter | null): Observable<any> {
+    getRequests(requestFilter?: RequestFilter | null): void {
         const headers = new HttpHeaders({
             'Authorization': `Bearer ${this.auth.getJWT()}`,
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -29,7 +32,7 @@ export class RequestService {
             url += `?request_filter=${encodedRequestFilter}`;
         }
 
-        return this.http.get<any>(url, {headers});
+        this.requests$ = this.http.get<any>(url, {headers});
     }
 
     postRequest(beatmapsetId: number, comment: string, mvChecked: boolean, userId: number, queueId: number): Observable<HttpResponse<any>> {

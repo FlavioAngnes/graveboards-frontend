@@ -4,7 +4,7 @@
 <div *ngIf="visibleRequests as requests" class="grid-container" scrollNearEnd (nearEnd)="loadBeatmaps()">
     <request-beatmap-panel-horizontal [beatmap]="request" *ngFor="let request of requests"></request-beatmap-panel-horizontal>
 
-    <ng-container *ngIf="isLoading">
+    <ng-container *ngIf="isLoading.value">
         <request-beatmap-panel-horizontal-placeholder></request-beatmap-panel-horizontal-placeholder>
     </ng-container>
 </div>

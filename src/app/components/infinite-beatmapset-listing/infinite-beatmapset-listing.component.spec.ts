@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InfiniteScrollBeatmapPanelListComponent } from './infinite-scroll-beatmap-panel-list.component';
+import { InfiniteBeatmapsetListingComponent } from './infinite-beatmapset-listing.component';
 
 describe('InfiniteScrollBeatmapPanelListComponent', () => {
-  let component: InfiniteScrollBeatmapPanelListComponent;
-  let fixture: ComponentFixture<InfiniteScrollBeatmapPanelListComponent>;
+  let component: InfiniteBeatmapsetListingComponent;
+  let fixture: ComponentFixture<InfiniteBeatmapsetListingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InfiniteScrollBeatmapPanelListComponent]
+      imports: [InfiniteBeatmapsetListingComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(InfiniteScrollBeatmapPanelListComponent);
+    fixture = TestBed.createComponent(InfiniteBeatmapsetListingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

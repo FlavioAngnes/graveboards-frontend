@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {RequestFilter} from "../models/interfaces";
-import {Observable} from "rxjs";
+import {catchError, Observable, of} from "rxjs";
 import {BeatmapsetDisplayData, BeatmapsetListing, BeatmapsetSnapshot} from "../models/Beatmapset";
 import {EndpointEnum} from "../enums/endpoint.enum";
 import {environment} from "../../environments/environment";
@@ -10,11 +10,14 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class BeatmapService {
+  beatmaps$: Observable<BeatmapsetListing[]> | null = null;
+
   private baseUrl: string = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  getBeatmapsetListings(requestFilter?: RequestFilter | null): Observable<BeatmapsetListing[]> {
+  getBeatmapsetListings(requestFilter?: RequestFilter | null): void {
     let url = `${this.baseUrl}${EndpointEnum.LISTINGS}`;
 
     if (requestFilter) {
@@ -23,7 +26,13 @@ export class BeatmapService {
       url += `?request_filter=${encodedRequestFilter}`;
     }
 
-    return this.http.get<BeatmapsetListing[]>(url);
+    this.beatmaps$ = this.http.get<BeatmapsetListing[]>(url).pipe(
+      catchError(err => {
+          console.error(err);
+          return of([]);
+        }
+      )
+    );
   }
 
   getBeatmapsetSnapshot(): Observable<BeatmapsetSnapshot[]> {
