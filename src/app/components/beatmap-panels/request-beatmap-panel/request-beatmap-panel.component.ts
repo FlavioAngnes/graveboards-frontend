@@ -43,16 +43,14 @@ export class RequestBeatmapPanelComponent extends BaseBeatmapPanelComponent impl
         transform:
             (value: BeatmapQueueRequest): RequestBeatmapPanelData => toRequestBeatmapPanelData(value)
     }) override beatmap!: RequestBeatmapPanelData;
-    
+
     protected icon: string = '/assets/icons/modqueue/default-stamp.svg';
 
     constructor(router: Router, audio: AudioService) {
         super(router, audio);
     }
 
-    override ngOnInit() {
-        super.ngOnInit();
-
+    ngOnInit() {
         switch (this.beatmap.request_data.status) {
             case -1:
                 this.icon = '/assets/icons/modqueue/rejected-stamp.svg';

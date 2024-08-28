@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 import {NgClass, NgForOf, NgIf, NgOptimizedImage, NgStyle, SlicePipe} from "@angular/common";
 import {MatIconModule} from '@angular/material/icon';
 import {Router} from "@angular/router";
@@ -67,7 +67,7 @@ export function toBaseBeatmapPanelData({id, beatmapset_snapshot,display_data}: B
     styleUrl: './base-beatmap-panel.component.scss'
 })
 
-export class BaseBeatmapPanelComponent implements OnInit, OnDestroy {
+export class BaseBeatmapPanelComponent implements OnDestroy {
     @Input({
         transform:
             (value: BeatmapsetListing): BaseBeatmapPanelData => toBaseBeatmapPanelData(value)
@@ -86,9 +86,6 @@ export class BaseBeatmapPanelComponent implements OnInit, OnDestroy {
 
     constructor(protected router: Router, protected audio: AudioService) {
         this.time = new TimeUtils();
-    }
-
-    ngOnInit(): void {
     }
 
     ngOnDestroy() {
