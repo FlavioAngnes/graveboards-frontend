@@ -124,6 +124,10 @@ button {
 }
 
 @media (prefers-color-scheme: light) {
+  .dropdown-menu {
+    background-color: #fff;
+  }
+
   .dropdown-menu-section-title {
     color: #777;
   }
