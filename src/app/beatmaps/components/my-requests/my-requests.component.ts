@@ -47,7 +47,7 @@ export class MyRequestsComponent implements OnInit {
         this.isLoading = true;
         const requestFilter = this.getRequestFilter();
 
-        this.beatmaps$ = this.beatmap.getBeatmapsetListings(requestFilter).pipe(
+        this.beatmaps$ = this.beatmap.getBeatmapsetListings(requestFilter, 2).pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error

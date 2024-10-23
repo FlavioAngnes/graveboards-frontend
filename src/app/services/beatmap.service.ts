@@ -14,13 +14,22 @@ export class BeatmapService {
 
   constructor(private http: HttpClient) {}
 
-  getBeatmapsetListings(requestFilter?: RequestFilter | null): Observable<BeatmapsetListing[]> {
+  getBeatmapsetListings(requestFilter?: RequestFilter | null, queue_ID?: number | null): Observable<BeatmapsetListing[]> {
     let url = `${this.baseUrl}${EndpointEnum.LISTINGS}`;
+    const params: string[] = [];
 
     if (requestFilter) {
-      const jsonRequestFilter = JSON.stringify(requestFilter);
-      const encodedRequestFilter = encodeURIComponent(jsonRequestFilter);
-      url += `?request_filter=${encodedRequestFilter}`;
+        const jsonRequestFilter = JSON.stringify(requestFilter);
+        const encodedRequestFilter = encodeURIComponent(jsonRequestFilter);
+        params.push(`request_filter=${encodedRequestFilter}`);
+    }
+
+    if (queue_ID) {
+        params.push(`queue_id=${queue_ID}`);
+    }
+
+    if (params.length > 0) {
+        url += `?${params.join('&')}`;
     }
 
     return this.http.get<BeatmapsetListing[]>(url);

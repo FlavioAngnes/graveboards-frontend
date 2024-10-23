@@ -54,7 +54,7 @@ export class ManageRequestsComponent implements OnInit {
     refresh() {
         this.isLoading = true;
 
-        this.beatmaps$ = this.beatmap.getBeatmapsetListings({}).pipe(
+        this.beatmaps$ = this.beatmap.getBeatmapsetListings(null, 2).pipe(
             catchError(err => {
                 console.error(err);
                 return of([]); // Return an empty array on error
