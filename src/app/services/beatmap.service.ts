@@ -18,6 +18,9 @@ export class BeatmapService {
     let url = `${this.baseUrl}${EndpointEnum.LISTINGS}`;
     const params: string[] = [];
 
+    params.push('sorting=Request.created_at');
+    params.push('sort_orders=desc');
+
     if (requestFilter) {
         const jsonRequestFilter = JSON.stringify(requestFilter);
         const encodedRequestFilter = encodeURIComponent(jsonRequestFilter);
