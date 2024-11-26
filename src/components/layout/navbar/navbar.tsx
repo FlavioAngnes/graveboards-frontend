@@ -1,9 +1,12 @@
 'use client';
 
 import React, {useState} from 'react';
-import {GoFilter, GoPlus, GoSearch, GoX} from "react-icons/go";
-import Dialog from "@/app/ui/shared/dialog";
+import {GoX} from "react-icons/go";
+import Dialog from "@/components/shared/dialog";
 import {FiMenu} from "react-icons/fi";
+import RequestButton from "@/components/layout/navbar/requestButton";
+import ProfileButton from "@/components/layout/navbar/profileButton";
+import {MdFilterList, MdSearch} from "react-icons/md";
 
 const Navbar = () => {
     const [isFiltersPopupVisible, setIsFiltersPopupVisible] = useState(false);
@@ -14,7 +17,8 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="flex flex-1 items-center gap-4 sm:px-5 sm:py-9 p-5 sticky top-0 z-10 backdrop-blur bg-white dark:bg-transparent dark:backdrop-brightness-[0.1]">
+            <div
+                className="flex flex-1 items-center gap-4 sm:px-5 sm:py-9 p-5 sticky top-0 z-10 backdrop-blur bg-white dark:bg-transparent dark:backdrop-brightness-[0.1]">
                 <button className="md:hidden text-black dark:text-white">
                     <FiMenu className="size-6"/>
                 </button>
@@ -27,7 +31,7 @@ const Navbar = () => {
                         <button
                             className="flex items-center pointer-events-auto size-9 justify-center rounded-full shrink-0 hover:bg-tertiary-50 active:bg-tertiary-100 dark:hover:bg-tertiary-800 dark:active:bg-tertiary-700 transition-colors duration-300 ease-in-out"
                             onClick={toggleSearch}>
-                            <GoSearch className="size-5 text-tertiary-500"/>
+                            <MdSearch className="size-5 text-tertiary-500"/>
                         </button>
                         <input
                             type="text"
@@ -40,24 +44,13 @@ const Navbar = () => {
                             className={`flex items-center pointer-events-auto size-9 justify-center rounded-full shrink-0 hover:bg-tertiary-50 active:bg-tertiary-100 dark:hover:bg-tertiary-800 dark:active:bg-tertiary-700 transition-all duration-300 ease-in-out ${
                                 isSearchExpanded ? 'opacity-100' : 'opacity-0 sm:opacity-100'}`}
                             onClick={toggleFiltersPopup}>
-                            <GoFilter className="size-6 text-tertiary-500"/>
+                            <MdFilterList className="size-6 text-tertiary-500"/>
                         </button>
                     </div>
 
-                    <button
-                        className={`gap-2 items-center overflow-hidden justify-center text-white bg-primary-500 rounded-3xl h-12 flex shrink-0 transition-all duration-300 ${
-                            isSearchExpanded ? 'min-w-12' : 'lg:min-w-80 min-w-40'
-                        }`}>
-                        <GoPlus className="size-6"/>
-                        {!isSearchExpanded && (
-                            <>
-                                <p className="lg:block hidden">Request a Map</p>
-                                <p className="block lg:hidden">Request</p>
-                            </>
-                        )}
-                    </button>
+                    <RequestButton isSearchExpanded={isSearchExpanded}/>
 
-                    <button className="size-14 rounded-full bg-gray-500 shrink-0 hidden sm:block"></button>
+                    <ProfileButton/>
                 </div>
             </div>
             <div
@@ -69,11 +62,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <Dialog title="Filters">
-                <div>
-                    Filters
-                </div>
-            </Dialog>
+            <Dialog title="Filters"/>
         </>
 
     );
