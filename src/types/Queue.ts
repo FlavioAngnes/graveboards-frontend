@@ -1,4 +1,4 @@
-import {User} from "@/app/types/User";
+import {User} from "@/types/User";
 
 export interface Queue {
     user_id: number;
