@@ -5,7 +5,7 @@ import {GoX} from "react-icons/go";
 
 const Dialog = ({title, children}: Readonly<{
     title: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }>) => {
     const dialogRef = useRef<HTMLDialogElement | null>(null);
 

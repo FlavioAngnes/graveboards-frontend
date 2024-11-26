@@ -16,7 +16,8 @@ const BeatmapsetPanel = ({beatmapset}: BeatmapPanelProps) => {
             <div
                 className={clsx("relative flex flex-col items-end p-2.5 justify-end gap-3 grow shrink-0 basis-0 self-stretch transition-[filter] duration-300 ease-in-out bg-center bg-no-repeat bg-[size:215%] tracking-[0.25px]", {"delay-300": hover})}
                 style={{backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})`}}>
-                <div className={clsx("absolute w-full h-full backdrop-blur backdrop-brightness-75 -mb-2.5 -mr-2.5 duration-300", {"opacity-0": !hover})}></div>
+                <div
+                    className={clsx("absolute w-full h-full backdrop-blur backdrop-brightness-75 -mb-2.5 -mr-2.5 duration-300", {"opacity-0": !hover})}></div>
                 <div
                     className={clsx("bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out",
                         {"opacity-0": hover},
@@ -26,41 +27,86 @@ const BeatmapsetPanel = ({beatmapset}: BeatmapPanelProps) => {
             </div>
             <div
                 className="bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 flex gap-3 p-2.5 self-stretch min-w-24 transition-colors duration-300 ease-in-out overflow-hidden relative tracking-wide">
-                <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`} className="size-10 bg-gray-500 rounded-full bg-cover" target="_blank" style={{backgroundImage: `url(${beatmapset.display_data.mapper_avatar})`}}></a>
+                <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
+                   className="size-10 bg-gray-500 rounded-full bg-cover" target="_blank"
+                   style={{backgroundImage: `url(${beatmapset.display_data.mapper_avatar})`}}></a>
                 <div className="overflow-hidden flex-1 truncate">
-                    <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.beatmapset_snapshot.beatmapset_id}`} className="text-sm font-semibold" target="_blank">
+                    <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.beatmapset_snapshot.beatmapset_id}`}
+                       className="text-sm font-semibold leading-5" target="_blank">
                         {beatmapset.display_data.title}
                     </a>
                     <p className="text-xs text-tertiary-500 dark:text-tertiary-400 truncate">
                         by {beatmapset.display_data.artist}
                     </p>
                     <p className="text-xs text-tertiary-500 dark:text-tertiary-400">
-                        Mapped by <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`} className="font-semibold" target="_blank">{beatmapset.display_data.mapper}</a>
+                        Mapped by <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
+                                     className="font-semibold" target="_blank">{beatmapset.display_data.mapper}</a>
                     </p>
                     <div onMouseEnter={() => setHover(true)}
                          onMouseLeave={() => setHover(false)}
-                         className="flex flex-col mt-2 gap-0 transition-[gap] duration-[400ms] delay-[350ms] ease-out group hover:gap-2 hover:delay-150">
+                         className="flex flex-col mt-2 gap-0 transition-[gap] duration-300 delay-300 ease-out group hover:gap-2 hover:delay-0">
                         <div className="flex items-center gap-1 self-stretch">
-                            <div className="size-4 bg-gray-500 rounded-full"></div>
+                            <div className="size-4 bg-tertiary-500 dark:bg-tertiary-400 rounded-full"></div>
                             <div className="flex items-center gap-0.5">
                                 {
                                     beatmapset.beatmapset_snapshot.beatmap_snapshots
                                         .sort((a, b) => a.difficulty_rating - b.difficulty_rating)
-                                        .slice(0, 6)
+                                        .slice(0, 14)
                                         .map((beatmap, index) => (
-                                        <div key={index} className="w-1.5 h-4 bg-gray-500 rounded-full" style={{backgroundColor: ColorUtils.forStarRating(beatmap.difficulty_rating)}}></div>
-                                    ))
+                                            <div key={index} className="w-1.5 h-4 bg-gray-500 rounded-full"
+                                                 style={{backgroundColor: ColorUtils.forStarRating(beatmap.difficulty_rating)}}></div>
+                                        ))
                                 }
 
-                                {beatmapset.beatmapset_snapshot.beatmap_snapshots.length > 6 && (
+                                {beatmapset.beatmapset_snapshot.beatmap_snapshots.length > 14 && (
                                     <div className="text-xs ml-1 text-tertiary-500 dark:text-tertiary-400">
-                                        +{beatmapset.beatmapset_snapshot.beatmap_snapshots.length - 6}
+                                        +{beatmapset.beatmapset_snapshot.beatmap_snapshots.length - 14}
                                     </div>
                                 )}
                             </div>
                         </div>
-                        <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr] grid-hover:delay-300">
-                            <div className="overflow-hidden grid-rows-[1fr]">Difficulty</div>
+
+                        <div
+                            className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr] grid-hover:delay-300">
+                            <div className="overflow-hidden grid-rows-[1fr]">
+                                <div className="flex flex-col gap-1 text-xs overflow-y-scroll snap-y">
+                                    {
+                                        beatmapset.beatmapset_snapshot.beatmap_snapshots
+                                            .sort((a, b) => b.difficulty_rating - a.difficulty_rating)
+                                            .slice(0, 5)
+                                            .map((beatmap, index) => (
+
+                                                <div key={index}
+                                                     className="snap-start flex items-center gap-1 flex-1 shrink-0 overflow-x-hidden">
+                                                    <div
+                                                        className="size-4 bg-tertiary-500 dark:bg-tertiary-400 rounded-full shrink-0"></div>
+                                                    <div className="px-2 rounded-full font-semibold"
+                                                         style={{
+                                                             backgroundColor: ColorUtils.forStarRating(beatmap.difficulty_rating),
+                                                             color: beatmap.difficulty_rating >= 6.5 ? "#fff" : "#000"
+                                                         }}>
+                                                        ★ {beatmap.difficulty_rating.toFixed(2)}
+                                                    </div>
+                                                    <div
+                                                        className="truncate">
+                                                        {beatmap.version}
+                                                    </div>
+                                                </div>
+                                            ))
+                                    }
+
+                                    {beatmapset.beatmapset_snapshot.beatmap_snapshots.length > 5 && (
+                                        <div
+                                            className="snap-start flex items-center gap-1 flex-1 shrink-0 overflow-x-hidden">
+                                            <div
+                                                className="size-4 bg-tertiary-500 dark:bg-tertiary-400 rounded-full shrink-0"></div>
+                                            <div className="text-xs ml-1 text-tertiary-500 dark:text-tertiary-400">
+                                                +{beatmapset.beatmapset_snapshot.beatmap_snapshots.length - 5} more...
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,7 +121,7 @@ const formatTime = (time: number) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
-type ColorStop = [number, string]; // Tuple type for the gradient stops
+type ColorStop = [number, string];
 
 export class ColorUtils {
     static toColor4FromHex(hex: string): Color4 {

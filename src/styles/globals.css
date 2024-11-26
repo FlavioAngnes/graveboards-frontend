@@ -6,7 +6,7 @@
   font-family: 'Nunito';
     font-style: normal;
     font-weight: 100 900;
-    src: url('../fonts/Nunito.ttf') format('truetype');
+    src: url('./fonts/Nunito.ttf') format('truetype');
 }
 
 body {

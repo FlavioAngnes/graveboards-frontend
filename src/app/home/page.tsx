@@ -1,12 +1,12 @@
 import {Suspense} from "react";
-import BeatmapsetPanelList from "@/app/ui/shared/beatmapsetPanelList";
-import BeatmapsetPanelSkeleton from "@/app/ui/shared/beatmapsetPanelSkeleton";
+import BeatmapsetList from "@/components/beatmapsets/beatmapsetList";
+import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanelSkeleton";
 
 const Home = async () => {
     return (
         <div className="grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))] gap-4 w-full">
             <Suspense fallback={<BeatmapsetPanelSkeleton />}>
-                <BeatmapsetPanelList />
+                <BeatmapsetList />
             </Suspense>
         </div>
     );
