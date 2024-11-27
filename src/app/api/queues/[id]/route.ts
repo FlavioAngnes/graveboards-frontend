@@ -13,7 +13,7 @@ interface LoginResponse {
     state: string;
 }
 
-export async function GET(request: Request, { params }: { params: Promise<{id: string}>}) {
+export async function GET(request: Request, { params }: { params: Promise<{id: number}>}) {
     try {
         const id = (await params).id;
         const headers = request.headers;
