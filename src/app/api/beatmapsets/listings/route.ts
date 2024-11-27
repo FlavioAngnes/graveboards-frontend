@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
             );
         }
 
-        const response = await fetch(`${API_URL}/beatmapsets/listings?limit=${limit}&offset=${offset}`, {
+        const response = await fetch(`${API_URL}/beatmapsets/listings?${searchParams}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
