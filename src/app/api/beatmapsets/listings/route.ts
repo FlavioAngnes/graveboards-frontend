@@ -19,9 +19,9 @@ export async function GET(request: NextRequest) {
 
         const limit = searchParams.get('limit') || 10;
 
-        if (Number(limit) > 50) {
+        if (Number(limit) < 1 && Number(limit) > 50) {
             return NextResponse.json(
-                {error: 'Limit must be less than or equal to 50.'},
+                {error: 'Limit must be between 1 and 50.'},
                 {status: 400}
             );
         }
