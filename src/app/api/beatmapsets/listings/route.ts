@@ -18,7 +18,6 @@ export async function GET(request: NextRequest) {
         const searchParams = request.nextUrl.searchParams;
 
         const limit = searchParams.get('limit') || 10;
-        const offset = searchParams.get('offset') || 0;
 
         if (Number(limit) > 50) {
             return NextResponse.json(
