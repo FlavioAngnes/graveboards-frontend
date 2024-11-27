@@ -15,10 +15,22 @@ export interface BeatmapsetSnapshot {
     // osu! API datastructure
     artist: string;
     artist_unicode: string;
-    covers: Covers;
+    covers: {
+        cover: string;
+        "cover@2x": string;
+        card: string;
+        "card@2x": string;
+        list: string;
+        "list@2x": string;
+        slimcover: string;
+        "slimcover@2x": string;
+    };
     creator: string;
     favourite_count: number;
-    hype: Hype;
+    hype: {
+        current: number;
+        required: number;
+    };
     nsfw: boolean;
     offset: number;
     play_count: number;
@@ -36,7 +48,7 @@ export interface BeatmapsetSnapshot {
     beatmap_snapshots: BeatmapSnapshot[];
 }
 
-interface BeatmapSnapshot {
+export interface BeatmapSnapshot {
     id: number;
     beatmap_id: number;
     snapshot_number: number;
@@ -79,20 +91,4 @@ export interface BeatmapsetDisplayData {
     length: number;
     difficulties: number[];
     verified: boolean;
-}
-
-interface Covers {
-    cover: string;
-    "cover@2x": string;
-    card: string;
-    "card@2x": string;
-    list: string;
-    "list@2x": string;
-    slimcover: string;
-    "slimcover@2x": string;
-}
-
-interface Hype {
-    current: number;
-    required: number;
 }
