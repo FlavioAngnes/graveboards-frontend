@@ -1,16 +1,16 @@
 'use client'
 
-import {useState} from "react";
+import {FC, useState} from "react";
 import clsx from "clsx";
 import {BeatmapsetListing} from "@/types/Beatmapset";
 import {MdChevronRight} from "react-icons/md";
 
-interface BeatmapPanelProps {
+interface BeatmapsetProps {
     beatmapset: BeatmapsetListing,
     view?: "list" | "grid"
 }
 
-const BeatmapsetPanel = ({beatmapset, view}: BeatmapPanelProps) => {
+const Beatmapset: FC<BeatmapsetProps> = ({beatmapset, view}) => {
     const [hover, setHover] = useState(false);
 
     return (view && view === "grid" ? (
@@ -258,4 +258,4 @@ class Color4 {
     }
 }
 
-export default BeatmapsetPanel;
+export default Beatmapset;
