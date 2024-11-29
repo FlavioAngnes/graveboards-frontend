@@ -12,7 +12,7 @@ const Sidebar = () => {
 
     return (
         <div
-            className="md:flex-col md:h-screen pt-9 px-6 pb-4 gap-6 md:sticky fixed top-0 hidden md:flex md:w-64 border-r border-tertiary-200 dark:border-tertiary-800">
+            className="md:flex-col md:h-screen pt-9 px-6 pb-4 gap-6 md:sticky fixed shrink-0 top-0 hidden md:flex md:w-64 border-r border-tertiary-200 dark:border-tertiary-800">
             <div className="text-2xl self-center">
                 Graveboards
             </div>
