@@ -1,4 +1,4 @@
-import {BeatmapSnapshot} from "@/types/Beatmapset";
+import {BeatmapSnapshot} from "@/types/beatmapsets/Beatmapset";
 
 export interface FilterOptions<T> {
     eq?: T;
@@ -16,47 +16,47 @@ export interface BeatmapsetListingFilters {
 }
 
 export interface BeatmapsetFilters {
-    id: FilterOptions<number>;
-    beatmapset_id: FilterOptions<number>;
-    snapshot_number: FilterOptions<number>;
-    snapshot_date: FilterOptions<string>;
-    checksum: FilterOptions<string>;
-    verified: FilterOptions<boolean>;
+    id?: FilterOptions<number>;
+    beatmapset_id?: FilterOptions<number>;
+    snapshot_number?: FilterOptions<number>;
+    snapshot_date?: FilterOptions<string>;
+    checksum?: FilterOptions<string>;
+    verified?: FilterOptions<boolean>;
 
     // osu! API datastructure
-    artist: FilterOptions<string>;
-    artist_unicode: FilterOptions<string>;
-    covers: {
-        cover: FilterOptions<string>;
-        "cover@2x": FilterOptions<string>;
-        card: FilterOptions<string>;
-        "card@2x": FilterOptions<string>;
-        list: FilterOptions<string>;
-        "list@2x": FilterOptions<string>;
-        slimcover: FilterOptions<string>;
-        "slimcover@2x": FilterOptions<string>;
+    artist?: FilterOptions<string>;
+    artist_unicode?: FilterOptions<string>;
+    covers?: {
+        cover?: FilterOptions<string>;
+        "cover@2x"?: FilterOptions<string>;
+        card?: FilterOptions<string>;
+        "card@2x"?: FilterOptions<string>;
+        list?: FilterOptions<string>;
+        "list@2x"?: FilterOptions<string>;
+        slimcover?: FilterOptions<string>;
+        "slimcover@2x"?: FilterOptions<string>;
     };
-    creator: FilterOptions<string>;
-    favourite_count: FilterOptions<number>;
-    hype: {
-        current: FilterOptions<number>;
-        required: FilterOptions<number>;
+    creator?: FilterOptions<string>;
+    favourite_count?: FilterOptions<number>;
+    hype?: {
+        current?: FilterOptions<number>;
+        required?: FilterOptions<number>;
     };
-    nsfw: FilterOptions<boolean>;
-    offset: FilterOptions<number>;
-    play_count: FilterOptions<number>;
-    preview_url: FilterOptions<string>;
-    source: FilterOptions<string>;
-    spotlight: FilterOptions<boolean>;
-    status: FilterOptions<string>;
-    title: FilterOptions<string>;
-    title_unicode: FilterOptions<string>;
-    track_id: FilterOptions<number>;
-    user_id: FilterOptions<number>;
-    video: FilterOptions<boolean>;
+    nsfw?: FilterOptions<boolean>;
+    offset?: FilterOptions<number>;
+    play_count?: FilterOptions<number>;
+    preview_url?: FilterOptions<string>;
+    source?: FilterOptions<string>;
+    spotlight?: FilterOptions<boolean>;
+    status?: FilterOptions<string>;
+    title?: FilterOptions<string>;
+    title_unicode?: FilterOptions<string>;
+    track_id?: FilterOptions<number>;
+    user_id?: FilterOptions<number>;
+    video?: FilterOptions<boolean>;
 
     // Relationships
-    beatmap_snapshots: BeatmapSnapshot[];
+    beatmap_snapshots?: FilterOptions<BeatmapSnapshot[]>;
 }
 
 export interface BeatmapFilters {
