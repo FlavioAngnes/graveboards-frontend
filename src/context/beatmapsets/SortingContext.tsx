@@ -80,7 +80,7 @@ export const SortingProvider: FC<{
     }
 
     const undoLayers = () => {
-        setLayers(layersToUse);
+        setLayers(layersToUse.filter(layer => !layer.isDefault));
     }
 
     const reorderLayers = (items: SortingLayerValue[]) => {
