@@ -48,7 +48,7 @@ const Beatmapset: FC<BeatmapsetProps> = ({beatmapset, view}) => {
                              onMouseLeave={() => setHover(false)}
                              className="flex flex-col mt-2 gap-0 transition-[gap] duration-300 delay-300 ease-out group hover:gap-2 hover:delay-0">
                             <div className="flex items-center gap-1 self-stretch">
-                                <div className="size-4 bg-tertiary-500 dark:bg-tertiary-400 rounded-full"></div>
+                                <MdRadioButtonChecked className="size-4 shrink-0 text-tertiary-500 dark:text-tertiary-400"/>
                                 <div className="flex items-center gap-0.5">
                                     {
                                         beatmapset.beatmapset_snapshot.beatmap_snapshots
@@ -80,8 +80,7 @@ const Beatmapset: FC<BeatmapsetProps> = ({beatmapset, view}) => {
 
                                                     <div key={index}
                                                          className="snap-start flex items-center gap-1 flex-1 shrink-0 overflow-x-hidden">
-                                                        <div
-                                                            className="size-4 bg-tertiary-500 dark:bg-tertiary-400 rounded-full shrink-0"></div>
+                                                        <MdRadioButtonChecked className="size-4 shrink-0 text-tertiary-500 dark:text-tertiary-400"/>
                                                         <div className="px-2 rounded-full font-semibold"
                                                              style={{
                                                                  backgroundColor: ColorUtils.forStarRating(beatmap.difficulty_rating),
@@ -153,7 +152,7 @@ const Beatmapset: FC<BeatmapsetProps> = ({beatmapset, view}) => {
                     <div
                         className="flex flex-col gap-0 transition-[gap] duration-300 delay-300 ease-out group hover:gap-2 hover:delay-0">
                         <div className="flex items-center gap-1 self-stretch">
-                            <div className="shrink-0 size-4 bg-tertiary-500 dark:bg-tertiary-400 rounded-full"></div>
+                            <MdRadioButtonChecked className="size-4 shrink-0 text-tertiary-500 dark:text-tertiary-400"/>
                             <div className="flex items-center gap-0.5">
                                 {
                                     beatmapset.beatmapset_snapshot.beatmap_snapshots
