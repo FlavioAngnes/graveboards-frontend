@@ -9,6 +9,7 @@ import SelectValue
     from "@/components/beatmapsets/controls/sortingLayers/selectValue";
 import SelectOrder
     from "@/components/beatmapsets/controls/sortingLayers/selectOrder";
+import {Reorder, useDragControls} from 'motion/react';
 
 interface SortingLayerProps {
     values: SortingLayerOptions[],
@@ -64,9 +65,12 @@ const SortingLayer: FC<SortingLayerProps> = ({values, value, onChange, onDestroy
         }
     }
 
+    const controls = useDragControls();
+
     return (
-        <div className="flex items-center gap-2">
+        <Reorder.Item as="div" value={value.value} dragListener={false} dragControls={controls} className="flex items-center gap-2">
             <MdDragIndicator
+                onPointerDown={(e) => controls.start(e)}
                 className="cursor-grab active:cursor-grabbing size-5 dark:text-tertiary-400 text-tertiary-500"/>
             <SelectValue values={values} value={value.value} onChange={handleValueChange}/>
             <SelectOrder values={values} value={value.order} onChange={handleOrderChange}/>
@@ -76,7 +80,7 @@ const SortingLayer: FC<SortingLayerProps> = ({values, value, onChange, onDestroy
                 className="rounded-lg hover:bg-tertiary-200 dark:hover:bg-tertiary-800 dark:text-tertiary-400 text-tertiary-500 p-2">
                 <MdClose className="size-4"/>
             </button>
-        </div>
+        </Reorder.Item>
     );
 };
 
