@@ -1,8 +1,8 @@
 'use client';
 
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {User} from "@/types/User";
-import {TokenResponse} from "@/app/api/auth/token/route";
+import {PostTokenResponse} from "@/app/api/auth/token/route";
 import {useRouter} from "next/navigation";
 
 interface AuthContextType {
@@ -42,9 +42,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
             throw new Error('Failed to fetch token');
         }
 
-        const data: TokenResponse = await response.json();
+        const data: PostTokenResponse = await response.json();
         const {token, user_id} = data;
-        sessionStorage.setItem('token', token);
+        localStorage.setItem('token', token);
 
         const user = await getUser(user_id);
 
@@ -52,26 +52,70 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
             throw new Error('Failed to fetch user');
         }
 
-        setUser(user || null);
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
     };
 
     const logout = () => {
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('token');
+
         setUser(null);
+        localStorage.removeItem('user');
+
         router.push('/');
     };
 
     const getUser = async (user_id: string) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return;
+        }
+
         const response = await fetch(`/api/users/${user_id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                'Authorization': `Bearer ${token}`,
             },
         });
 
         return await response.json() as User;
     }
+
+    useEffect(() => {
+        const verifyToken = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                return;
+            }
+
+            const response = await fetch(`/api/auth/token?token=${token}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                return;
+            }
+
+            const data = await response.json();
+
+            const {user_id} = data;
+            localStorage.setItem('token', token);
+
+            const user = await getUser(user_id);
+
+            if (!user) {
+                throw new Error('Failed to fetch user');
+            }
+
+            setUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+
+        verifyToken().then();
+    }, []);
 
     return (
         <AuthContext.Provider value={{user, isAuthenticated, isAdmin, login, logout}}>

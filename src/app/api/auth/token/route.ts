@@ -8,9 +8,8 @@ if (!API_URL) {
     )
 }
 
-interface TokenRequest {
-    code: string;
-    state: string;
+export interface TokenRequest {
+    token: string;
 }
 
 export interface TokenResponse {
@@ -18,9 +17,55 @@ export interface TokenResponse {
     user_id: string;
 }
 
+interface PostTokenRequest {
+    code: string;
+    state: string;
+}
+
+export interface PostTokenResponse {
+    token: string;
+    user_id: string;
+}
+
+export async function GET(request: Request) {
+    try {
+        const token = new URL(request.url).searchParams.get('token');
+
+        if (!token) {
+            return NextResponse.json(
+                {error: 'Bad Request.'},
+                {status: 400}
+            );
+        }
+
+        const response = await fetch(`${API_URL}/token?token=${token}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+
+        if (!response.ok) {
+            return NextResponse.json(
+                {error: 'Unable to exchange token'},
+                {status: 500}
+            );
+        }
+
+        const data: TokenResponse = await response.json();
+        return NextResponse.json(data);
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {error: 'Unable to exchange token'},
+            {status: 500}
+        );
+    }
+}
+
 export async function POST(request: Request) {
     try {
-        const body: TokenRequest = await request.json();
+        const body: PostTokenRequest = await request.json();
 
         const {code, state} = body;
 
@@ -46,7 +91,7 @@ export async function POST(request: Request) {
             );
         }
 
-        const data: TokenResponse = await response.json();
+        const data: PostTokenResponse = await response.json();
         return NextResponse.json(data);
     } catch (error) {
         console.error(error);
