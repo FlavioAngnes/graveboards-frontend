@@ -2,8 +2,8 @@
 
 import {FC, useState} from "react";
 import clsx from "clsx";
-import {BeatmapsetListing} from "@/types/Beatmapset";
-import {MdChevronRight} from "react-icons/md";
+import {BeatmapsetListing} from "@/types/beatmapsets/Beatmapset";
+import {MdChevronRight, MdRadioButtonChecked} from "react-icons/md";
 
 interface BeatmapsetProps {
     beatmapset: BeatmapsetListing,
