@@ -42,7 +42,7 @@ export const SortingContext = createContext<SortingContextType>({
 
 export const SortingProvider: FC<{
     children: ReactNode,
-    defaultSortingLayers?: SortingLayerOptions[]
+    defaultSortingLayers?: Required<SortingLayerOptions>[]
 }> = ({children, defaultSortingLayers}) => {
     const [layers, setLayers] = useState<SortingLayerOptions[]>([]);
     const [layersToUse, setLayersToUse] = useState<SortingLayerOptions[]>(defaultSortingLayers || []);
