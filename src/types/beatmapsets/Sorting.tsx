@@ -16,7 +16,7 @@ import {
 export interface SortingLayerOptions {
     value: SortingLayerValue;
     order: SortingLayerOrders;
-    isDefault?: boolean;
+    isDefault?: true;
 }
 
 export type SortingLayerValue =
