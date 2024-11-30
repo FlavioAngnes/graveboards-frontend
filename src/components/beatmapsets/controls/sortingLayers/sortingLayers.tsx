@@ -49,10 +49,8 @@ const SortingLayers = () => {
                                        layout={"position"}
                                        className="flex flex-col gap-2 overflow-visible">
                             {layers.map((layer) => (
-                                <Reorder.Item as="div" key={layer.value} value={layer.value}>
                                     <SortingLayer values={layers} value={layer} onChange={updateLayer}
-                                                  onDestroy={removeLayer}/>
-                                </Reorder.Item>
+                                                  onDestroy={removeLayer} key={layer.value}/>
                             ))}
                         </Reorder.Group>
                     )}
