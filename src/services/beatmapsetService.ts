@@ -1,10 +1,10 @@
 import {SortingLayerOptions} from "@/types/beatmapsets/Sorting";
-import {BeatmapsetListingFilters} from "@/types/Filters";
+import {BeatmapsetsFilters} from "@/types/beatmapsets/Filters";
 import {BeatmapsetListing} from "@/types/beatmapsets/Beatmapset";
 
 export interface BeatmapsetListingOptions {
     search?: string;
-    filters?: BeatmapsetListingFilters;
+    filters?: BeatmapsetsFilters;
     sortingLayers?: SortingLayerOptions[];
     limit?: number;
     offset?: number;

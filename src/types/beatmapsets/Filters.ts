@@ -6,9 +6,11 @@ export interface FilterOptions<T> {
     lt?: T;
     gte?: T;
     lte?: T;
+    neq?: T;
+    isDefault?: boolean;
 }
 
-export interface BeatmapsetListingFilters {
+export interface BeatmapsetsFilters {
     mapper_filter?: MapperFilters;
     beatmap_filter?: BeatmapFilters;
     beatmapset_filter?: BeatmapsetFilters;
@@ -115,4 +117,3 @@ export interface RequestFilters {
     user_id?: FilterOptions<number>;
     queue_id?: FilterOptions<number>;
 }
-
