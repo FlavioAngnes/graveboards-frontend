@@ -1,16 +1,21 @@
 import React from "react";
 import {
     MdCheckCircleOutline,
-    MdFavorite, MdFavoriteBorder, MdMusicNote,
+    MdFavoriteBorder,
+    MdMusicNote,
     MdOutlineCalendarToday,
     MdOutlineEditCalendar,
     MdOutlineEmojiFlags,
-    MdOutlineFunctions, MdOutlineMoreTime,
-    MdOutlineNumbers, MdOutlinePlayArrow,
+    MdOutlineFunctions,
+    MdOutlineMoreTime,
+    MdOutlineNumbers,
+    MdOutlinePlayArrow,
     MdOutlineStarBorder,
     MdOutlineTextFormat,
     MdOutlineTimer,
-    MdPersonOutline, MdPlayArrow, MdRadioButtonChecked
+    MdPersonOutline,
+    MdPlayArrow,
+    MdRadioButtonChecked
 } from "react-icons/md";
 
 export interface SortingLayerOptions {

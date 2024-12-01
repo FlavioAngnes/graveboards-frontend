@@ -1,6 +1,7 @@
 import React, {FC, useEffect, useRef, useState} from "react";
 import {MdArrowDownward, MdArrowUpward, MdOutlineKeyboardArrowDown} from "react-icons/md";
 import {SortingLayerOptions, SortingLayerOrders} from "@/types/beatmapsets/Sorting";
+import clsx from "clsx";
 
 interface Order {
     icon: React.ReactNode,
@@ -45,23 +46,31 @@ const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
     }
 
     return (
-        <div ref={dropdownRef} className="relative">
+        <div
+            ref={dropdownRef}
+            className={clsx(
+                `relative transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border-[1px] rounded-lg`,
+                open ? "border-primary-500" : "border-transparent"
+            )}>
             <button
-                className={
-                    `whitespace-nowrap p-2 rounded-lg backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 border-[1px] flex items-center gap-1 transition-colors duration-300 ease-in-out
-                    ${open ? 'border-primary-500 bg-tertiary-100 dark:bg-tertiary-800' : 'border-tertiary-300 dark:border-tertiary-700'}`
-                }
+                className={clsx(
+                    `w-full sm:w-auto whitespace-nowrap p-2 sm:rounded-lg sm:backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 sm:border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
+                    open ? 'border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg' : 'border-tertiary-300 dark:border-tertiary-700 rounded-lg'
+                )}
                 onClick={() => setOpen(!open)}>
-                {order === 'asc' ? <MdArrowUpward className="size-5"/> : <MdArrowDownward className="size-5"/>}
-                {order === 'asc' ? 'Ascending' : 'Descending'}
+                <div className="flex items-center gap-1 w-full">
+                    {order === 'asc' ? <MdArrowUpward className="size-4"/> : <MdArrowDownward className="size-4"/>}
+                    {order === 'asc' ? 'Ascending' : 'Descending'}
+                </div>
+
                 <MdOutlineKeyboardArrowDown className="size-5"/>
             </button>
             {open && (
                 <div
-                    className="absolute mt-2 flex flex-col z-10 bg-tertiary-50 dark:bg-tertiary-900 rounded-lg border-[1px] border-tertiary-500 dark:border-tertiary-700 min-w-full max-h-[50vh] overflow-y-scroll">
+                    className="sm:absolute overflow-hidden sm:overflow-visible sm:mt-2 flex flex-col z-10 bg-tertiary-100 dark:bg-tertiary-900 sm:border-[1px] border-tertiary-500 rounded-b-lg sm:rounded-lg min-w-full max-h-[19.25rem] snap-y">
                     <SelectSortingOrderItem
                         order={{
-                            icon: <MdArrowUpward className="size-5"/>,
+                            icon: <MdArrowUpward className="size-4"/>,
                             label: 'Ascending',
                             value: 'asc'
                         }}
@@ -69,7 +78,7 @@ const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
                     />
                     <SelectSortingOrderItem
                         order={{
-                            icon: <MdArrowDownward className="size-5"/>,
+                            icon: <MdArrowDownward className="size-4"/>,
                             label: 'Descending',
                             value: 'desc'
                         }}
@@ -90,7 +99,7 @@ interface SelectSortingOrderItemProps {
 const SelectSortingOrderItem: FC<SelectSortingOrderItemProps> = ({order, setOrder}) => {
     return (
         <button
-            className={`text-tertiary-500 dark:text-tertiary-400 whitespace-nowrap p-2.5 flex-1 flex items-center hover:bg-tertiary-100 active:bg-tertiary-200 active:text-black dark:hover:bg-tertiary-800 active:dark:bg-tertiary-700 active:dark:text-white transition-colors duration-300 ease-in-out`}
+            className="text-tertiary-500 dark:text-tertiary-400 whitespace-nowrap p-2 flex-1 flex gap-1.5 items-center hover:bg-tertiary-100 active:bg-tertiary-200 active:text-black dark:hover:bg-tertiary-800 active:dark:bg-tertiary-700 active:dark:text-white transition-colors duration-300 ease-in-out"
             key={order.value}
             onClick={() => setOrder(order.value)}
         >
