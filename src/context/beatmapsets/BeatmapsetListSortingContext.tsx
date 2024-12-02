@@ -67,8 +67,6 @@ export const BeatmapsetListSortingProvider: FC<{
     }
 
     const updateLayer = (layer: BeatmapsetListSortingLayerOptions, index: number) => {
-        console.log(layer, index);
-        console.log(layers)
         setLayers((prev) => prev.map((prevLayer, i) => i === index ? layer : prevLayer));
     }
 
