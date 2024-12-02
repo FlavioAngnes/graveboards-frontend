@@ -78,16 +78,14 @@ const Filters = () => {
                         <FiltersInput name="beatmapset_filter.title"/>
                         <FiltersInput name="beatmapset_filter.creator"/>
                     </div>
-                    <div className="flex flex-col gap-4 flex-1">
-                        <div className="flex flex-col gap-2">
-                            {canClear && (<button
-                                onClick={() => clearFilters()}
-                                className="flex items-center gap-1.5 whitespace-nowrap rounded-lg hover:bg-tertiary-200 dark:hover:bg-tertiary-800 text-primary-400 p-2">
-                                <MdClose className="size-4"/>
-                                Clear Filters
-                            </button>)}
-                        </div>
-                    </div>
+
+                    {canClear && (<button
+                        onClick={() => clearFilters()}
+                        className="flex items-center gap-1.5 whitespace-nowrap rounded-lg hover:bg-tertiary-200 dark:hover:bg-tertiary-800 text-primary-400 p-2">
+                        <MdClose className="size-4"/>
+                        Clear Filters
+                    </button>)}
+
                     {
                         canApply && (
                             <div className="flex gap-2 self-end sticky bottom-0">
