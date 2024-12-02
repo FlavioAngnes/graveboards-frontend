@@ -1,10 +1,10 @@
 import {SortingLayerOptions} from "@/types/beatmapsets/Sorting";
-import {BeatmapsetsFilters} from "@/types/beatmapsets/Filters";
+import {FilterOptions, FilterType} from "@/types/beatmapsets/Filters";
 import {BeatmapsetListing} from "@/types/beatmapsets/Beatmapset";
 
 export interface BeatmapsetListingOptions {
     search?: string;
-    filters?: BeatmapsetsFilters;
+    filters?: FilterOptions<never>[];
     sortingLayers?: SortingLayerOptions[];
     limit?: number;
     offset?: number;
@@ -14,9 +14,30 @@ export interface BeatmapsetListingOptions {
 export const getBeatmapsets = async (page: number, options: BeatmapsetListingOptions, init?: RequestInit): Promise<BeatmapsetListing[]> => {
     const searchParams = new URLSearchParams();
 
-    for (const [key, value] of Object.entries(options.filters || {})) {
-        searchParams.append(key, JSON.stringify(value));
+    const groupedFilters: Record<string, Record<string, FilterType<never>>> = {};
+
+    for (const filter of options.filters || []) {
+        const [type, filterName] = filter.value.split('.')
+
+        if (!type || !filterName) {
+            throw new Error(`Invalid filter value: ${filter.value}`);
+        }
+
+        // Initialize type group if it doesn't exist
+        if (!groupedFilters[type]) {
+            groupedFilters[type] = {};
+        }
+
+        // Add the filter name and options to the type group
+        groupedFilters[type][filterName] = {
+            ...groupedFilters[type][filterName],
+            ...filter.options,
+        };
     }
+
+    Object.entries(groupedFilters).forEach(([type, filtersByType]) => {
+        searchParams.append(type, JSON.stringify(filtersByType));
+    });
 
     for (const sorting of options.sortingLayers || []) {
         searchParams.append(`sorting`, sorting.value);
