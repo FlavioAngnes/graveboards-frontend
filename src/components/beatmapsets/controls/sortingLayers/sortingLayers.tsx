@@ -3,6 +3,7 @@ import {MdAdd, MdClose, MdImportExport, MdUndo} from "react-icons/md";
 import SortingLayer from "@/components/beatmapsets/controls/sortingLayers/sortingLayer";
 import {Reorder} from 'motion/react';
 import {useSorting} from "@/context/beatmapsets/SortingContext";
+import clsx from "clsx";
 
 const SortingLayers = () => {
     const [open, setOpen] = useState(false);
@@ -43,10 +44,12 @@ const SortingLayers = () => {
             <button
                 ref={buttonRef}
                 onClick={() => setOpen(!open)}
-                className={
-                    `p-1 size-9 rounded-lg hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out
-                        ${open ? 'bg-tertiary-100 dark:bg-tertiary-900' : ''}
-                        ${canClear ? `text-primary-500 border-primary-500` : `text-tertiary-500 border-transparent hover:dark:border-tertiary-900 active:dark:border-tertiary-800`}`}
+                className={clsx(
+                    `p-1 size-9 rounded-lg hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out`,
+                    { 'bg-tertiary-100 dark:bg-tertiary-900': open },
+                    canClear ? `text-primary-500 border-primary-500` : `text-tertiary-500 border-transparent hover:dark:border-tertiary-900 active:dark:border-tertiary-800`,
+                    { 'animate-wiggle': canApply && !open }
+                )}
             >
                 <MdImportExport className="size-5"/>
             </button>

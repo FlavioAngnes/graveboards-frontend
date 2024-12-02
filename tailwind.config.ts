@@ -8,6 +8,18 @@ export default {
   ],
   theme: {
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%, 50%': { transform: 'rotate(0deg)' },
+          '10%': { transform: 'rotate(3deg)' },
+          '20%': { transform: 'rotate(-3deg)' },
+          '30%': { transform: 'rotate(3deg)' },
+          '40%': { transform: 'rotate(-3deg)' },
+        }
+      },
+      animation: {
+        wiggle: 'wiggle 1s ease-in-out infinite',
+      },
       colors: {
         primary: {
           10: "#FFFBFF",
