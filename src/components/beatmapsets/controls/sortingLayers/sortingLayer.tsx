@@ -1,27 +1,27 @@
 import React, {FC, useState} from 'react';
 import {MdClose, MdDragIndicator} from "react-icons/md";
 import {
-    SortingLayerOptions,
-    SortingLayerOrders,
-    SortingLayerValue
-} from "@/types/beatmapsets/Sorting";
+    BeatmapsetListSortingLayerOptions,
+    BeatmapsetListSortingLayerValue
+} from "@/types/beatmapsets/sorting";
 import SelectValue
     from "@/components/beatmapsets/controls/sortingLayers/selectValue";
 import SelectOrder
     from "@/components/beatmapsets/controls/sortingLayers/selectOrder";
 import {Reorder, useDragControls} from 'motion/react';
+import {SortingLayerOrders} from "@/types/sorting";
 
 interface SortingLayerProps {
-    values: SortingLayerOptions[],
-    value: SortingLayerOptions,
-    onChange?: (newValue: SortingLayerOptions, index: number) => void,
+    values: BeatmapsetListSortingLayerOptions[],
+    value: BeatmapsetListSortingLayerOptions,
+    onChange?: (newValue: BeatmapsetListSortingLayerOptions, index: number) => void,
     onDestroy?: (index: number) => void,
 }
 
 const SortingLayer: FC<SortingLayerProps> = ({values, value, onChange, onDestroy}) => {
-    const [sorting, setSorting] = useState<SortingLayerOptions>(value);
+    const [sorting, setSorting] = useState<BeatmapsetListSortingLayerOptions>(value);
 
-    const handleValueChange = (value: SortingLayerValue) => {
+    const handleValueChange = (value: BeatmapsetListSortingLayerValue) => {
         setSorting((prev) => {
             if (prev) {
                 return {

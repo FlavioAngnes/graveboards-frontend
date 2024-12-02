@@ -1,4 +1,4 @@
-import {Profile} from "@/types/Profile";
+import {Profile} from "@/types/profile";
 
 export interface User {
     profile: Profile;

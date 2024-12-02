@@ -1,9 +1,11 @@
 import React, {FC} from 'react';
-import {FilterOperators, FiltersMap, FilterValue} from "@/types/beatmapsets/Filters";
-import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
+import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import {FilterOperators} from "@/types/filters";
+import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
 
 interface FiltersInputProps {
-    name: FilterValue;
+    name: BeatmapsetListFilterValue;
     allowedOperators?: FilterOperators[];
 }
 
@@ -25,9 +27,9 @@ const FiltersInput: FC<FiltersInputProps> = ({
         <div className="flex flex-col gap-1">
             <div className="flex gap-1.5 items-center font-semibold dark:text-white">
                 <div className="size-5 text-xl flex items-center justify-center">
-                    {FiltersMap[name].icon}
+                    {BeatmapsetListFiltersMap[name].icon}
                 </div>
-                {FiltersMap[name].label}
+                {BeatmapsetListFiltersMap[name].label}
             </div>
             <div className="flex items-center gap-2">
                 <button
@@ -43,7 +45,7 @@ const FiltersInput: FC<FiltersInputProps> = ({
 
                     name={name}
                     type="text"
-                    placeholder={FiltersMap[name].label}
+                    placeholder={BeatmapsetListFiltersMap[name].label}
                     defaultValue={initialValue}
                     onChange={(e) => {
                         if (e.target.value.length === 0) {

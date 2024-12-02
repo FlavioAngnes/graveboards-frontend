@@ -1,14 +1,14 @@
 import {FC, ReactNode} from "react";
-import {SortingProvider} from "@/context/beatmapsets/SortingContext";
-import Beatmapsets from "@/components/beatmapsets/beatmapsets";
-import {SortingLayerOptions} from "@/types/beatmapsets/Sorting";
-import {FiltersProvider} from "@/context/beatmapsets/FiltersContext";
-import {FilterOptions} from "@/types/beatmapsets/Filters";
+import {BeatmapsetListSortingProvider} from "@/context/beatmapsets/BeatmapsetListSortingContext";
+import BeatmapsetList from "@/components/beatmapsets/beatmapsetList";
+import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
+import {BeatmapsetListFiltersProvider} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 
 export const BeatmapsetsProvider: FC<{
     title?: string,
-    defaultFilters?: Required<FilterOptions<never>>[];
-    defaultSortingLayers?: Required<SortingLayerOptions>[];
+    defaultFilters?: Required<BeatmapsetListFilterOptions<never>>[];
+    defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[];
     queueId?: number;
     showControls?: boolean;
     children?: ReactNode;
@@ -20,10 +20,10 @@ export const BeatmapsetsProvider: FC<{
           showControls = true,
       }) => {
     return (
-        <FiltersProvider defaultFilters={defaultFilters}>
-            <SortingProvider defaultSortingLayers={defaultSortingLayers}>
-                <Beatmapsets title={title} showControls={showControls}/>
-            </SortingProvider>
-        </FiltersProvider>
+        <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
+            <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
+                <BeatmapsetList title={title} showControls={showControls}/>
+            </BeatmapsetListSortingProvider>
+        </BeatmapsetListFiltersProvider>
     )
 }

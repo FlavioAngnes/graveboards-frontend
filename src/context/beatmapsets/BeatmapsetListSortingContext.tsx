@@ -1,24 +1,25 @@
 'use client'
 
 import {createContext, FC, ReactNode, useContext, useState} from 'react';
-import {SortingLayerMap, SortingLayerOptions, SortingLayerValue} from "@/types/beatmapsets/Sorting";
+import {BeatmapsetListSortingLayerOptions, BeatmapsetListSortingLayerValue} from "@/types/beatmapsets/sorting";
+import {BeatmapsetListSortingLayerMap} from "@/data/beatmapsets/sorting";
 
-interface SortingContextType {
-    layers: SortingLayerOptions[];
-    layersToUse: SortingLayerOptions[];
-    nextLayer: SortingLayerValue;
+interface BeatmapsetListSortingContextType {
+    layers: BeatmapsetListSortingLayerOptions[];
+    layersToUse: BeatmapsetListSortingLayerOptions[];
+    nextLayer: BeatmapsetListSortingLayerValue;
     addLayer: () => void;
     removeLayer: (index: number) => void;
-    updateLayer: (layer: SortingLayerOptions, index: number) => void;
+    updateLayer: (layer: BeatmapsetListSortingLayerOptions, index: number) => void;
     canClear: boolean;
     clearLayers: () => void;
     canApply: boolean;
     applyLayers: () => void;
     undoLayers: () => void;
-    reorderLayers: (newLayers: SortingLayerValue[]) => void;
+    reorderLayers: (newLayers: BeatmapsetListSortingLayerValue[]) => void;
 }
 
-export const SortingContext = createContext<SortingContextType>({
+export const BeatmapsetListSortingContext = createContext<BeatmapsetListSortingContextType>({
     layers: [],
     layersToUse: [],
     nextLayer: 'Profile.country_code',
@@ -40,17 +41,17 @@ export const SortingContext = createContext<SortingContextType>({
     }
 })
 
-export const SortingProvider: FC<{
+export const BeatmapsetListSortingProvider: FC<{
     children: ReactNode,
-    defaultSortingLayers?: Required<SortingLayerOptions>[]
+    defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[]
 }> = ({children, defaultSortingLayers}) => {
-    const [layers, setLayers] = useState<SortingLayerOptions[]>([]);
-    const [layersToUse, setLayersToUse] = useState<SortingLayerOptions[]>(defaultSortingLayers || []);
+    const [layers, setLayers] = useState<BeatmapsetListSortingLayerOptions[]>([]);
+    const [layersToUse, setLayersToUse] = useState<BeatmapsetListSortingLayerOptions[]>(defaultSortingLayers || []);
 
     const canClear = layers.length > 0;
     const canApply = JSON.stringify(layers) !== JSON.stringify(layersToUse.filter(layer => !layer.isDefault));
 
-    const nextLayer = Object.keys(SortingLayerMap).find(option => !layers.some(sorting => sorting.value === option)) as SortingLayerValue;
+    const nextLayer = Object.keys(BeatmapsetListSortingLayerMap).find(option => !layers.some(sorting => sorting.value === option)) as BeatmapsetListSortingLayerValue;
 
     const addLayer = () => {
         if (nextLayer) {
@@ -65,7 +66,7 @@ export const SortingProvider: FC<{
         setLayers((prev) => prev.filter((_, i) => i !== index));
     }
 
-    const updateLayer = (layer: SortingLayerOptions, index: number) => {
+    const updateLayer = (layer: BeatmapsetListSortingLayerOptions, index: number) => {
         setLayers((prev) => prev.map((prevLayer, i) => i === index ? layer : prevLayer));
     }
 
@@ -83,7 +84,7 @@ export const SortingProvider: FC<{
         setLayers(layersToUse.filter(layer => !layer.isDefault));
     }
 
-    const reorderLayers = (items: SortingLayerValue[]) => {
+    const reorderLayers = (items: BeatmapsetListSortingLayerValue[]) => {
         setLayers((prev) => {
             const newLayers = [...prev];
 
@@ -100,7 +101,7 @@ export const SortingProvider: FC<{
     }
 
     return (
-        <SortingContext.Provider value={{
+        <BeatmapsetListSortingContext.Provider value={{
             layers,
             layersToUse,
             nextLayer,
@@ -115,8 +116,8 @@ export const SortingProvider: FC<{
             reorderLayers
         }}>
             {children}
-        </SortingContext.Provider>
+        </BeatmapsetListSortingContext.Provider>
     )
 }
 
-export const useSorting = () => useContext(SortingContext);
+export const useSorting = () => useContext(BeatmapsetListSortingContext);

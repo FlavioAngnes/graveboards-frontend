@@ -1,11 +1,11 @@
-import {SortingLayerOptions} from "@/types/beatmapsets/Sorting";
-import {FilterOptions, FilterType} from "@/types/beatmapsets/Filters";
-import {BeatmapsetListing} from "@/types/beatmapsets/Beatmapset";
+import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
+import {BeatmapsetListFilterOptions, FilterType} from "@/types/beatmapsets/filters";
+import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 
 export interface BeatmapsetListingOptions {
     search?: string;
-    filters?: FilterOptions<never>[];
-    sortingLayers?: SortingLayerOptions[];
+    filters?: BeatmapsetListFilterOptions<never>[];
+    sortingLayers?: BeatmapsetListSortingLayerOptions[];
     limit?: number;
     offset?: number;
     queueId?: number;

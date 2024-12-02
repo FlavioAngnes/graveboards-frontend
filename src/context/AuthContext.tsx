@@ -1,7 +1,7 @@
 'use client';
 
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {User} from "@/types/User";
+import {User} from "@/types/user";
 import {PostTokenResponse} from "@/app/api/auth/token/route";
 import {useRouter} from "next/navigation";
 

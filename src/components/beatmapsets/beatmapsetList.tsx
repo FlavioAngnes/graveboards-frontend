@@ -2,16 +2,17 @@
 
 import React, {FC, useEffect, useRef} from 'react';
 import useBeatmapsets from "@/hooks/useBeatmapsets";
-import Beatmapset from "@/components/beatmapsets/beatmapset";
+import BeatmapsetPanel from "@/components/beatmapsets/beatmapsetPanel";
 import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanelSkeleton";
 import {ViewSwitch} from "@/components/beatmapsets/controls/viewSwitch";
 import SortingLayers from "@/components/beatmapsets/controls/sortingLayers/sortingLayers";
-import {useSorting} from "@/context/beatmapsets/SortingContext";
+import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import clsx from "clsx";
 import Filters from "@/components/beatmapsets/controls/filters/filters";
-import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import FilterChip from "@/components/shared/filterChip";
-import {FilterOperators, FiltersMap} from "@/types/beatmapsets/Filters";
+import {FilterOperators} from "@/types/filters";
+import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
 
 interface BeatmapsetsProps {
     title: string;
@@ -20,7 +21,7 @@ interface BeatmapsetsProps {
 
 type BeatmapsetListingView = 'list' | 'grid';
 
-const Beatmapsets: FC<BeatmapsetsProps> = ({title, showControls}) => {
+const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls}) => {
     /*const id = title?.toLowerCase().replace(' ', '-');*/
 
     const [view, setView] = React.useState<BeatmapsetListingView>('grid');
@@ -90,7 +91,7 @@ const Beatmapsets: FC<BeatmapsetsProps> = ({title, showControls}) => {
                     <div className="flex gap-2">
                         {filters.map((filter, index) => (
                             Object.entries(filter.options).map(([key, value]) => (
-                                <FilterChip name={filter.value} key={`${index}-${key}`} label={FiltersMap[filter.value].label} option={{
+                                <FilterChip name={filter.value} key={`${index}-${key}`} label={BeatmapsetListFiltersMap[filter.value].label} option={{
                                     operation: key as FilterOperators,
                                     value: value
                                 }}/>
@@ -107,7 +108,7 @@ const Beatmapsets: FC<BeatmapsetsProps> = ({title, showControls}) => {
                 )}
             >
                 {beatmapsets.map((beatmap) => (
-                        <Beatmapset key={beatmap.id} beatmapset={beatmap} view={view}/>
+                        <BeatmapsetPanel key={beatmap.id} beatmapset={beatmap} view={view}/>
                     )
                 )}
 
@@ -121,4 +122,4 @@ const Beatmapsets: FC<BeatmapsetsProps> = ({title, showControls}) => {
     );
 };
 
-export default Beatmapsets;
+export default BeatmapsetList;

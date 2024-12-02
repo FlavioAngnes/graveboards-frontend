@@ -1,7 +1,7 @@
 'use client';
 
 import React, {FC} from 'react';
-import {Queue} from "@/types/Queue";
+import {Queue} from "@/types/queue";
 import {MdChevronRight, MdCircle, MdEdit} from "react-icons/md";
 import {useAuth} from "@/context/AuthContext";
 

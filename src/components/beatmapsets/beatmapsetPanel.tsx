@@ -2,7 +2,7 @@
 
 import {FC, useState} from "react";
 import clsx from "clsx";
-import {BeatmapsetListing} from "@/types/beatmapsets/Beatmapset";
+import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {MdChevronRight, MdRadioButtonChecked} from "react-icons/md";
 
 interface BeatmapsetProps {
@@ -10,7 +10,7 @@ interface BeatmapsetProps {
     view?: "list" | "grid"
 }
 
-const Beatmapset: FC<BeatmapsetProps> = ({beatmapset, view}) => {
+const BeatmapsetPanel: FC<BeatmapsetProps> = ({beatmapset, view}) => {
     const [hover, setHover] = useState(false);
 
     return (view && view === "grid" ? (
@@ -257,4 +257,4 @@ class Color4 {
     }
 }
 
-export default Beatmapset;
+export default BeatmapsetPanel;

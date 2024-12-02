@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import {MdClose, MdFilterList, MdOutlineFilterAlt, MdUndo} from "react-icons/md";
 import clsx from "clsx";
 import FiltersInput from "@/components/beatmapsets/controls/filters/filtersInput";

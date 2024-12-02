@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Queue} from "@/types/Queue";
+import {Queue} from "@/types/queue";
 import {getQueues} from "@/services/queueService";
 
 interface QueueOptions {

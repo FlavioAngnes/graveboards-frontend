@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import {BeatmapsetListing} from "@/types/beatmapsets/Beatmapset";
+import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {BeatmapsetListingOptions, getBeatmapsets} from "@/services/beatmapsetService";
-import {useSorting} from "@/context/beatmapsets/SortingContext";
-import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
+import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 
 const useBeatmapsets = (page: number) => {
     const [beatmapsets, setBeatmapsets] = useState<BeatmapsetListing[]>([]);

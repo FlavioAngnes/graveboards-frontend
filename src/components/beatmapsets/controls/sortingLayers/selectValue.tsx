@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from "react";
-import {SortingLayerMap, SortingLayerOptions, SortingLayerValue} from "@/types/beatmapsets/Sorting";
+import {BeatmapsetListSortingLayerOptions, BeatmapsetListSortingLayerValue} from "@/types/beatmapsets/sorting";
 import {
     MdMusicNote,
     MdOutlineKeyboardArrowDown,
@@ -11,11 +11,12 @@ import {
 } from "react-icons/md";
 import {IoMdNotificationsOutline} from "react-icons/io";
 import clsx from "clsx";
+import {BeatmapsetListSortingLayerMap} from "@/data/beatmapsets/sorting";
 
 interface SelectValueProps {
-    values: SortingLayerOptions[],
-    value: SortingLayerValue,
-    onChange?: (value: SortingLayerValue) => void,
+    values: BeatmapsetListSortingLayerOptions[],
+    value: BeatmapsetListSortingLayerValue,
+    onChange?: (value: BeatmapsetListSortingLayerValue) => void,
 }
 
 const SelectValue: FC<SelectValueProps> = ({values, value, onChange}) => {
@@ -62,30 +63,30 @@ const SelectValue: FC<SelectValueProps> = ({values, value, onChange}) => {
         };
     }, []);
 
-    const handleChange = (value: SortingLayerValue) => {
+    const handleChange = (value: BeatmapsetListSortingLayerValue) => {
         if (onChange) {
             onChange(value);
         }
     }
 
-    const profileValues = Object.entries(SortingLayerMap)
+    const profileValues = Object.entries(BeatmapsetListSortingLayerMap)
         .filter(
-            ([key]) => key.split('.')[0] === 'Profile' && !values.map(sorting => sorting.value).includes(key as SortingLayerValue)
+            ([key]) => key.split('.')[0] === 'Profile' && !values.map(sorting => sorting.value).includes(key as BeatmapsetListSortingLayerValue)
         )
 
-    const beatmapsetValues = Object.entries(SortingLayerMap)
+    const beatmapsetValues = Object.entries(BeatmapsetListSortingLayerMap)
         .filter(
-            ([key]) => key.split('.')[0] === 'BeatmapsetSnapshot' && !values.map(sorting => sorting.value).includes(key as SortingLayerValue)
+            ([key]) => key.split('.')[0] === 'BeatmapsetSnapshot' && !values.map(sorting => sorting.value).includes(key as BeatmapsetListSortingLayerValue)
         )
 
-    const beatmapValues = Object.entries(SortingLayerMap)
+    const beatmapValues = Object.entries(BeatmapsetListSortingLayerMap)
         .filter(
-            ([key]) => key.split('.')[0] === 'BeatmapSnapshot' && !values.map(sorting => sorting.value).includes(key as SortingLayerValue)
+            ([key]) => key.split('.')[0] === 'BeatmapSnapshot' && !values.map(sorting => sorting.value).includes(key as BeatmapsetListSortingLayerValue)
         )
 
-    const requestValues = Object.entries(SortingLayerMap)
+    const requestValues = Object.entries(BeatmapsetListSortingLayerMap)
         .filter(
-            ([key]) => key.split('.')[0] === 'Request' && !values.map(sorting => sorting.value).includes(key as SortingLayerValue)
+            ([key]) => key.split('.')[0] === 'Request' && !values.map(sorting => sorting.value).includes(key as BeatmapsetListSortingLayerValue)
         )
 
     return (
@@ -108,8 +109,8 @@ const SelectValue: FC<SelectValueProps> = ({values, value, onChange}) => {
                     </div>
                     <MdOutlineKeyboardArrowRight className="sm:block max-[475px]:hidden text-tertiary-500 shrink-0"/>
                     <div className="flex items-center gap-1">
-                        {SortingLayerMap[value].icon}
-                        {SortingLayerMap[value].label}
+                        {BeatmapsetListSortingLayerMap[value].icon}
+                        {BeatmapsetListSortingLayerMap[value].label}
                     </div>
                 </div>
                 <MdOutlineKeyboardArrowDown className="size-5 shrink-0"/>
@@ -126,7 +127,7 @@ const SelectValue: FC<SelectValueProps> = ({values, value, onChange}) => {
                                     profileValues.map(([key, value]) => ({
                                         icon: value.icon,
                                         label: value.label,
-                                        value: key as SortingLayerValue
+                                        value: key as BeatmapsetListSortingLayerValue
                                     }))
                                 }
                                 setValue={handleChange}/>
@@ -141,7 +142,7 @@ const SelectValue: FC<SelectValueProps> = ({values, value, onChange}) => {
                                     beatmapsetValues.map(([key, value]) => ({
                                         icon: value.icon,
                                         label: value.label,
-                                        value: key as SortingLayerValue
+                                        value: key as BeatmapsetListSortingLayerValue
                                     }))
                                 }
                                 setValue={handleChange}/>
@@ -156,7 +157,7 @@ const SelectValue: FC<SelectValueProps> = ({values, value, onChange}) => {
                                     beatmapValues.map(([key, value]) => ({
                                         icon: value.icon,
                                         label: value.label,
-                                        value: key as SortingLayerValue
+                                        value: key as BeatmapsetListSortingLayerValue
                                     }))
                                 }
                                 setValue={handleChange}/>
@@ -171,7 +172,7 @@ const SelectValue: FC<SelectValueProps> = ({values, value, onChange}) => {
                                     requestValues.map(([key, value]) => ({
                                         icon: value.icon,
                                         label: value.label,
-                                        value: key as SortingLayerValue
+                                        value: key as BeatmapsetListSortingLayerValue
                                     }))
                                 }
                                 setValue={handleChange}/>
@@ -189,9 +190,9 @@ interface SelectSortingItemProps {
     values: {
         icon: React.ReactNode;
         label: string;
-        value: SortingLayerValue;
+        value: BeatmapsetListSortingLayerValue;
     }[];
-    setValue: (value: SortingLayerValue) => void;
+    setValue: (value: BeatmapsetListSortingLayerValue) => void;
 }
 
 const SelectSortingItem: FC<SelectSortingItemProps> = ({icon, label, values, setValue}) => {

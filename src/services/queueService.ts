@@ -1,4 +1,4 @@
-import {Queue} from "@/types/Queue";
+import {Queue} from "@/types/queue";
 
 export interface BeatmapsetListingOptions {
     limit?: number;

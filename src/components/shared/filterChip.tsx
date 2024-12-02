@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import {GoX} from "react-icons/go";
-import {FilterOperators, FilterValue} from "@/types/beatmapsets/Filters";
-import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import {FilterOperators, BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
+import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 
 interface FilterChipProps {
-    name: FilterValue;
+    name: BeatmapsetListFilterValue;
     label: string;
     option: {
         operation: FilterOperators;

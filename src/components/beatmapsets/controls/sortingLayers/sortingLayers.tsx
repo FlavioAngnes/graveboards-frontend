@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {MdAdd, MdClose, MdImportExport, MdUndo} from "react-icons/md";
 import SortingLayer from "@/components/beatmapsets/controls/sortingLayers/sortingLayer";
 import {Reorder} from 'motion/react';
-import {useSorting} from "@/context/beatmapsets/SortingContext";
+import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import clsx from "clsx";
 
 const SortingLayers = () => {
