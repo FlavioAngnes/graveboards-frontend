@@ -34,9 +34,9 @@ const Filters = () => {
                 onClick={() => setOpen(!open)}
                 className={clsx(
                     `p-1 size-9 rounded-lg hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out`,
-                    { 'bg-tertiary-100 dark:bg-tertiary-900': open },
+                    {'bg-tertiary-100 dark:bg-tertiary-900': open},
                     canClear ? `text-primary-500 border-primary-500` : `text-tertiary-500 border-transparent hover:dark:border-tertiary-900 active:dark:border-tertiary-800`,
-                    { 'animate-wiggle': canApply && !open }
+                    {'animate-wiggle': canApply && !open}
                 )}
             >
                 <MdFilterList className="size-5"/>
