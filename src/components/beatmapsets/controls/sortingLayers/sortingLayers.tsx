@@ -4,7 +4,7 @@ import SortingLayer from "@/components/beatmapsets/controls/sortingLayers/sortin
 import {Reorder} from 'motion/react';
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import clsx from "clsx";
-import {IoMdInformationCircle, IoMdInformationCircleOutline} from "react-icons/io";
+import {IoMdInformationCircleOutline} from "react-icons/io";
 
 const SortingLayers = () => {
     const [open, setOpen] = useState(false);
