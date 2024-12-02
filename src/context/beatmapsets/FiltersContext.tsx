@@ -1,7 +1,7 @@
 'use client'
 
 import {createContext, FC, ReactNode, useContext, useState} from 'react';
-import {FilterOperators, FilterOptions} from "@/types/beatmapsets/Filters";
+import {FilterOptions} from "@/types/beatmapsets/Filters";
 
 interface FiltersContextType {
     filters: FilterOptions<never>[]
