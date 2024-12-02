@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {BeatmapsetListing} from "@/types/beatmapsets/Beatmapset";
 import {BeatmapsetListingOptions, getBeatmapsets} from "@/services/beatmapsetService";
 import {useSorting} from "@/context/beatmapsets/SortingContext";
+import {useFilters} from "@/context/beatmapsets/FiltersContext";
 
 const useBeatmapsets = (page: number) => {
     const [beatmapsets, setBeatmapsets] = useState<BeatmapsetListing[]>([]);
@@ -10,9 +11,11 @@ const useBeatmapsets = (page: number) => {
     const [hasMore, setHasMore] = useState<boolean>(false);
 
     const {layersToUse} = useSorting();
+    const {filtersToUse} = useFilters();
 
     useEffect(() => {
         const options: BeatmapsetListingOptions = {
+            filters: filtersToUse,
             sortingLayers: layersToUse
         }
 
@@ -39,7 +42,7 @@ const useBeatmapsets = (page: number) => {
             })
 
         return () => controller.abort();
-    }, [page, layersToUse]);
+    }, [page, layersToUse, filtersToUse]);
 
     return {beatmapsets, loading, error, hasMore}
 }
