@@ -5,9 +5,13 @@ import useBeatmapsets from "@/hooks/useBeatmapsets";
 import Beatmapset from "@/components/beatmapsets/beatmapset";
 import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanelSkeleton";
 import {ViewSwitch} from "@/components/beatmapsets/controls/viewSwitch";
-import SortingLayers from "@/components/beatmapsets/controls/sortingLayers";
+import SortingLayers from "@/components/beatmapsets/controls/sortingLayers/sortingLayers";
 import {useSorting} from "@/context/beatmapsets/SortingContext";
 import clsx from "clsx";
+import Filters from "@/components/beatmapsets/controls/filters/filters";
+import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import FilterChip from "@/components/shared/filterChip";
+import {FilterOperators, FiltersMap} from "@/types/beatmapsets/Filters";
 
 interface BeatmapsetsProps {
     title: string;
@@ -29,6 +33,7 @@ const Beatmapsets: FC<BeatmapsetsProps> = ({title, showControls}) => {
     }, [layersToUse]);
 
     const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page);
+    const {filters} = useFilters();
 
     const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -73,12 +78,27 @@ const Beatmapsets: FC<BeatmapsetsProps> = ({title, showControls}) => {
                         <div className="block h-6 w-[1px] bg-tertiary-200 dark:bg-tertiary-700"></div>
                         <div className="flex gap-2 relative">
                             {/*<Search value={search} onChange={setSearch} listId={id}/>*/}
-                            {/*<Filters values={filters} onChange={setFilters}/>*/}
+                            <Filters/>
                             <SortingLayers/>
                         </div>
                     </div>
                 )}
             </div>
+
+            {
+                filters.length > 0 && (
+                    <div className="flex gap-2">
+                        {filters.map((filter, index) => (
+                            Object.entries(filter.options).map(([key, value]) => (
+                                <FilterChip name={filter.value} key={`${index}-${key}`} label={FiltersMap[filter.value].label} option={{
+                                    operation: key as FilterOperators,
+                                    value: value
+                                }}/>
+                            ))
+                        ))}
+                    </div>
+                )
+            }
 
             <div
                 className={clsx(
