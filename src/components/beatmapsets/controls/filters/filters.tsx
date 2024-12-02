@@ -1,21 +1,13 @@
 import React, {useEffect} from 'react';
 import {useFilters} from "@/context/beatmapsets/FiltersContext";
-import {
-    MdAdd,
-    MdClose,
-    MdFilterList,
-    MdFilterListAlt,
-    MdImportExport, MdOutlineFilterAlt,
-    MdOutlineTextFormat,
-    MdUndo
-} from "react-icons/md";
+import {MdClose, MdFilterList, MdOutlineFilterAlt, MdUndo} from "react-icons/md";
 import clsx from "clsx";
 import FiltersInput from "@/components/beatmapsets/controls/filters/filtersInput";
 
 const Filters = () => {
     const [open, setOpen] = React.useState(false);
 
-    const {filters, putFilter, canApply, canClear, clearFilters, undoFilters, applyFilters} = useFilters();
+    const {canApply, canClear, clearFilters, undoFilters, applyFilters} = useFilters();
 
     const buttonRef = React.useRef<HTMLButtonElement | null>(null);
     const filtersRef = React.useRef<HTMLDivElement | null>(null);
