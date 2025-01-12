@@ -23,7 +23,7 @@ export const ViewSwitch: FC<ViewSwitchProps> = ({view, setView}) => {
                 <button
                     onClick={() => setView('list')}
                     className={clsx(
-                        `p-1 size-9 rounded-lg hover:dark:border-tertiary-900 active:dark:border-tertiary-800 hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out`,
+                        `p-1 size-9 rounded-lg active:dark:border-tertiary-800 hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out`,
                         view === 'list' ? 'text-primary-500 border-primary-500' : 'text-tertiary-500 border-transparent'
                     )}>
                     <MdOutlineViewAgenda className="size-5"/>
@@ -31,7 +31,7 @@ export const ViewSwitch: FC<ViewSwitchProps> = ({view, setView}) => {
                 <button
                     onClick={() => setView('grid')}
                     className={clsx(
-                        `p-1 size-9 rounded-lg hover:dark:border-tertiary-900 active:dark:border-tertiary-800 hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out`,
+                        `p-1 size-9 rounded-lg active:dark:border-tertiary-800 hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out`,
                         view === 'grid' ? 'text-primary-500 border-primary-500' : 'text-tertiary-500 border-transparent'
                     )}>
                     <MdGridView className="size-5"/>
