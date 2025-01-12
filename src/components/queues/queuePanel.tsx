@@ -4,6 +4,7 @@ import React, {FC} from 'react';
 import {Queue} from "@/types/queue";
 import {MdChevronRight, MdCircle, MdEdit} from "react-icons/md";
 import {useAuth} from "@/context/AuthContext";
+import Link from "next/link";
 
 interface QueuePanelProps {
     queue: Queue;
@@ -13,7 +14,7 @@ const QueuePanel: FC<QueuePanelProps> = ({queue}) => {
     const {user, isAdmin} = useAuth();
 
     return (
-        <div
+        <Link href={`/queues/${queue.id}`}
             className="cursor-pointer px-8 py-6 flex-col gap-8 lg:flex-row flex justify-between items-center rounded-xl bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 self-stretch transition-colors duration-300 ease-in-out overflow-hidden">
             <div className="flex items-center gap-6 flex-1 overflow-hidden">
                 <div className="max-[400px]:hidden size-24 rounded-xl shrink-0 bg-cover" style={{backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})`}}></div>
@@ -51,17 +52,18 @@ const QueuePanel: FC<QueuePanelProps> = ({queue}) => {
                         </div>
                     </div>
                     {(user?.id && queue.display_data.manager_profiles.some(manager => manager.username === user.profile.username) || isAdmin) && (
-                        <button
+                        <Link
+                            href={`/queues/${queue.id}/manage`}
                             className="bg-primary-500 hover:bg-primary-400 active:bg-primary-300 text-white px-6 py-2.5 rounded-full lg:flex hidden items-center gap-1.5 shrink-0 transition-all duration-300 ease-in-out min-w-12 lg:min-w-44">
                             <MdEdit className="size-6"/>
                             <p className="lg:block hidden">Manage Queue</p>
                             <p className="block lg:hidden">Manage</p>
-                        </button>
+                        </Link>
                     )}
                     <MdChevronRight className="size-6 shrink-0 text-tertiary-500"/>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
