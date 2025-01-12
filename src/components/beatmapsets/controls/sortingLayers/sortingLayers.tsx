@@ -82,7 +82,7 @@ const SortingLayers = () => {
                                         <div
                                             className="absolute z-10 w-64 p-2 bg-white border rounded-lg text-tertiary-500 dark:text-tertiary-400 dark:bg-tertiary-800 dark:border-tertiary-700 right-0 top-full mt-4"
                                         >
-                                            Sorting applied may not work due to default sorting layers being active in this list.
+                                            Sorting applied may not work as expected due to default sorting layers being active in this list.
                                             <ul className="list-disc pl-4">
                                                 {layersToUse
                                                     .filter((layer) => layer.isDefault)
