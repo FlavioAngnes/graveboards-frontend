@@ -2,8 +2,8 @@
 
 import React, {FC, useEffect, useRef} from 'react';
 import useBeatmapsets from "@/hooks/useBeatmapsets";
-import BeatmapsetPanel from "@/components/beatmapsets/beatmapsetPanel";
-import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanelSkeleton";
+import BeatmapsetPanel from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanel";
+import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanelSkeleton";
 import {ViewSwitch} from "@/components/beatmapsets/controls/viewSwitch";
 import SortingLayers from "@/components/beatmapsets/controls/sortingLayers/sortingLayers";
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";

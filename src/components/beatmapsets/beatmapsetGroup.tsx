@@ -1,6 +1,6 @@
 import React, {FC, ReactNode, useState} from 'react';
 import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
-import BeatmapsetPanel from "@/components/beatmapsets/beatmapsetPanel";
+import BeatmapsetPanel from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanel";
 import {MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp} from "react-icons/md";
 import clsx from "clsx";
 

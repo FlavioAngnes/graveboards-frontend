@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
 import {GoX} from "react-icons/go";
-import {FilterOperators, BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
+import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
 import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import {FilterOperators} from "@/types/filters";
 
 interface FilterChipProps {
     name: BeatmapsetListFilterValue;
