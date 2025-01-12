@@ -33,13 +33,13 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls}) => {
     const [grouping, setGrouping] = React.useState<BeatmapsetListGroup>(null);
 
     const {layersToUse} = useSorting();
+    const {filters, filtersToUse} = useFilters();
 
     useEffect(() => {
         setPage(0);
-    }, [layersToUse]);
+    }, [layersToUse, filtersToUse]);
 
     const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page);
-    const {filters} = useFilters();
 
     const observerRef = useRef<HTMLDivElement | null>(null);
 
