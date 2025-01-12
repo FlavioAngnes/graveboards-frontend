@@ -1,13 +1,13 @@
 'use client';
 
 import React, {FC, useEffect, useState} from 'react';
-import {QueueContent} from "@/components/queues/queueContent";
+import {ManageQueueContent} from "@/components/queues/manage/manageQueueContent";
 
 interface QueuePageProps {
     params: Promise<{ id: string }>;
 }
 
-const QueuePage: FC<QueuePageProps> = ({params}) => {
+const ManageQueuePage: FC<QueuePageProps> = ({params}) => {
     const [id, setId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -23,8 +23,8 @@ const QueuePage: FC<QueuePageProps> = ({params}) => {
         return null;
     }
 
-    return <QueueContent id={id} />;
+    return <ManageQueueContent id={id} />;
 };
 
-export default QueuePage;
+export default ManageQueuePage;
 

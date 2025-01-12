@@ -1,7 +1,7 @@
 'use client';
 
 import React, {Suspense} from 'react';
-import QueueList from "@/components/queues/queueList";
+import Queues from "@/components/queues/queues";
 import QueuePanelSkeleton from "@/components/queues/queuePanelSkeleton";
 
 const QueuesPage = () => {
@@ -12,7 +12,7 @@ const QueuesPage = () => {
             </div>
             <Suspense fallback={<QueuePanelSkeleton/>}>
                 <div>
-                    {<QueueList />}
+                    {<Queues />}
                 </div>
             </Suspense>
         </div>
