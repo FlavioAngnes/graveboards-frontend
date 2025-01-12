@@ -1,6 +1,7 @@
 import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
-import {BeatmapsetListFilterOptions, FilterType} from "@/types/beatmapsets/filters";
+import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
+import {FilterType} from "@/types/filters";
 
 export interface BeatmapsetListingOptions {
     search?: string;
