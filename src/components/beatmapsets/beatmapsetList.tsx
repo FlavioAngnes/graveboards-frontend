@@ -26,7 +26,7 @@ type View = 'list' | 'grid';
 export type BeatmapsetListGroup = 'artist' | 'mapper' | null;
 
 const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls}) => {
-    /*const id = title?.toLowerCase().replace(' ', '-');*/
+    const id = title?.toLowerCase().replace(' ', '-');
 
     const [view, setView] = React.useState<View>('grid');
     const [page, setPage] = React.useState(0);
@@ -85,7 +85,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls}) => {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div id={id} className="flex flex-col gap-4">
             <div className="flex flex-col lg:flex-row justify-between gap-2">
                 <div className="text-2xl font-semibold truncate transition-all duration-300 ease-in-out">
                     {title}
