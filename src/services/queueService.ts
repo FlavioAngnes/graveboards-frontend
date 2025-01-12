@@ -27,3 +27,21 @@ export const getQueues = async (page: number, options: BeatmapsetListingOptions,
 
     return await response.json() as Queue[];
 }
+
+export const getQueue = async (id: number, init?: RequestInit): Promise<Queue> => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+        init = {
+            ...init,
+            headers: {
+                ...init?.headers,
+                Authorization: `Bearer ${token}`
+            }
+        }
+    }
+
+    const response = await fetch(`/api/queues/${id}`, init);
+
+    return await response.json() as Queue;
+}
