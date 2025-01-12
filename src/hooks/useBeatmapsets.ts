@@ -4,7 +4,7 @@ import {BeatmapsetListingOptions, getBeatmapsets} from "@/services/beatmapsetSer
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 
-const useBeatmapsets = (page: number) => {
+const useBeatmapsets = (page: number, queueId?: number) => {
     const [beatmapsets, setBeatmapsets] = useState<BeatmapsetListing[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -16,7 +16,8 @@ const useBeatmapsets = (page: number) => {
     useEffect(() => {
         const options: BeatmapsetListingOptions = {
             filters: filtersToUse,
-            sortingLayers: layersToUse
+            sortingLayers: layersToUse,
+            queueId: queueId
         }
 
         setLoading(true);

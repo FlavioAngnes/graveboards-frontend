@@ -19,13 +19,14 @@ import BeatmapsetGroup from "@/components/beatmapsets/beatmapsetGroup";
 interface BeatmapsetsProps {
     title: string;
     showControls: boolean;
+    queueId?: number;
 }
 
 type View = 'list' | 'grid';
 
 export type BeatmapsetListGroup = 'artist' | 'mapper' | null;
 
-const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls}) => {
+const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls, queueId}) => {
     const id = title?.toLowerCase().replace(' ', '-');
 
     const [view, setView] = React.useState<View>('grid');
@@ -39,7 +40,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls}) => {
         setPage(0);
     }, [layersToUse, filtersToUse]);
 
-    const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page);
+    const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page, queueId);
 
     const observerRef = useRef<HTMLDivElement | null>(null);
 

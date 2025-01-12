@@ -16,13 +16,13 @@ export const BeatmapsetsProvider: FC<{
           title = 'Beatmapsets',
           defaultFilters = [],
           defaultSortingLayers = [],
-          //queueId,
+          queueId,
           showControls = true,
       }) => {
     return (
         <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
             <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
-                <BeatmapsetList title={title} showControls={showControls}/>
+                <BeatmapsetList title={title} showControls={showControls} queueId={queueId}/>
             </BeatmapsetListSortingProvider>
         </BeatmapsetListFiltersProvider>
     )
