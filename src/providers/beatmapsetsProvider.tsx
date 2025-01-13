@@ -11,20 +11,35 @@ export const BeatmapsetsProvider: FC<{
     defaultFilters?: Required<BeatmapsetListFilterOptions<never>>[];
     defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[];
     queueId?: number;
-    showControls?: boolean;
+    showGrouping?: boolean;
+    showViewSwitch?: boolean;
+    showSearch?: boolean;
+    showFilters?: boolean;
+    showSorting?: boolean;
     children?: ReactNode;
 }> = ({
           title = 'Beatmapsets',
           defaultFilters = [],
           defaultSortingLayers = [],
           queueId,
-          showControls = true,
+          showGrouping = true,
+          showViewSwitch = true,
+          showSearch = true,
+          showFilters = true,
+          showSorting = true,
       }) => {
     return (
         <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
             <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
-                <BeatmapsetList title={title} showControls={showControls} queueId={queueId}/>
                 <BeatmapsetListSearchProvider>
+                    <BeatmapsetList title={title}
+                                    queueId={queueId}
+                                    showGrouping={showGrouping}
+                                    showViewSwitch={showViewSwitch}
+                                    showSearch={showSearch}
+                                    showFilters={showFilters}
+                                    showSorting={showSorting}
+                    />
                 </BeatmapsetListSearchProvider>
             </BeatmapsetListSortingProvider>
         </BeatmapsetListFiltersProvider>

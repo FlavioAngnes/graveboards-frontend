@@ -15,18 +15,33 @@ import {FilterOperators} from "@/types/filters";
 import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
 import Grouping from "@/components/beatmapsets/controls/grouping";
 import BeatmapsetGroup from "@/components/beatmapsets/beatmapsetGroup";
+import Search from "@/components/beatmapsets/controls/search";
+import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
 
 interface BeatmapsetsProps {
     title: string;
-    showControls: boolean;
     queueId?: number;
+    showGrouping?: boolean;
+    showViewSwitch?: boolean;
+    showSearch?: boolean;
+    showFilters?: boolean;
+    showSorting?: boolean;
 }
 
 type View = 'list' | 'grid';
 
 export type BeatmapsetListGroup = 'artist' | 'mapper' | null;
 
-const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls, queueId}) => {
+const BeatmapsetList: FC<BeatmapsetsProps> = ({
+                                                  title,
+                                                  queueId,
+                                                  showGrouping = true,
+                                                  showViewSwitch = true,
+                                                  showSearch = true,
+                                                  showSorting = true,
+                                                  showFilters = true
+                                              }) => {
+    const showControls = showGrouping && showViewSwitch && showSearch && showFilters && showSorting;
     const id = title?.toLowerCase().replace(' ', '-');
 
     const [view, setView] = React.useState<View>('grid');
@@ -35,10 +50,11 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls, queueId}) =>
 
     const {layersToUse} = useSorting();
     const {filters, filtersToUse} = useFilters();
+    const {search} = useSearch();
 
     useEffect(() => {
         setPage(0);
-    }, [layersToUse, filtersToUse]);
+    }, [layersToUse, filtersToUse, search]);
 
     const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page, queueId);
 
@@ -92,19 +108,49 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({title, showControls, queueId}) =>
                     {title}
                 </div>
 
-                {showControls && (
-                    <div className="flex items-center self-end gap-4 max-w-full">
-                        <Grouping grouping={grouping} setGrouping={setGrouping}/>
-                        <div className="block h-6 w-[1px] bg-tertiary-200 dark:bg-tertiary-700"></div>
-                        <ViewSwitch view={view} setView={setView}/>
-                        <div className="block h-6 w-[1px] bg-tertiary-200 dark:bg-tertiary-700"></div>
-                        <div className="flex gap-2 relative">
-                            {/*<Search value={search} onChange={setSearch} listId={id}/>*/}
-                            <Filters/>
-                            <SortingLayers/>
+
+                {
+                    showControls && (
+                        <div className="flex items-center self-end gap-4 max-w-full">
+                            {
+                                showGrouping && (
+                                    <Grouping grouping={grouping} setGrouping={setGrouping}/>
+                                )
+                            }
+
+                            <div className="block h-6 w-[1px] bg-tertiary-200 dark:bg-tertiary-700"></div>
+
+                            {
+                                showViewSwitch && (
+                                    <ViewSwitch view={view} setView={setView}/>
+                                )
+                            }
+
+                            <div className="block h-6 w-[1px] bg-tertiary-200 dark:bg-tertiary-700"></div>
+
+                            <div className="flex gap-2 relative">
+                                {
+                                    showSearch && (
+                                        <Search listId={id}/>
+                                    )
+                                }
+
+                                {
+                                    showFilters && (
+                                        <Filters/>
+                                    )
+                                }
+
+                                {
+                                    showSorting && (
+                                        <SortingLayers/>
+                                    )
+                                }
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )
+                }
+
             </div>
 
             {
