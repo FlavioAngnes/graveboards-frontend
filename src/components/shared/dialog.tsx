@@ -1,25 +1,28 @@
 "use client";
 
-import React, {useRef} from 'react';
+import React, {forwardRef, MouseEventHandler} from 'react';
 import {GoX} from "react-icons/go";
 
-const Dialog = ({title, children}: Readonly<{
+interface DialogProps {
     title: string;
+    onClose: MouseEventHandler<HTMLButtonElement>;
     children?: React.ReactNode;
-}>) => {
-    const dialogRef = useRef<HTMLDialogElement | null>(null);
+}
 
+const Dialog = forwardRef<HTMLDialogElement, DialogProps>(({title, onClose, children}, ref) => {
     return (
-        <dialog ref={dialogRef} className="fixed z-50 h-screen top-0 left-0 m-0 p-5 bg-transparent">
-            <div className="bg-white w-full h-full rounded-xl">
-                <div className="flex items-center">
+        <dialog ref={ref} className="bg-white dark:bg-tertiary-900 text-black dark:text-white p-6 sm:rounded-xl">
+            <div className="flex flex-col gap-2">
+                <header className="flex items-center justify-between gap-2">
                     <div className="text-2xl font-medium">{title}</div>
-                    <button onClick={() => dialogRef.current?.close()}><GoX className="size-6"/></button>
-                </div>
+                    <button onClick={onClose}><GoX className="size-6"/></button>
+                </header>
                 {children}
             </div>
         </dialog>
     );
-};
+});
+
+Dialog.displayName = 'Dialog';
 
 export default Dialog;
