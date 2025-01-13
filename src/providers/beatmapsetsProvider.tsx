@@ -4,6 +4,7 @@ import BeatmapsetList from "@/components/beatmapsets/beatmapsetList";
 import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
 import {BeatmapsetListFiltersProvider} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
+import {BeatmapsetListSearchProvider} from "@/context/beatmapsets/BeatmapsetListSearchContext";
 
 export const BeatmapsetsProvider: FC<{
     title?: string,
@@ -23,6 +24,8 @@ export const BeatmapsetsProvider: FC<{
         <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
             <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
                 <BeatmapsetList title={title} showControls={showControls} queueId={queueId}/>
+                <BeatmapsetListSearchProvider>
+                </BeatmapsetListSearchProvider>
             </BeatmapsetListSortingProvider>
         </BeatmapsetListFiltersProvider>
     )
