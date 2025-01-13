@@ -2,6 +2,10 @@ import React, {FC} from 'react';
 import {GoLock} from "react-icons/go";
 import {useAuth} from "@/context/AuthContext";
 import {MdAdd} from "react-icons/md";
+import Dialog from "@/components/shared/dialog";
+import useDialog from "@/hooks/useDialog";
+import Button from "@/components/shared/button";
+import SelectQueues from "@/components/shared/selectQueues";
 
 interface RequestButtonProps {
     isSearchExpanded: boolean;
@@ -14,8 +18,11 @@ const RequestButton: FC<RequestButtonProps> = ({isSearchExpanded}) => {
 
     return (
         <>
-            {isAuthenticated ? (<button
-                className={`gap-2 items-center overflow-hidden justify-center text-white bg-primary-500 rounded-3xl h-12 flex shrink-0 transition-all duration-300 ${
+            {isAuthenticated ? (<Button
+                onClick={onOpen}
+                size="lg"
+                rounded="3xl"
+                className={`shrink-0 ${
                     isSearchExpanded ? 'min-w-12' : 'lg:min-w-80 min-w-40'
                 }`}>
                 <MdAdd className="size-6"/>
@@ -25,9 +32,11 @@ const RequestButton: FC<RequestButtonProps> = ({isSearchExpanded}) => {
                         <p className="block lg:hidden">Request</p>
                     </>
                 )}
-            </button>) : (
-                <button
-                    className={`gap-2 items-center overflow-hidden justify-center text-tertiary-600 bg-tertiary-200 dark:text-tertiary-900 dark:bg-tertiary-500 rounded-3xl h-12 flex shrink-0 transition-all duration-300 ${
+            </Button>) : (
+                <Button
+                    size="lg"
+                    rounded="3xl"
+                    className={`shrink-0 ${
                         isSearchExpanded ? 'min-w-12' : 'lg:min-w-80 min-w-40'
                     }`} disabled>
                     <GoLock className="size-6"/>
@@ -37,7 +46,7 @@ const RequestButton: FC<RequestButtonProps> = ({isSearchExpanded}) => {
                             <p className="block lg:hidden">Login</p>
                         </>
                     )}
-                </button>
+                </Button>
             )}
             <Dialog title={"Request a Map"} ref={ref} onClose={onClose}>
                 <form className="flex flex-col gap-3 mt-2">
