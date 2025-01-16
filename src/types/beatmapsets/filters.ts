@@ -6,6 +6,12 @@ export interface BeatmapsetListFilterOptions<T> {
     isDefault?: true;
 }
 
+export interface RequestFilterOptions<T> {
+    value: RequestFilterValue;
+    options: FilterType<T>;
+    isDefault?: true;
+}
+
 export type BeatmapsetListFilterValue = MapperFilterValue | BeatmapsetFilterValue | BeatmapFilterValue | RequestFilterValue;
 
 export type MapperFilterValue = "mapper_filter.kudosu.available" |
