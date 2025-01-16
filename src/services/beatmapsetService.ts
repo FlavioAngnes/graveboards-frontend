@@ -3,12 +3,15 @@ import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {FilterType} from "@/types/filters";
 
-export interface BeatmapsetListingOptions {
+export interface Pagination {
+    limit?: number;
+    offset?: number;
+}
+
+export interface BeatmapsetListingOptions extends Pagination {
     search?: string;
     filters?: BeatmapsetListFilterOptions<never>[];
     sortingLayers?: BeatmapsetListSortingLayerOptions[];
-    limit?: number;
-    offset?: number;
     queueId?: number;
 }
 
