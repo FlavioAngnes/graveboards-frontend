@@ -5,6 +5,7 @@ import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {MdChevronRight, MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
+import Link from "next/link";
 import clsx from "clsx";
 import {useAuth} from "@/context/AuthContext";
 import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
@@ -99,6 +100,12 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                     )
                 }
             </div>
+
+            <Link
+                href={`/beatmapsets/${beatmapset.id}`}
+                className={`h-full flex items-center justify-center rounded-r-xl bg-tertiary-100 hover:bg-tertiary-200 active:bg-tertiary-300 dark:bg-tertiary-800 hover:dark:bg-tertiary-700 active:dark:bg-tertiary-600 pl-8 -ml-8 hover:w-20 w-14 transition-all duration-150 ease-in-out`}>
+                <MdChevronRight className="size-6 shrink-0 text-tertiary-500 justify-self-end"/>
+            </Link>
         </div>
     );
 }
