@@ -10,7 +10,7 @@ export interface Pagination {
 
 export interface BeatmapsetListingOptions extends Pagination {
     search?: string;
-    filters?: BeatmapsetListFilterOptions<never>[];
+    filters?: BeatmapsetListFilterOptions<unknown>[];
     sortingLayers?: BeatmapsetListSortingLayerOptions[];
     queueId?: number;
 }
@@ -18,7 +18,7 @@ export interface BeatmapsetListingOptions extends Pagination {
 export const getBeatmapsets = async (page: number, options: BeatmapsetListingOptions, init?: RequestInit): Promise<BeatmapsetListing[]> => {
     const searchParams = new URLSearchParams();
 
-    const groupedFilters: Record<string, Record<string, FilterType<never>>> = {};
+    const groupedFilters: Record<string, Record<string, FilterType<unknown>>> = {};
 
     for (const filter of options.filters || []) {
         const [type, filterName] = filter.value.split('.')
