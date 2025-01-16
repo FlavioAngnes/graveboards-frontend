@@ -58,7 +58,7 @@ const QueueHeader: FC<QueueHeaderProps> = ({queue}) => {
                             <MdEdit className="size-6"/>
                             <p className="lg:block hidden">Manage Queue</p>
                             <p className="block lg:hidden">Manage</p>
-                        </button>
+                        </Link>
                     )}
                 </div>
             </div>
