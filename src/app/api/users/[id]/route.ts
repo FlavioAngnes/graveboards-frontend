@@ -8,11 +8,6 @@ if (!API_URL) {
     )
 }
 
-interface LoginResponse {
-    authorization_url: string;
-    state: string;
-}
-
 export async function GET(request: Request, { params }: { params: Promise<{id: string;}>}) {
     try {
         const id = (await params).id;
@@ -40,7 +35,7 @@ export async function GET(request: Request, { params }: { params: Promise<{id: s
             );
         }
 
-        const data: LoginResponse = await response.json();
+        const data = await response.json();
         return NextResponse.json(data);
     } catch (error) {
         console.error(error);

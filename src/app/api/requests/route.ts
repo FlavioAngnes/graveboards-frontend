@@ -1,4 +1,4 @@
-import {NextResponse} from 'next/server';
+import {NextRequest, NextResponse} from 'next/server';
 
 const {API_URL} = process.env;
 
@@ -8,9 +8,8 @@ if (!API_URL) {
     )
 }
 
-export async function GET(request: Request, { params }: { params: Promise<{id: number}>}) {
+export async function GET(request: NextRequest) {
     try {
-        const id = (await params).id;
         const headers = request.headers;
 
         if (!headers.get('Authorization')) {
@@ -20,7 +19,19 @@ export async function GET(request: Request, { params }: { params: Promise<{id: n
             );
         }
 
-        const response = await fetch(`${API_URL}/queues/${id}`, {
+        const searchParams = request.nextUrl.searchParams;
+
+        const limit = searchParams.get('limit') || 10;
+        const offset = searchParams.get('offset') || 0;
+
+        if (Number(limit) > 50) {
+            return NextResponse.json(
+                {error: 'Limit must be less than or equal to 50.'},
+                {status: 400}
+            );
+        }
+
+        const response = await fetch(`${API_URL}/requests?${searchParams}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +41,7 @@ export async function GET(request: Request, { params }: { params: Promise<{id: n
 
         if (!response.ok) {
             return NextResponse.json(
-                {error: 'Failed to fetch queue from backend.'},
+                {error: 'Failed to fetch users from backend.'},
                 {status: 500}
             );
         }
@@ -40,7 +51,7 @@ export async function GET(request: Request, { params }: { params: Promise<{id: n
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            {error: 'Failed to fetch queue from backend.'},
+            {error: 'Failed to fetch users from backend.'},
             {status: 500}
         );
     }

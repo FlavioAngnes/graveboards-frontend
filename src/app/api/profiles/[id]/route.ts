@@ -8,29 +8,20 @@ if (!API_URL) {
     )
 }
 
-export async function GET(request: Request, { params }: { params: Promise<{id: number}>}) {
+export async function GET(request: Request, { params }: { params: Promise<{id: string;}>}) {
     try {
         const id = (await params).id;
-        const headers = request.headers;
 
-        if (!headers.get('Authorization')) {
-            return NextResponse.json(
-                {error: 'Unauthorized request'},
-                {status: 401}
-            );
-        }
-
-        const response = await fetch(`${API_URL}/queues/${id}`, {
+        const response = await fetch(`${API_URL}/profiles/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `${headers.get('Authorization')}`,
             },
         });
 
         if (!response.ok) {
             return NextResponse.json(
-                {error: 'Failed to fetch queue from backend.'},
+                {error: 'Failed to fetch profile from backend.'},
                 {status: 500}
             );
         }
@@ -40,7 +31,7 @@ export async function GET(request: Request, { params }: { params: Promise<{id: n
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            {error: 'Failed to fetch queue from backend.'},
+            {error: 'Failed to fetch profile from backend.'},
             {status: 500}
         );
     }
