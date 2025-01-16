@@ -13,10 +13,16 @@ export const ViewSwitch: FC<ViewSwitchProps> = ({view, setView}) => {
             <div className="block sm:hidden">
                 <button
                     onClick={() => view === 'grid' ? setView('list') : setView('grid')}
-                    className="p-1 size-9 rounded-lg text-primary-500 border-primary-500 hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out"
+                    className="p-1 h-9 rounded-lg text-primary-500 border-primary-500 hover:bg-tertiary-100 active:bg-tertiary-200 hover:dark:bg-tertiary-900 active:dark:bg-tertiary-800 flex items-center border-2 justify-center transition-colors duration-300 ease-in-out"
                 >
-                    <MdGridView className={`size-5 ${view === 'grid' ? 'block' : 'hidden'}`}/>
-                    <MdOutlineViewAgenda className={`size-5 ${view === 'list' ? 'block' : 'hidden'}`}/>
+                    <div className={`flex items-center gap-1.5 pr-1 ${view === 'grid' ? 'block' : 'hidden'}`}>
+                        <MdGridView className={`size-5 ${view === 'grid' ? 'block' : 'hidden'}`}/>
+                        Grid
+                    </div>
+                    <div className={`flex items-center gap-1.5 pr-1 ${view === 'list' ? 'block' : 'hidden'}`}>
+                        <MdOutlineViewAgenda className={`size-5 ${view === 'list' ? 'block' : 'hidden'}`}/>
+                        List
+                    </div>
                 </button>
             </div>
             <div className="hidden sm:flex gap-2">
