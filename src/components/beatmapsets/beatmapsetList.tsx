@@ -4,19 +4,15 @@ import React, {FC, useEffect, useRef} from 'react';
 import useBeatmapsets from "@/hooks/useBeatmapsets";
 import BeatmapsetPanel from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanel";
 import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanelSkeleton";
-import {ViewSwitch} from "@/components/beatmapsets/controls/viewSwitch";
-import SortingLayers from "@/components/beatmapsets/controls/sortingLayers/sortingLayers";
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import clsx from "clsx";
-import Filters from "@/components/beatmapsets/controls/filters/filters";
 import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import FilterChip from "@/components/shared/filterChip";
 import {FilterOperators} from "@/types/filters";
 import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
-import Grouping from "@/components/beatmapsets/controls/grouping";
 import BeatmapsetGroup from "@/components/beatmapsets/beatmapsetGroup";
-import Search from "@/components/beatmapsets/controls/search";
 import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import ListControls from "@/components/shared/lists/listControls";
 
 interface BeatmapsetsProps {
     title: string;
@@ -115,46 +111,20 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
                     {title}
                 </div>
 
-
                 {
                     showControls && (
-                        <div className="flex items-center self-end gap-4 max-w-full">
-                            {
-                                showGrouping && (
-                                    <Grouping grouping={grouping} setGrouping={setGrouping}/>
-                                )
-                            }
-
-                            <div className="block h-6 w-[1px] bg-tertiary-200 dark:bg-tertiary-700"></div>
-
-                            {
-                                showViewSwitch && (
-                                    <ViewSwitch view={view} setView={setView}/>
-                                )
-                            }
-
-                            <div className="block h-6 w-[1px] bg-tertiary-200 dark:bg-tertiary-700"></div>
-
-                            <div className="flex gap-2 relative">
-                                {
-                                    showSearch && (
-                                        <Search listId={id}/>
-                                    )
-                                }
-
-                                {
-                                    showFilters && (
-                                        <Filters/>
-                                    )
-                                }
-
-                                {
-                                    showSorting && (
-                                        <SortingLayers/>
-                                    )
-                                }
-                            </div>
-                        </div>
+                        <ListControls
+                            id={id}
+                            showViewSwitch={showViewSwitch}
+                            view={view}
+                            setView={setView}
+                            showGrouping={showGrouping}
+                            grouping={grouping}
+                            setGrouping={setGrouping}
+                            showSearch={showSearch}
+                            showFilters={showFilters}
+                            showSorting={showSorting}
+                        />
                     )
                 }
 
