@@ -2,9 +2,10 @@
 
 import {FC} from "react";
 import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
-import {MdChevronRight, MdRadioButtonChecked} from "react-icons/md";
+import {MdChevronRight, MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
+import Button from "@/components/shared/button";
 
 interface BeatmapsetProps {
     beatmapset: BeatmapsetListing,
@@ -16,6 +17,18 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
             <div
                 className="hidden sm:block h-full aspect-video bg-center bg-no-repeat bg-[size:215%]"
                 style={{backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})`}}>
+                <div className="flex gap-1.5 z-10">
+                    <Button className="px-1.5 gap-1 h-8.5 font-semibold text-sm transition-[opacity, max-height] box-border duration-300 ease-in-out">
+                        <MdPlayArrow className="size-4 shrink-0"/>
+                        PREVIEW
+                    </Button>
+                    <div
+                        className="bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out">
+                        {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
+                    </div>
+                </div>
+                <div
+                    className="absolute w-full h-full backdrop-blur backdrop-brightness-75 -mb-2.5 -mr-2.5 duration-300"></div>
             </div>
             <div
                 className={`bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 grid grid-cols-[repeat(2,_minmax(0,_1fr)),_3rem]

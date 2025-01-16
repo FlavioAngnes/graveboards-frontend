@@ -3,9 +3,10 @@
 import {FC, useState} from "react";
 import clsx from "clsx";
 import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
-import {MdRadioButtonChecked} from "react-icons/md";
+import {MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
+import Button from "@/components/shared/button";
 
 interface BeatmapsetProps {
     beatmapset: BeatmapsetListing,
@@ -19,14 +20,24 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
             <div
                 className={clsx("relative flex flex-col items-end p-2.5 justify-end gap-3 grow shrink-0 basis-0 self-stretch transition-[filter] duration-300 ease-in-out bg-center bg-no-repeat bg-[size:215%] tracking-[0.25px]", {"delay-300": hover})}
                 style={{backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})`}}>
+                <div className="flex gap-1.5 z-10">
+                    <Button className={clsx(
+                        "px-1.5 gap-1 h-8.5 font-semibold text-sm transition-[opacity, max-height] box-border duration-300 ease-in-out",
+                        {"opacity-0": hover}
+                    )}>
+                        <MdPlayArrow className="size-4 shrink-0"/>
+                        PREVIEW
+                    </Button>
+                    <div
+                        className={clsx(
+                            "bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out",
+                            {"opacity-0": hover}
+                        )}>
+                        {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
+                    </div>
+                </div>
                 <div
                     className={clsx("absolute w-full h-full backdrop-blur backdrop-brightness-75 -mb-2.5 -mr-2.5 duration-300", {"opacity-0": !hover})}></div>
-                <div
-                    className={clsx("bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out",
-                        {"opacity-0": hover},
-                        hover ? "max-h-0" : "max-h-7")}>
-                    {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
-                </div>
             </div>
             <div
                 className="bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 flex gap-3 p-2.5 self-stretch min-w-24 transition-colors duration-300 ease-in-out overflow-hidden relative tracking-wide">
