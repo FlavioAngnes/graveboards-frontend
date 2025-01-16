@@ -14,7 +14,7 @@ const QueueHeader: FC<QueueHeaderProps> = ({queue}) => {
 
     return (
         <div
-            className="cursor-pointer px-8 py-6 flex-col gap-8 lg:flex-row flex justify-between items-center rounded-xl dark:text-white self-stretch transition-colors duration-300 ease-in-out overflow-hidden">
+            className="px-8 py-6 flex-col gap-8 lg:flex-row flex justify-between items-center rounded-xl dark:text-white self-stretch transition-colors duration-300 ease-in-out overflow-hidden">
             <div className="flex items-center gap-6 flex-1 overflow-hidden">
                 <div className="max-[400px]:hidden size-24 rounded-xl shrink-0 bg-cover" style={{backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})`}}></div>
                 <div className="flex flex-col gap-1.5 flex-1">
