@@ -7,6 +7,8 @@ import {MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
 import Button from "@/components/shared/button";
+import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
+import {useAuth} from "@/context/AuthContext";
 
 interface BeatmapsetProps {
     beatmapset: BeatmapsetListing,
@@ -14,6 +16,8 @@ interface BeatmapsetProps {
 
 const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
     const [hover, setHover] = useState(false);
+
+    const {isAdmin} = useAuth();
 
     return (
         <div className="flex flex-col items-start shrink-0 rounded-xl overflow-hidden self-stretch min-w-72 h-64">
@@ -60,6 +64,13 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
                          onMouseLeave={() => setHover(false)}
                          className="flex flex-col mt-2 gap-0 transition-[gap] duration-300 delay-300 ease-out group hover:gap-2 hover:delay-0">
                         <div className="flex items-center gap-1 self-stretch">
+                            {
+                                isAdmin && (
+                                    <div className="flex items-center justify-center">
+                                        <BeatmapsetStatusBadge status={beatmapset.beatmapset_snapshot.verified ? "verified" : "unverified"}/>
+                                    </div>
+                                )
+                            }
                             <MdRadioButtonChecked className="size-4 shrink-0 text-tertiary-500 dark:text-tertiary-400"/>
                             <div className="flex items-center gap-0.5">
                                 {

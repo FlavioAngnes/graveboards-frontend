@@ -5,6 +5,9 @@ import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {MdChevronRight, MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
+import clsx from "clsx";
+import {useAuth} from "@/context/AuthContext";
+import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
 import Button from "@/components/shared/button";
 
 interface BeatmapsetProps {
@@ -12,6 +15,8 @@ interface BeatmapsetProps {
 }
 
 const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
+    const {isAdmin} = useAuth();
+
     return (
         <div className="flex rounded-xl overflow-hidden h-24">
             <div
@@ -31,8 +36,10 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                     className="absolute w-full h-full backdrop-blur backdrop-brightness-75 -mb-2.5 -mr-2.5 duration-300"></div>
             </div>
             <div
-                className={`bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 grid grid-cols-[repeat(2,_minmax(0,_1fr)),_3rem]
-                    lg:grid-cols-[repeat(3,_minmax(0,_1fr)),_3rem] xl:grid-cols-[repeat(4,_minmax(0,_1fr)),_3rem] w-full items-center gap-8 p-8 sm:p-4 self-stretch transition-colors duration-300 ease-in-out overflow-hidden relative tracking-wide`}>
+                className={clsx(
+                    `bg-tertiary-50 dark:text-white dark:bg-tertiary-900 grid w-full items-center gap-8 px-4 relative tracking-wide rounded-xl xl:rounded-l-none xl:rounded-r-xl`,
+                    isAdmin ? 'lg:grid-cols-4 grid-cols-3' : 'lg:grid-cols-3 grid-cols-2'
+                )}>
                 <div className="truncate">
                     <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.beatmapset_snapshot.beatmapset_id}`}
                        className="text-sm font-semibold leading-5" target="_blank">
@@ -84,11 +91,13 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                     </div>
                 </div>
 
-                <div className="hidden xl:block">
-                    {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
-                </div>
-
-                <MdChevronRight className="size-6 shrink-0 text-tertiary-500 justify-self-end"/>
+                {
+                    isAdmin && (
+                        <div className="flex items-center justify-center">
+                            <BeatmapsetStatusBadge status={beatmapset.beatmapset_snapshot.verified ? "verified" : "unverified"}/>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );
