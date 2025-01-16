@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import useQueue from "@/hooks/useQueue";
+import {RequestsProvider} from "@/providers/requestsProvider";
 import QueueHeader from "@/components/queues/queueHeader";
-import {BeatmapsetsProvider} from "@/providers/beatmapsetsProvider";
 
 export const QueueContent: FC<{ id: number }> = ({id}) => {
     const {queue} = useQueue(id);
@@ -13,7 +13,7 @@ export const QueueContent: FC<{ id: number }> = ({id}) => {
     return (
         <div className="flex flex-col gap-6">
             <QueueHeader queue={queue}/>
-            <BeatmapsetsProvider
+            <RequestsProvider
                 title="Queue Requests"
                 defaultSortingLayers={[
                     {
