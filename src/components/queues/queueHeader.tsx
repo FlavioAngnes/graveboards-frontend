@@ -4,6 +4,7 @@ import React, {FC} from 'react';
 import {Queue} from "@/types/queue";
 import {MdCircle, MdEdit} from "react-icons/md";
 import {useAuth} from "@/context/AuthContext";
+import Link from "next/link";
 
 interface QueueHeaderProps {
     queue: Queue;
@@ -51,7 +52,8 @@ const QueueHeader: FC<QueueHeaderProps> = ({queue}) => {
                         </div>
                     </div>
                     {(user?.id && queue.display_data.manager_profiles.some(manager => manager.username === user.profile.username) || isAdmin) && (
-                        <button
+                        <Link
+                            href={`/queues/${queue.id}/manage`}
                             className="bg-primary-500 hover:bg-primary-400 active:bg-primary-300 text-white px-6 py-2.5 rounded-full lg:flex hidden items-center gap-1.5 shrink-0 transition-all duration-300 ease-in-out min-w-12 lg:min-w-44">
                             <MdEdit className="size-6"/>
                             <p className="lg:block hidden">Manage Queue</p>
