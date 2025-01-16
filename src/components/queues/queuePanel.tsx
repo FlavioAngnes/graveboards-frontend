@@ -15,16 +15,16 @@ const QueuePanel: FC<QueuePanelProps> = ({queue}) => {
     const isManager = user && queue.display_data.manager_profiles.some(manager => manager.username === user.profile.username);
 
     return (
-        <Link href={`/queues/${queue.id}`}
-            className="cursor-pointer px-8 py-6 flex-col gap-8 lg:flex-row flex justify-between items-center rounded-xl bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 self-stretch transition-colors duration-300 ease-in-out overflow-hidden">
+        <div className="px-8 py-6 flex-col gap-8 lg:flex-row flex justify-between items-center rounded-xl bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 self-stretch transition-colors duration-300 ease-in-out overflow-hidden">
             <div className="flex items-center gap-6 flex-1 overflow-hidden">
-                <div className="max-[400px]:hidden size-24 rounded-xl shrink-0 bg-cover" style={{backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})`}}></div>
-                <div className="flex flex-col gap-1.5 flex-1">
+                <div className="max-[400px]:hidden size-24 rounded-xl shrink-0 bg-cover"
+                     style={{backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})`}}></div>
+                <div className="flex flex-col gap-1.5 flex-1 text-left">
                     <div>
                         <div className="font-semibold">{queue.name}</div>
-                        <div className="text-sm text-tertiary-500">Owned by <a
+                        <div className="text-sm text-tertiary-500">Owned by <Link
                             href={`https://osu.ppy.sh/users/${queue.user_id}`}
-                            className="font-semibold" target="_blank">{queue.display_data.owner_profile.username}</a>
+                            className="font-semibold" target="_blank">{queue.display_data.owner_profile.username}</Link>
                             {
                                 queue.display_data.manager_profiles.length > 0 && (
                                     <>
@@ -61,10 +61,12 @@ const QueuePanel: FC<QueuePanelProps> = ({queue}) => {
                             <p className="block lg:hidden">Manage</p>
                         </Link>
                     )}
-                    <MdChevronRight className="size-6 shrink-0 text-tertiary-500"/>
+                    <Link href={`/queues/${queue.id}`}>
+                        <MdChevronRight className="size-6 shrink-0 text-tertiary-500 cursor-pointer rounded-full"/>
+                    </Link>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 };
 
