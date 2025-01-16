@@ -2,6 +2,7 @@ export interface BeatmapsetListing {
     id: number;
     beatmapset_snapshot: BeatmapsetSnapshot;
     display_data: BeatmapsetDisplayData;
+    updated_at: string;
 }
 
 export interface BeatmapsetSnapshot {
