@@ -6,16 +6,18 @@ export interface BeatmapsetListFilterOptions<T> {
     isDefault?: true;
 }
 
-export type BeatmapsetListFilterValue =
-    "mapper_filter.kudosu.available" |
+export type BeatmapsetListFilterValue = MapperFilterValue | BeatmapsetFilterValue | BeatmapFilterValue | RequestFilterValue;
+
+export type MapperFilterValue = "mapper_filter.kudosu.available" |
     "mapper_filter.user_id" |
     "mapper_filter.username" |
     "mapper_filter.country_code" |
     "mapper_filter.graveyard_beatmapset_count" |
     "mapper_filter.loved_beatmapset_count" |
     "mapper_filter.pending_beatmapset_count" |
-    "mapper_filter.ranked_beatmapset_count" |
-    "beatmapset_filter.beatmapset_id" |
+    "mapper_filter.ranked_beatmapset_count";
+
+export type BeatmapsetFilterValue = "beatmapset_filter.beatmapset_id" |
     "beatmapset_filter.verified" |
     "beatmapset_filter.artist" |
     "beatmapset_filter.title" |
@@ -24,8 +26,9 @@ export type BeatmapsetListFilterValue =
     "beatmapset_filter.mode" |
     "beatmapset_filter.status" |
     "beatmapset_filter.favourite_count" |
-    "beatmapset_filter.play_count" |
-    "beatmap_filter.beatmap_id" |
+    "beatmapset_filter.play_count";
+
+export type BeatmapFilterValue = "beatmap_filter.beatmap_id" |
     "beatmap_filter.difficulty_rating" |
     "beatmap_filter.mode" |
     "beatmap_filter.status" |
@@ -39,8 +42,10 @@ export type BeatmapsetListFilterValue =
     "beatmap_filter.cs" |
     "beatmap_filter.drain" |
     "beatmap_filter.passcount" |
-    "beatmap_filter.playcount" |
-    "request_filter.queue_id";
+    "beatmap_filter.playcount";
+
+export type RequestFilterValue = "request_filter.queue_id" |
+    "request_filter.beatmapset_id";
 
 /*export interface BeatmapsetsFilters {
     mapper_filter?: MapperFilters;
