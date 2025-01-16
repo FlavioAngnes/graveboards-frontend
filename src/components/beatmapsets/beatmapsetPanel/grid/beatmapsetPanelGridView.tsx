@@ -25,7 +25,7 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
                     className={clsx("bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out",
                         {"opacity-0": hover},
                         hover ? "max-h-0" : "max-h-7")}>
-                    {TimeUtils.formatTime(beatmapset.display_data.length)}
+                    {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
                 </div>
             </div>
             <div
@@ -36,14 +36,14 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
                 <div className="overflow-hidden flex-1 truncate">
                     <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.beatmapset_snapshot.beatmapset_id}`}
                        className="text-sm font-semibold leading-5" target="_blank">
-                        {beatmapset.display_data.title}
+                        {beatmapset.beatmapset_snapshot.title}
                     </a>
                     <div className="text-xs text-tertiary-500 dark:text-tertiary-400 truncate">
-                        by {beatmapset.display_data.artist}
+                        by {beatmapset.beatmapset_snapshot.artist}
                     </div>
                     <div className="text-xs text-tertiary-500 dark:text-tertiary-400">
                         Mapped by <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
-                                     className="font-semibold" target="_blank">{beatmapset.display_data.mapper}</a>
+                                     className="font-semibold" target="_blank">{beatmapset.beatmapset_snapshot.creator}</a>
                     </div>
                     <div onMouseEnter={() => setHover(true)}
                          onMouseLeave={() => setHover(false)}

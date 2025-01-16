@@ -23,14 +23,14 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                 <div className="truncate">
                     <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.beatmapset_snapshot.beatmapset_id}`}
                        className="text-sm font-semibold leading-5" target="_blank">
-                        {beatmapset.display_data.title}
+                        {beatmapset.beatmapset_snapshot.title}
                     </a>
                     <div className="text-xs text-tertiary-500 dark:text-tertiary-400 truncate">
-                        by {beatmapset.display_data.artist}
+                        by {beatmapset.beatmapset_snapshot.artist}
                     </div>
                     <div className="block lg:hidden text-xs text-tertiary-500 dark:text-tertiary-400 truncate">
                         Mapped by <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
-                                     className="font-semibold" target="_blank">{beatmapset.display_data.mapper}</a>
+                                     className="font-semibold" target="_blank">{beatmapset.beatmapset_snapshot.creator}</a>
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                             Mapped by
                         </div>
                         <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
-                           className="text-sm font-semibold" target="_blank">{beatmapset.display_data.mapper}</a>
+                           className="text-sm font-semibold" target="_blank">{beatmapset.beatmapset_snapshot.creator}</a>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                 </div>
 
                 <div className="hidden xl:block">
-                    {TimeUtils.formatTime(beatmapset.display_data.length)}
+                    {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
                 </div>
 
                 <MdChevronRight className="size-6 shrink-0 text-tertiary-500 justify-self-end"/>
