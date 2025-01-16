@@ -6,7 +6,7 @@ import {BeatmapsetListFiltersProvider} from "@/context/beatmapsets/BeatmapsetLis
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 import {BeatmapsetListSearchProvider} from "@/context/beatmapsets/BeatmapsetListSearchContext";
 
-export const BeatmapsetsProvider: FC<{
+interface BeatmapsetsProviderProps {
     title?: string,
     defaultFilters?: Required<BeatmapsetListFilterOptions<never>>[];
     defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[];
@@ -17,7 +17,9 @@ export const BeatmapsetsProvider: FC<{
     showFilters?: boolean;
     showSorting?: boolean;
     children?: ReactNode;
-}> = ({
+}
+
+export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
           title = 'Beatmapsets',
           defaultFilters = [],
           defaultSortingLayers = [],
