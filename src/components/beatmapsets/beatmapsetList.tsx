@@ -60,7 +60,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
 
     const observerRef = useRef<HTMLDivElement | null>(null);
 
-    const groupedBeatmapsets = beatmapsets.reduce((groups, beatmap) => {
+    const groupedBeatmapsets = beatmapsets.reduce((groups, beatmapset) => {
         if (!grouping) {
             return groups;
         }
@@ -69,7 +69,9 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
         if (!groups[groupKey]) {
             groups[groupKey] = [];
         }
-        groups[groupKey].push(beatmap);
+
+        groups[groupKey].push(beatmapset);
+
         return groups;
     }, {} as Record<string, typeof beatmapsets>);
 
