@@ -65,7 +65,12 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
             return groups;
         }
 
-        const groupKey = (beatmap.display_data as never)[grouping];
+        const groupKey = ({
+            artist: beatmapset.beatmapset_snapshot.artist,
+            title: beatmapset.beatmapset_snapshot.title,
+            mapper: beatmapset.beatmapset_snapshot.creator
+        })[grouping];
+
         if (!groups[groupKey]) {
             groups[groupKey] = [];
         }
