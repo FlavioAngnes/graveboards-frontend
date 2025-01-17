@@ -4,6 +4,8 @@ import React from "react";
 import Sidebar from "@/components/layout/sidebar/sidebar";
 import Navbar from "@/components/layout/navbar/navbar";
 import {AuthProvider} from "@/context/AuthContext";
+import {BeatmapPreviewProvider} from "@/context/BeatmapPreviewContext";
+import BeatmapPreviewPlayer from "@/components/shared/beatmapPreviewPlayer";
 
 export const metadata: Metadata = {
     title: "Graveboards",
@@ -18,15 +20,18 @@ const RootLayout = ({
     <html lang="en">
     <body className="bg-white dark:bg-black text-black dark:text-white antialiased">
     <AuthProvider>
-        <div className="flex">
-            <Sidebar/>
-            <div className="flex-1">
-                <Navbar/>
-                <div className="px-5 pb-5">
-                    {children}
+        <BeatmapPreviewProvider>
+            <div className="flex">
+                <Sidebar/>
+                <div className="flex-1">
+                    <Navbar/>
+                    <div className="px-5 pb-5">
+                        {children}
+                    </div>
                 </div>
             </div>
-        </div>
+            <BeatmapPreviewPlayer/>
+        </BeatmapPreviewProvider>
     </AuthProvider>
     </body>
     </html>
