@@ -1,11 +1,7 @@
 import {Queue} from "@/types/queue";
+import {Pagination} from "@/services/beatmapsetService";
 
-export interface BeatmapsetListingOptions {
-    limit?: number;
-    offset?: number;
-}
-
-export const getQueues = async (page: number, options: BeatmapsetListingOptions, init?: RequestInit): Promise<Queue[]> => {
+export const getQueues = async (page: number, options: Pagination, init?: RequestInit): Promise<Queue[]> => {
     const searchParams = new URLSearchParams();
 
     searchParams.append('limit', (options.limit || 10).toString());
