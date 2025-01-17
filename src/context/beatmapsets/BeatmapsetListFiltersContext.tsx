@@ -4,10 +4,11 @@ import {createContext, FC, ReactNode, useContext, useState} from 'react';
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 
 interface BeatmapsetListFiltersContextType {
-    filters: BeatmapsetListFilterOptions<never>[]
-    filtersToUse: BeatmapsetListFilterOptions<never>[]
-    putFilter: (filter: BeatmapsetListFilterOptions<never>) => void;
-    removeFilter: (filter: BeatmapsetListFilterOptions<never>) => void;
+    filters: BeatmapsetListFilterOptions<unknown>[];
+    userFilters: BeatmapsetListFilterOptions<unknown>[];
+    filtersToUse: BeatmapsetListFilterOptions<unknown>[];
+    putFilter: (filter: BeatmapsetListFilterOptions<unknown>) => void;
+    removeFilter: (filter: BeatmapsetListFilterOptions<unknown>) => void;
     canClear: boolean;
     clearFilters: () => void;
     canApply: boolean;
@@ -17,6 +18,7 @@ interface BeatmapsetListFiltersContextType {
 
 export const BeatmapsetListFiltersContext = createContext<BeatmapsetListFiltersContextType>({
     filters: [],
+    userFilters: [],
     filtersToUse: [],
     putFilter: () => {},
     removeFilter: () => {},
@@ -29,20 +31,21 @@ export const BeatmapsetListFiltersContext = createContext<BeatmapsetListFiltersC
 
 export const BeatmapsetListFiltersProvider: FC<{
     children: ReactNode,
-    defaultFilters?: BeatmapsetListFilterOptions<never>[]
+    defaultFilters?: BeatmapsetListFilterOptions<unknown>[]
 }> = ({children, defaultFilters}) => {
-    const [filters, setFilters] = useState<BeatmapsetListFilterOptions<never>[]>([]);
-    const [filtersToUse, setFiltersToUse] = useState<BeatmapsetListFilterOptions<never>[]>(defaultFilters || []);
+    const [filters, setFilters] = useState<BeatmapsetListFilterOptions<unknown>[]>([]);
+    const [userFilters, setUserFilters] = useState<BeatmapsetListFilterOptions<unknown>[]>([]);
+    const [filtersToUse, setFiltersToUse] = useState<BeatmapsetListFilterOptions<unknown>[]>(defaultFilters || []);
 
     const canClear = Object.keys(filters).length > 0;
     const canApply = JSON.stringify(filters) !== JSON.stringify(filtersToUse.filter(layer => !layer.isDefault));
 
-    const putFilter = (filter: BeatmapsetListFilterOptions<never>) => {
+    const putFilter = (filter: BeatmapsetListFilterOptions<unknown>) => {
         const updatedFilters = filters.filter(f => f.value !== filter.value);
         setFilters([...updatedFilters, filter]);
     }
 
-    const removeFilter = (filter: BeatmapsetListFilterOptions<never>) => {
+    const removeFilter = (filter: BeatmapsetListFilterOptions<unknown>) => {
         // Removes the options provided by the filter from the filter options.
         // If the options are empty afterward, the filter is removed.
         const updatedFilters = filters
@@ -65,15 +68,22 @@ export const BeatmapsetListFiltersProvider: FC<{
             })
             .filter((filter) => filter !== null);
         setFilters(updatedFilters);
+
+        const defaultFilters = filtersToUse.filter(layer => layer.isDefault);
+        const updatedLayersToUse = [...defaultFilters, ...updatedFilters];
+        setUserFilters(updatedFilters);
+        setFiltersToUse(updatedLayersToUse);
     }
 
     const clearFilters = () => {
         setFilters([]);
+        setUserFilters([]);
     }
 
     const applyFilters = () => {
         const defaultFilters = filtersToUse.filter(layer => layer.isDefault);
         const updatedLayersToUse = [...defaultFilters, ...filters];
+        setUserFilters(filters);
         setFiltersToUse(updatedLayersToUse);
     }
 
@@ -84,6 +94,7 @@ export const BeatmapsetListFiltersProvider: FC<{
     return (
         <BeatmapsetListFiltersContext.Provider value={{
             filters,
+            userFilters,
             filtersToUse,
             putFilter,
             removeFilter,
