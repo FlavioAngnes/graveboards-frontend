@@ -1,6 +1,6 @@
 import React from 'react';
-import BeatmapsetPanelSkeletonGridView from "@/components/beatmapsets/beatmapsetPanel/grid/beatmapsetPanelSkeletonGridView";
-import BeatmapsetPanelSkeletonListView from "@/components/beatmapsets/beatmapsetPanel/list/beatmapsetPanelSkeletonListView";
+import RequestPanelSkeletonGridView from "@/components/requests/panels/grid/requestPanelSkeletonGridView";
+import RequestPanelSkeletonListView from "@/components/requests/panels/list/requestPanelSkeletonListView";
 
 interface BeatmapsetPanelSkeletonProps {
     view?: "list" | "grid"
@@ -8,9 +8,9 @@ interface BeatmapsetPanelSkeletonProps {
 
 const RequestPanelSkeleton = ({view}: BeatmapsetPanelSkeletonProps) => {
     return view === "grid" ? (
-        <BeatmapsetPanelSkeletonGridView/>
+        <RequestPanelSkeletonGridView/>
     ) : (
-        <BeatmapsetPanelSkeletonListView/>
+        <RequestPanelSkeletonListView/>
     );
 };
 
