@@ -6,6 +6,7 @@ import Filters from "@/components/beatmapsets/controls/filters/filters";
 import SortingLayers from "@/components/beatmapsets/controls/sortingLayers/sortingLayers";
 
 interface ListControlsProps {
+    showControls?: boolean;
     showGrouping?: boolean;
     showViewSwitch?: boolean;
     showSearch?: boolean;
@@ -19,6 +20,7 @@ interface ListControlsProps {
 }
 
 const ListControls: FC<ListControlsProps> = ({
+                                                 showControls = true,
                                                  showGrouping = true,
                                                  showViewSwitch = true,
                                                  showSearch = true,
@@ -30,6 +32,8 @@ const ListControls: FC<ListControlsProps> = ({
                                                  view,
                                                  setView,
                                              }) => {
+    if (!showControls) return null;
+
     return (
         <div className="flex flex-row items-center justify-center self-end gap-4 max-w-full">
             {
