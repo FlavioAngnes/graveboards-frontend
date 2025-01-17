@@ -11,7 +11,7 @@ interface DialogProps {
 
 const Dialog = forwardRef<HTMLDialogElement, DialogProps>(({title, onClose, children}, ref) => {
     return (
-        <dialog ref={ref} className="bg-white dark:bg-tertiary-900 text-black dark:text-white p-6 sm:rounded-xl">
+        <dialog ref={ref} className="bg-white max-w-[100vw] max-h-[100vh] h-screen w-screen sm:h-max sm:w-max overflow-y-scroll overflow-x-hidden dark:bg-tertiary-900 text-black dark:text-white p-6 sm:rounded-xl">
             <div className="flex flex-col gap-2">
                 <header className="flex items-center justify-between gap-2">
                     <div className="text-2xl font-medium">{title}</div>
