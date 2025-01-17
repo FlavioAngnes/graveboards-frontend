@@ -36,7 +36,7 @@ const useBeatmapsets = (page: number, queueId?: number) => {
                 } else {
                     setBeatmapsets((prev) => [...prev, ...data]);
                 }
-                setHasMore(!!data.length);
+                setHasMore(!!data.length && data.length === 10);
                 setLoading(false);
             })
             .catch(e => {
