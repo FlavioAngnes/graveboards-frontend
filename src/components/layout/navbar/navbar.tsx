@@ -2,7 +2,6 @@
 
 import React, {useState} from 'react';
 import {GoX} from "react-icons/go";
-import Dialog from "@/components/shared/dialog";
 import {FiMenu} from "react-icons/fi";
 import RequestButton from "@/components/layout/navbar/requestButton";
 import ProfileButton from "@/components/layout/navbar/profileButton";
@@ -62,9 +61,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <Dialog title="Filters"/>
         </>
-
     );
 };
 
