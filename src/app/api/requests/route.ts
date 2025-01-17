@@ -56,3 +56,42 @@ export async function GET(request: NextRequest) {
         );
     }
 }
+
+export async function POST(request: NextRequest) {
+    try {
+        const headers = request.headers;
+
+        if (!headers.get('Authorization')) {
+            return NextResponse.json(
+                {error: 'Unauthorized request'},
+                {status: 401}
+            );
+        }
+
+        const body = await request.json();
+
+        const response = await fetch(`${API_URL}/requests`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${headers.get('Authorization')}`,
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            return NextResponse.json(
+                {error: 'Failed to post request to backend.'},
+                {status: 500}
+            );
+        }
+
+        return NextResponse.json(await response.json());
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {error: 'Failed to post request to backend.'},
+            {status: 500}
+        );
+    }
+}
