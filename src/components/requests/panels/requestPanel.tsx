@@ -8,15 +8,14 @@ import RequestPanelListView from "@/components/requests/panels/list/requestPanel
 interface RequestPanelProps {
     beatmapset: BeatmapsetListing;
     view: "list" | "grid";
-    editable?: boolean;
-    showQueue?: boolean;
+    editMode?: boolean;
 }
 
-const RequestPanel: FC<RequestPanelProps> = ({beatmapset, view, editable = false, showQueue = true}) => {
+const RequestPanel: FC<RequestPanelProps> = ({beatmapset, view, editMode = false}) => {
     return view === "grid" ? (
-        <RequestPanelGridView beatmapset={beatmapset} showQueue={showQueue}/>
+        <RequestPanelGridView beatmapset={beatmapset}/>
     ) : (
-        <RequestPanelListView beatmapset={beatmapset} editable={editable}/>
+        <RequestPanelListView beatmapset={beatmapset} editMode={editMode}/>
     );
 }
 

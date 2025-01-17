@@ -17,7 +17,7 @@ interface RequestsProviderProps {
     showFilters?: boolean;
     showSorting?: boolean;
     children?: ReactNode;
-    editable?: boolean;
+    editMode?: boolean;
 }
 
 export const RequestsProvider: FC<RequestsProviderProps> = ({
@@ -30,8 +30,8 @@ export const RequestsProvider: FC<RequestsProviderProps> = ({
           showSearch = true,
           showFilters = true,
           showSorting = true,
-          editable = false
       }) => {
+                                                                editMode = false,
     return (
         <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
             <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
@@ -43,7 +43,7 @@ export const RequestsProvider: FC<RequestsProviderProps> = ({
                                     showSearch={showSearch}
                                     showFilters={showFilters}
                                     showSorting={showSorting}
-                                    editable={editable}
+                                 editMode={editMode}
                     />
                 </BeatmapsetListSearchProvider>
             </BeatmapsetListSortingProvider>

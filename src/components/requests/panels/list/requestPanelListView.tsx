@@ -18,10 +18,10 @@ import {useBeatmapPreview} from "@/context/BeatmapPreviewContext";
 interface RequestPanelProps {
     // TODO: Replace with Request type
     beatmapset: BeatmapsetListing,
-    editable?: boolean;
+    editMode?: boolean;
 }
 
-const RequestPanelListView: FC<RequestPanelProps> = ({beatmapset, editable = false}) => {
+const RequestPanelListView: FC<RequestPanelProps> = ({beatmapset, editMode = false}) => {
     const {isAdmin} = useAuth();
     const {setSrc} = useBeatmapPreview();
 
@@ -133,7 +133,7 @@ const RequestPanelListView: FC<RequestPanelProps> = ({beatmapset, editable = fal
                 </div>
 
                 {
-                    editable ? (
+                    editMode ? (
                         <>
                             {
                                 isAdmin && (
