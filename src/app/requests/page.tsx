@@ -24,6 +24,7 @@ const Requests: FC = () => {
                         isDefault: true
                     }
                 ]}
+                pagination={true}
             />
         </div>
     );

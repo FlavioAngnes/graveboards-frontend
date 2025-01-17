@@ -34,7 +34,7 @@ export const RequestsProvider: FC<RequestsProviderProps> = ({
                                                                 showFilters = true,
                                                                 showSorting = true,
                                                                 editMode = false,
-                                                                pagination = true,
+                                                                pagination = false,
                                                             }) => {
     return (
         <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
