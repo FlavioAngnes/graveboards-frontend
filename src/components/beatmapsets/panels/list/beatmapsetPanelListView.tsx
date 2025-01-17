@@ -1,6 +1,6 @@
 'use client'
 
-import {FC} from "react";
+import React, {FC} from "react";
 import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {MdChevronRight, MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
@@ -10,6 +10,7 @@ import clsx from "clsx";
 import {useAuth} from "@/context/AuthContext";
 import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
 import Button from "@/components/shared/button";
+import {useBeatmapPreview} from "@/context/BeatmapPreviewContext";
 
 interface BeatmapsetProps {
     beatmapset: BeatmapsetListing,
@@ -18,23 +19,26 @@ interface BeatmapsetProps {
 const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
     const {isAdmin} = useAuth();
 
+    const {setSrc} = useBeatmapPreview();
+
     return (
         <div className="flex rounded-xl overflow-hidden h-24">
             <div
-                className="hidden sm:block h-full aspect-video bg-center bg-no-repeat bg-[size:215%]"
+                className="flex-col p-2.5 justify-end gap-3 items-end hidden xl:flex rounded-l-xl h-full aspect-video bg-center bg-no-repeat bg-[size:215%]"
                 style={{backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})`}}>
-                <div className="flex gap-1.5 z-10">
-                    <Button className="px-1.5 gap-1 h-8.5 font-semibold text-sm transition-[opacity, max-height] box-border duration-300 ease-in-out">
+                <div className="flex gap-1.5">
+                    <Button className="px-1.5 gap-1 h-8.5 font-semibold text-sm"
+                            onClick={() => {
+                                setSrc(beatmapset.beatmapset_snapshot.preview_url);
+                            }}>
                         <MdPlayArrow className="size-4 shrink-0"/>
                         PREVIEW
                     </Button>
                     <div
-                        className="bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out">
+                        className="bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden max-h-7 box-border">
                         {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
                     </div>
                 </div>
-                <div
-                    className="absolute w-full h-full backdrop-blur backdrop-brightness-75 -mb-2.5 -mr-2.5 duration-300"></div>
             </div>
             <div
                 className={clsx(

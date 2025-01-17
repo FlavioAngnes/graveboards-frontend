@@ -13,6 +13,7 @@ import {useAuth} from "@/context/AuthContext";
 import {TimeUtils} from "@/utils/timeUtils";
 import Button from "@/components/shared/button";
 import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
+import {useBeatmapPreview} from "@/context/BeatmapPreviewContext";
 
 interface RequestPanelProps {
     // TODO: Replace with Request type
@@ -22,6 +23,7 @@ interface RequestPanelProps {
 
 const RequestPanelListView: FC<RequestPanelProps> = ({beatmapset, editable = false}) => {
     const {isAdmin} = useAuth();
+    const {setSrc} = useBeatmapPreview();
 
     const [commentOpen, setCommentOpen] = useState(false);
 
@@ -31,7 +33,10 @@ const RequestPanelListView: FC<RequestPanelProps> = ({beatmapset, editable = fal
                 className="flex-col p-2.5 justify-end gap-3 items-end hidden xl:flex rounded-l-xl h-full aspect-video bg-center bg-no-repeat bg-[size:215%]"
                 style={{backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})`}}>
                 <div className="flex gap-1.5">
-                    <Button className="px-1.5 gap-1 h-8.5 font-semibold text-sm">
+                    <Button className="px-1.5 gap-1 h-8.5 font-semibold text-sm"
+                            onClick={() => {
+                        setSrc(beatmapset.beatmapset_snapshot.preview_url);
+                    }}>
                         <MdPlayArrow className="size-4 shrink-0"/>
                         PREVIEW
                     </Button>

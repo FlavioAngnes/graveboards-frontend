@@ -8,6 +8,7 @@ import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
 import Button from "@/components/shared/button";
 import RequestStatusBadge from "@/components/requests/badge/requestStatusBadge";
+import {useBeatmapPreview} from "@/context/BeatmapPreviewContext";
 
 interface RequestPanelProps {
     // TODO: Replace with Request type
@@ -17,6 +18,8 @@ interface RequestPanelProps {
 
 const RequestPanelGridView: FC<RequestPanelProps> = ({beatmapset, showQueue = true}) => {
     const [hover, setHover] = useState(false);
+
+    const {setSrc} = useBeatmapPreview();
 
     return (
         <div className="flex flex-col items-start shrink-0 rounded-xl overflow-hidden self-stretch min-w-72 h-72">
@@ -30,7 +33,11 @@ const RequestPanelGridView: FC<RequestPanelProps> = ({beatmapset, showQueue = tr
                     <Button className={clsx(
                         "px-1.5 gap-1 h-8.5 font-semibold text-sm transition-[opacity, max-height] box-border duration-300 ease-in-out",
                         {"opacity-0": hover}
-                    )}>
+                    )}
+                            onClick={() => {
+                                setSrc(beatmapset.beatmapset_snapshot.preview_url);
+                            }}>
+
                         <MdPlayArrow className="size-4 shrink-0"/>
                         PREVIEW
                     </Button>
