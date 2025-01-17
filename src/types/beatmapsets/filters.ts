@@ -51,7 +51,8 @@ export type BeatmapFilterValue = "beatmap_filter.beatmap_id" |
     "beatmap_filter.playcount";
 
 export type RequestFilterValue = "request_filter.queue_id" |
-    "request_filter.beatmapset_id";
+    "request_filter.beatmapset_id" |
+    "request_filter.user_id";
 
 /*export interface BeatmapsetsFilters {
     mapper_filter?: MapperFilters;
@@ -154,9 +155,9 @@ export interface MapperFilters {
 }
 
 export interface RequestFilters {
-    beatmapset_id?: FilterOptions<number>;
-    comment?: FilterOptions<string>;
-    mv_checked?: FilterOptions<boolean>;
-    user_id?: FilterOptions<number>;
-    queue_id?: FilterOptions<number>;
+    beatmapset_id?: FilterType<number>;
+    comment?: FilterType<string>;
+    mv_checked?: FilterType<boolean>;
+    user_id?: FilterType<number>;
+    queue_id?: FilterType<number>;
 }*/

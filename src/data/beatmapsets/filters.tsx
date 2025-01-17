@@ -151,5 +151,9 @@ export const BeatmapsetListFiltersMap: Record<BeatmapsetListFilterValue, {
     "request_filter.beatmapset_id": {
         icon: <MdNumbers/>,
         label: "Beatmapset ID"
-    }
+    },
+    "request_filter.user_id": {
+        icon: <MdNumbers/>,
+        label: "User ID"
+    },
 }
