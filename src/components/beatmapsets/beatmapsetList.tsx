@@ -2,8 +2,8 @@
 
 import React, {FC, useEffect, useRef} from 'react';
 import useBeatmapsets from "@/hooks/useBeatmapsets";
-import BeatmapsetPanel from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanel";
-import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanelSkeleton";
+import BeatmapsetPanel from "@/components/beatmapsets/panels/beatmapsetPanel";
+import BeatmapsetPanelSkeleton from "@/components/beatmapsets/panels/beatmapsetPanelSkeleton";
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import clsx from "clsx";
 import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
