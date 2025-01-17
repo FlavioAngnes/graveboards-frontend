@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
-import QueuePanel from "@/components/queues/queuePanel";
-import QueuePanelSkeleton from "@/components/queues/queuePanelSkeleton";
+import QueuePanel from "@/components/queues/panels/queuePanel";
+import QueuePanelSkeleton from "@/components/queues/panels/queuePanelSkeleton";
 import useQueues from "@/hooks/useQueues";
 
-const Queues = () => {
+const QueueList = () => {
     const [page, setPage] = useState(0);
 
     const {queues, hasMore, loading, error} = useQueues(page);
@@ -52,4 +52,4 @@ const Queues = () => {
     );
 };
 
-export default Queues;
+export default QueueList;
