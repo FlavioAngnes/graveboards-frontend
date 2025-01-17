@@ -155,9 +155,8 @@ const RequestList: FC<RequestListProps> = ({
 
             <div
                 className={clsx(
-                    'gap-4',
                     {'flex flex-col': grouping},
-                    view === 'grid' && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
+                    view === 'grid' && !grouping ? `grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-4` : `flex flex-col gap-2`
                 )}
             >
                 {
