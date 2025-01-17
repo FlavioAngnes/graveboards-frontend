@@ -101,11 +101,10 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
                         <div
                             className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-in-out group-hover:grid-rows-[1fr] grid-hover:delay-300">
                             <div className="overflow-hidden grid-rows-[1fr]">
-                                <div className="flex flex-col gap-1 text-xs overflow-y-scroll snap-y">
+                                <div className="flex flex-col gap-1 text-xs overflow-y-scroll snap-y max-h-24">
                                     {
                                         beatmapset.beatmapset_snapshot.beatmap_snapshots
                                             .sort((a, b) => b.difficulty_rating - a.difficulty_rating)
-                                            .slice(0, 5)
                                             .map((beatmap, index) => (
 
                                                 <div key={index}
@@ -126,17 +125,6 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
                                                 </div>
                                             ))
                                     }
-
-                                    {beatmapset.beatmapset_snapshot.beatmap_snapshots.length > 5 && (
-                                        <div
-                                            className="snap-start flex items-center gap-1 flex-1 shrink-0 overflow-x-hidden">
-                                            <div
-                                                className="size-4 bg-tertiary-500 dark:bg-tertiary-400 rounded-full shrink-0"></div>
-                                            <div className="text-xs ml-1 text-tertiary-500 dark:text-tertiary-400">
-                                                +{beatmapset.beatmapset_snapshot.beatmap_snapshots.length - 5} more...
-                                            </div>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         </div>
