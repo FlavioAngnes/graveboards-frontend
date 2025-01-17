@@ -2,27 +2,29 @@
 
 import React, {FC, useEffect, useRef} from 'react';
 import useBeatmapsets from "@/hooks/useBeatmapsets";
-import BeatmapsetPanelSkeleton from "@/components/beatmapsets/beatmapsetPanel/beatmapsetPanelSkeleton";
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import clsx from "clsx";
 import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
-import FilterChip from "@/components/shared/filterChip";
-import {FilterOperators} from "@/types/filters";
-import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
-import BeatmapsetGroup from "@/components/beatmapsets/beatmapsetGroup";
 import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
 import RequestPanel from "@/components/requests/panels/requestPanel";
 import ListControls from "@/components/shared/lists/listControls";
+import Button from "@/components/shared/button";
+import RequestGroup from "@/components/requests/requestGroup";
+import RequestPanelSkeleton from "@/components/requests/panels/requestPanelSkeleton";
+import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md";
+import {FilterChipList} from "@/components/shared/filterChipList";
 
 interface RequestListProps {
     title: string;
     queueId?: number;
+    showControls?: boolean;
     showGrouping?: boolean;
     showViewSwitch?: boolean;
     showSearch?: boolean;
     showFilters?: boolean;
     showSorting?: boolean;
-    editable?: boolean;
+    editMode?: boolean;
+    pagination?: boolean;
 }
 
 type View = 'list' | 'grid';
@@ -30,38 +32,55 @@ type View = 'list' | 'grid';
 export type BeatmapsetListGroup = 'artist' | 'mapper' | null;
 
 const RequestList: FC<RequestListProps> = ({
-                                                  title,
-                                                  queueId,
-                                                  showGrouping = true,
-                                                  showViewSwitch = true,
-                                                  showSearch = true,
-                                                  showSorting = true,
-                                                  showFilters = true,
-                                                  editable = false
-                                              }) => {
-    const showControls = showGrouping && showViewSwitch && showSearch && showFilters && showSorting;
+                                               title,
+                                               queueId,
+                                               showControls = true,
+                                               showGrouping = true,
+                                               showViewSwitch = true,
+                                               showSearch = true,
+                                               showSorting = true,
+                                               showFilters = true,
+                                               editMode = false,
+                                               pagination = false
+                                           }) => {
     const id = title?.toLowerCase().replace(' ', '-') + `-${queueId}`;
 
-    const [view, setView] = React.useState<View>(editable ? 'list' : 'grid');
-    const [page, setPage] = React.useState(0);
-    const [grouping, setGrouping] = React.useState<BeatmapsetListGroup>(null);
+    //#region Controls
+    const [view, setView] = React.useState<View>(editMode ? 'list' : 'grid');
 
-    if (editable) {
+    if (editMode) {
         showViewSwitch = false;
     }
 
-    const {layersToUse} = useSorting();
-    const {filters, filtersToUse} = useFilters();
-    const {search} = useSearch();
+    if (pagination) {
+        showGrouping = false;
+    }
 
-    useEffect(() => {
-        setPage(0);
-    }, [layersToUse, filtersToUse, search]);
+    showControls = showControls || (showGrouping && showViewSwitch && showSearch && showFilters && showSorting);
+
+    //#endregion
+
+    //#region Pagination
+
+    const [page, setPage] = React.useState(0);
+
+    //#endregion
+
+    //#region Hooks
 
     const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page, queueId);
 
-    const observerRef = useRef<HTMLDivElement | null>(null);
+    const {search} = useSearch();
+    const {filtersToUse} = useFilters();
+    const {layersToUse} = useSorting();
 
+    //#endregion
+
+    //#region Beatmapset Grouping
+
+    const [grouping, setGrouping] = React.useState<BeatmapsetListGroup>(null);
+
+    // Group beatmapsets by artist, title or mapper
     const groupedBeatmapsets = beatmapsets.reduce((groups, beatmapset) => {
         if (!grouping) {
             return groups;
@@ -82,8 +101,14 @@ const RequestList: FC<RequestListProps> = ({
         return groups;
     }, {} as Record<string, typeof beatmapsets>);
 
+    //#endregion
+
+    //#region Infinite scroll
+
+    const observerRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
-        if (loading) return;
+        if (loading || pagination) return;
 
         if (observerRef.current) {
             const observer = new IntersectionObserver((entries) => {
@@ -100,7 +125,14 @@ const RequestList: FC<RequestListProps> = ({
                 observer.disconnect();
             }
         }
-    }, [loading, hasMore]);
+    }, [loading, hasMore, pagination]);
+
+    // Reset page when search, filters or sorting changes
+    useEffect(() => {
+        setPage(0);
+    }, [layersToUse, filtersToUse, search]);
+
+    //#endregion
 
     if (error) {
         return (
@@ -117,41 +149,22 @@ const RequestList: FC<RequestListProps> = ({
                     {title}
                 </div>
 
-
-                {
-                    showControls && (
-                        <ListControls
-                            id={id}
-                            showViewSwitch={showViewSwitch}
-                            view={view}
-                            setView={setView}
-                            showGrouping={showGrouping}
-                            grouping={grouping}
-                            setGrouping={setGrouping}
-                            showSearch={showSearch}
-                            showFilters={showFilters}
-                            showSorting={showSorting}
-                        />
-                    )
-                }
-
+                <ListControls
+                    id={id}
+                    grouping={grouping}
+                    setGrouping={setGrouping}
+                    showGrouping={showGrouping}
+                    view={view}
+                    setView={setView}
+                    showViewSwitch={showViewSwitch}
+                    showSearch={showSearch}
+                    showFilters={showFilters}
+                    showSorting={showSorting}
+                    showControls={showControls}
+                />
             </div>
 
-            {
-                filters.length > 0 && (
-                    <div className="flex gap-2">
-                        {filters.map((filter, index) => (
-                            Object.entries(filter.options).map(([key, value]) => (
-                                <FilterChip name={filter.value} key={`${index}-${key}`}
-                                            label={BeatmapsetListFiltersMap[filter.value].label} option={{
-                                    operation: key as FilterOperators,
-                                    value: value
-                                }}/>
-                            ))
-                        ))}
-                    </div>
-                )
-            }
+            <FilterChipList/>
 
             <div
                 className={clsx(
@@ -161,23 +174,56 @@ const RequestList: FC<RequestListProps> = ({
             >
                 {
                     grouping ? (
-                        Object.entries(groupedBeatmapsets).map(([key, beatmaps]) => (
-                            <BeatmapsetGroup title={key} beatmapsets={beatmaps} view={view} key={key}/>
+                        Object.entries(groupedBeatmapsets).map(([key, beatmapsets]) => (
+                            <RequestGroup title={key} beatmapsets={beatmapsets} view={view} key={key}/>
                         ))
                     ) : (
-                        beatmapsets.map((beatmap) => (
-                                <RequestPanel key={beatmap.id} beatmapset={beatmap} view={view} editable={editable}/>
-                            )
+                        pagination ? (
+                            beatmapsets.slice(page * 10, (page + 1) * 10).map((beatmapset) => (
+                                <RequestPanel key={beatmapset.id} beatmapset={beatmapset} view={view}
+                                              editMode={editMode}/>
+                            ))
+                        ) : (
+                            beatmapsets.map((beatmapset) => (
+                                <RequestPanel key={beatmapset.id} beatmapset={beatmapset} view={view}
+                                              editMode={editMode}/>
+                            ))
                         )
                     )
+
                 }
 
                 {(loading || hasMore) && (
                     <div ref={observerRef}>
-                        <BeatmapsetPanelSkeleton view={view}/>
+                        <RequestPanelSkeleton view={view}/>
                     </div>
                 )}
             </div>
+
+            {
+                pagination && (
+                    <div className="flex justify-center items-center gap-2">
+                        <Button
+                            size="sm"
+                            rounded="full"
+                            onClick={() => setPage(prev => prev - 1)} disabled={page === 0}
+                                className="px-3">
+                            <MdKeyboardArrowLeft/>
+                            Previous
+                        </Button>
+                        <span className="text-tertiary-500 dark:text-tertiary-400">
+                            Page <span className="font-semibold text-black dark:text-white">{page + 1}</span> of <span className="font-semibold text-black dark:text-white">{Math.ceil(beatmapsets.length / 10)}</span>
+                        </span>
+                        <Button
+                            size="sm"
+                            rounded="full"
+                            onClick={() => setPage(prev => prev + 1)} disabled={!hasMore} className="px-3">
+                            Next
+                            <MdKeyboardArrowRight/>
+                        </Button>
+                    </div>
+                )
+            }
         </div>
     );
 };
