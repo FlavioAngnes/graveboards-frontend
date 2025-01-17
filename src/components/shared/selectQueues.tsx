@@ -1,19 +1,38 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, { FC, useEffect, useRef, useState } from "react";
 import useQueues from "@/hooks/useQueues";
 import QueueChip from "@/components/shared/queueChip";
-import {Queue} from "@/types/queue";
+import { Queue } from "@/types/queue";
 import clsx from "clsx";
-import {MdCheck, MdOutlineKeyboardArrowDown} from "react-icons/md";
+import { MdCheck, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { getQueue } from "@/services/queueService";
+import { useParams } from "next/navigation";
 
-const SelectQueues: FC = () => {
+interface SelectQueuesProps {
+    onSelect: (queues: number[]) => void;
+}
+
+const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
+    const params = useParams<{ id: string }>();
+
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
 
     const [selectedQueues, setSelectedQueues] = useState<Queue[]>([]);
 
-    const {queues, hasMore} = useQueues(page);
+    const { queues, hasMore } = useQueues(page);
 
     const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        const fetchId = async () => {
+            const id = Number((await params).id) || 1;
+            const queue = await getQueue(id);
+
+            setSelectedQueues([queue]);
+        };
+
+        fetchId();
+    }, [params]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -22,11 +41,15 @@ const SelectQueues: FC = () => {
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    useEffect(() => {
+        onSelect(selectedQueues.map(queue => queue.id));
+    }, [selectedQueues]);
 
     return (
         <div
@@ -38,8 +61,8 @@ const SelectQueues: FC = () => {
             <button
                 type="button"
                 className={clsx(
-                    `w-full whitespace-nowrap p-2 sm:rounded-lg sm:backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 sm:border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
-                    open ? 'border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg' : 'border-tertiary-300 dark:border-tertiary-700 rounded-lg'
+                    `w-full whitespace-nowrap p-2 sm:rounded-lg sm:backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
+                    open ? "border-transparent sm:border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg" : "border-tertiary-300 dark:border-tertiary-700 rounded-lg"
                 )}
                 onClick={() => setOpen(!open)}>
                 <div className="flex items-center gap-1 w-full flex-wrap">
@@ -48,15 +71,17 @@ const SelectQueues: FC = () => {
                             (queue) => {
                                 setSelectedQueues(selectedQueues.filter(selectedQueue => selectedQueue.id !== queue.id));
                             }
-                        }/>
+                        } />
                     ))}
 
                     {selectedQueues.length === 0 && (
-                        <p className={clsx(open ? "text-black dark:text-white" : "text-tertiary-400", "transition-colors duration-300 ease-in-out")}>BN Queue</p>
+                        <p
+                            className={clsx(open ? "text-black dark:text-white" : "text-tertiary-400", "transition-colors duration-300 ease-in-out")}>BN
+                            Queue</p>
                     )}
                 </div>
 
-                <MdOutlineKeyboardArrowDown className="size-5"/>
+                <MdOutlineKeyboardArrowDown className="size-5" />
             </button>
             {open && (
                 <div
@@ -67,14 +92,14 @@ const SelectQueues: FC = () => {
                             queue={queue}
                             selectQueue={
                                 (queue) => {
-                                    if (selectedQueues.includes(queue)) {
+                                    if (selectedQueues.some(q => q.id === queue.id)) {
                                         setSelectedQueues(selectedQueues.filter(selectedQueue => selectedQueue.id !== queue.id));
                                     } else {
                                         setSelectedQueues([...selectedQueues, queue]);
                                     }
                                 }
                             }
-                            selected={selectedQueues.includes(queue)}
+                            selected={selectedQueues.some(q => q.id === queue.id)}
                         />
                     ))}
 
@@ -101,7 +126,7 @@ interface SelectQueuesItemProps {
     selected: boolean;
 }
 
-const SelectQueuesItem: FC<SelectQueuesItemProps> = ({queue, selectQueue, selected}) => {
+const SelectQueuesItem: FC<SelectQueuesItemProps> = ({ queue, selectQueue, selected }) => {
     return (
         <button
             type="button"
@@ -117,17 +142,17 @@ const SelectQueuesItem: FC<SelectQueuesItemProps> = ({queue, selectQueue, select
             <div className="flex items-center gap-1.5">
                 <div
                     className="size-4 bg-gray-500 rounded-full bg-cover"
-                    style={{backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})`}}></div>
+                    style={{ backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})` }}></div>
                 {queue.name}
             </div>
 
-                {selected && (
-                    <div className="flex items-center justify-center text-black dark:text-white rounded-full w-6 h-6">
-                        <MdCheck/>
-                    </div>
-                )}
+            {selected && (
+                <div className="flex items-center justify-center text-black dark:text-white rounded-full w-6 h-6">
+                    <MdCheck />
+                </div>
+            )}
         </button>
-    )
-}
+    );
+};
 
 export default SelectQueues;
