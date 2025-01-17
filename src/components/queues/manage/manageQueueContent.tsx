@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import useQueue from "@/hooks/useQueue";
-import QueueHeader from "@/components/queues/queueHeader";
 import {RequestsProvider} from "@/providers/requestsProvider";
+import ManageQueueHeader from "@/components/queues/manage/manageQueueHeader";
 
 export const ManageQueueContent: FC<{ id: number }> = ({id}) => {
     const {queue} = useQueue(id);
@@ -12,7 +12,7 @@ export const ManageQueueContent: FC<{ id: number }> = ({id}) => {
 
     return (
         <div className="flex flex-col gap-6">
-            <QueueHeader queue={queue}/>
+            <ManageQueueHeader queue={queue}/>
             <RequestsProvider
                 title="Queue Requests"
                 defaultSortingLayers={[
@@ -23,7 +23,7 @@ export const ManageQueueContent: FC<{ id: number }> = ({id}) => {
                     },
                 ]}
                 queueId={id}
-                editable={true}
+                editMode={true}
             />
         </div>
     );
