@@ -8,9 +8,10 @@ import RequestList from "@/components/requests/requestList";
 
 interface RequestsProviderProps {
     title?: string,
-        defaultFilters?: Required<BeatmapsetListFilterOptions<never>>[];
+    defaultFilters?: Required<BeatmapsetListFilterOptions<unknown>>[];
     defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[];
     queueId?: number;
+    showControls?: boolean;
     showGrouping?: boolean;
     showViewSwitch?: boolean;
     showSearch?: boolean;
@@ -18,32 +19,37 @@ interface RequestsProviderProps {
     showSorting?: boolean;
     children?: ReactNode;
     editMode?: boolean;
+    pagination?: boolean;
 }
 
 export const RequestsProvider: FC<RequestsProviderProps> = ({
-          title = 'Requests',
-          defaultFilters = [],
-          defaultSortingLayers = [],
-          queueId,
-          showGrouping = true,
-          showViewSwitch = true,
-          showSearch = true,
-          showFilters = true,
-          showSorting = true,
-      }) => {
+                                                                title = 'Requests',
+                                                                defaultFilters = [],
+                                                                defaultSortingLayers = [],
+                                                                queueId,
+                                                                showControls = true,
+                                                                showGrouping = true,
+                                                                showViewSwitch = true,
+                                                                showSearch = true,
+                                                                showFilters = true,
+                                                                showSorting = true,
                                                                 editMode = false,
+                                                                pagination = true,
+                                                            }) => {
     return (
         <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
             <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
                 <BeatmapsetListSearchProvider>
                     <RequestList title={title}
-                                    queueId={queueId}
-                                    showGrouping={showGrouping}
-                                    showViewSwitch={showViewSwitch}
-                                    showSearch={showSearch}
-                                    showFilters={showFilters}
-                                    showSorting={showSorting}
+                                 queueId={queueId}
+                                 showControls={showControls}
+                                 showGrouping={showGrouping}
+                                 showViewSwitch={showViewSwitch}
+                                 showSearch={showSearch}
+                                 showFilters={showFilters}
+                                 showSorting={showSorting}
                                  editMode={editMode}
+                                 pagination={pagination}
                     />
                 </BeatmapsetListSearchProvider>
             </BeatmapsetListSortingProvider>
