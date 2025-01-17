@@ -52,7 +52,7 @@ const FilterChip: FC<FilterChipProps> = ({name, label, option}) => {
             </div>
             <div
                 onClick={() => removeFilter({value: name, options: {[option.operation]: option.value}})}
-                className="flex items-center py-0.5 pr-1.5 bg-primary-500 text-white">
+                className="flex cursor-pointer items-center py-0.5 pr-1.5 bg-primary-500 text-white">
                 <GoX/>
             </div>
         </div>
