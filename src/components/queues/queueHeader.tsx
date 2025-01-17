@@ -2,7 +2,7 @@
 
 import React, {FC} from 'react';
 import {Queue} from "@/types/queue";
-import {MdCircle, MdEdit} from "react-icons/md";
+import {MdCircle, MdEdit, MdSettings} from "react-icons/md";
 import {useAuth} from "@/context/AuthContext";
 import Link from "next/link";
 
@@ -44,7 +44,7 @@ const QueueHeader: FC<QueueHeaderProps> = ({queue}) => {
                     </div>
                     <div className="text-sm text-tertiary-500 line-clamp-2 text-ellipsis">{queue.description}</div>
                 </div>
-                <div className="flex items-center justify-self-end gap-8">
+                <div className="flex items-center justify-self-end gap-4">
                     <div className="text-sm text-green-500 flex gap-1.5 items-center">
                         <MdCircle/>
                         <div className="hidden sm:block">
@@ -52,13 +52,20 @@ const QueueHeader: FC<QueueHeaderProps> = ({queue}) => {
                         </div>
                     </div>
                     {(user?.id && queue.display_data.manager_profiles.some(manager => manager.username === user.profile.username) || isAdmin) && (
-                        <Link
-                            href={`/queues/${queue.id}/manage`}
-                            className="bg-primary-500 hover:bg-primary-400 active:bg-primary-300 text-white px-6 py-2.5 rounded-full lg:flex hidden items-center gap-1.5 shrink-0 transition-all duration-300 ease-in-out min-w-12 lg:min-w-44">
-                            <MdEdit className="size-6"/>
-                            <p className="lg:block hidden">Manage Queue</p>
-                            <p className="block lg:hidden">Manage</p>
-                        </Link>
+                        <div className="flex items-center gap-4 justify-center md:flex-row flex-col">
+                            <Link
+                                href={`/queues/${queue.id}/settings`}
+                                className="bg-tertiary-100 hover:bg-tertiary-200 active:bg-tertiary-300 dark:bg-tertiary-900 hover:dark:bg-tertiary-800 dark:active:bg-tertiary-700 text-tertiary-500 px-6 py-2.5 rounded-full flex items-center gap-1.5 shrink-0 transition-all duration-300 ease-in-out min-w-12">
+                                <MdSettings className="size-6"/>
+                                <p className="hidden lg:block">Settings</p>
+                            </Link>
+                            <Link
+                                href={`/queues/${queue.id}/manage`}
+                                className="bg-primary-500 hover:bg-primary-400 active:bg-primary-300 text-white px-6 py-2.5 rounded-full flex items-center gap-1.5 shrink-0 transition-all duration-300 ease-in-out min-w-12 lg:min-w-44">
+                                <MdEdit className="size-6"/>
+                                <p className="hidden lg:block">Manage Queue</p>
+                            </Link>
+                        </div>
                     )}
                 </div>
             </div>
