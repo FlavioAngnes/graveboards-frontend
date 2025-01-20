@@ -1,13 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { MdFilterList, MdSearch } from "react-icons/md";
 
 export function SearchBar() {
-    const [isFiltersPopupVisible, setIsFiltersPopupVisible] = useState(false);
-
-    const toggleFiltersPopup = () => setIsFiltersPopupVisible((prev) => !prev);
-
     return (
         <div
             className={`w-full justify-center flex overflow-hidden sm:grow gap-2 items-center border border-tertiary-500 dark:border-tertiary-900 dark:bg-tertiary-900 rounded-3xl h-12 px-[calc(0.25rem+1px)] transition-all duration-300`}>
@@ -20,8 +16,7 @@ export function SearchBar() {
                 className={`w-full appearance-none border-none outline-none bg-transparent placeholder-tertiary-500 dark:placeholder-tertiary-400 placeholder:tracking-wide transition-opacity duration-300`}
             />
             <button
-                className={`flex items-center pointer-events-auto size-9 justify-center rounded-full shrink-0 hover:bg-tertiary-50 active:bg-tertiary-100 dark:hover:bg-tertiary-800 dark:active:bg-tertiary-700 transition-all duration-300 ease-in-out`}
-                onClick={toggleFiltersPopup}>
+                className={`flex items-center pointer-events-auto size-9 justify-center rounded-full shrink-0 hover:bg-tertiary-50 active:bg-tertiary-100 dark:hover:bg-tertiary-800 dark:active:bg-tertiary-700 transition-all duration-300 ease-in-out`}>
                 <MdFilterList className="size-6 text-tertiary-500" />
             </button>
 {/*
