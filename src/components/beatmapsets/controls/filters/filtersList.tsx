@@ -4,7 +4,7 @@ import {MdClose, MdFilterList, MdOutlineFilterAlt, MdUndo} from "react-icons/md"
 import clsx from "clsx";
 import FiltersInput from "@/components/beatmapsets/controls/filters/filtersInput";
 
-const Filters = () => {
+const FiltersList = () => {
     const [open, setOpen] = React.useState(false);
 
     const {canApply, canClear, clearFilters, undoFilters, applyFilters} = useFilters();
@@ -45,7 +45,7 @@ const Filters = () => {
                 <div
                     ref={filtersRef}
                     className={
-                        `sm:absolute fixed w-screen h-screen sm:w-auto sm:h-auto top-0 sm:top-12 right-0 p-4 z-10 rounded-none border-0 sm:rounded-xl bg-tertiary-50 dark:bg-tertiary-900 flex flex-col gap-4 transition-colors duration-300 ease-in-out 
+                        `sm:absolute fixed w-screen h-screen sm:w-auto sm:h-auto top-0 sm:top-12 right-0 p-4 z-50 rounded-none border-0 sm:rounded-xl bg-tertiary-50 dark:bg-tertiary-900 flex flex-col gap-4 transition-colors duration-300 ease-in-out 
                             ${canApply ? "border-primary-500 sm:border-2" : "border-tertiary-300 dark:border-tertiary-700 sm:border-[1px]"}`
                     }
                 >
@@ -102,4 +102,4 @@ const Filters = () => {
     );
 };
 
-export default Filters;
+export default FiltersList;
