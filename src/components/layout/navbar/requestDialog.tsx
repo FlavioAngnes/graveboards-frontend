@@ -1,10 +1,12 @@
+"use client";
+
 import React, { forwardRef, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { createPortal } from "react-dom";
 import Dialog from "@/components/shared/dialog";
 import SelectQueues from "@/components/shared/selectQueues";
 import Button from "@/components/shared/button";
-import { postRequest } from "@/services/requestService";
+import { postRequest } from "@/actions/requests";
 
 interface RequestDialogProps {
   onClose: () => void;
