@@ -1,7 +1,17 @@
-import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
+'use server';
+
+import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
-import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {FilterType} from "@/types/filters";
+import { BeatmapsetListing } from "@/types/beatmapsets/beatmapset";
+
+const {API_URL} = process.env;
+
+if (!API_URL) {
+    throw new Error(
+        'Please define the API_URL environment variable inside .env.local'
+    )
+}
 
 export interface Pagination {
     limit?: number;
@@ -11,11 +21,11 @@ export interface Pagination {
 export interface BeatmapsetListingOptions extends Pagination {
     search?: string;
     filters?: BeatmapsetListFilterOptions<unknown>[];
-    sortingLayers?: BeatmapsetListSortingLayerOptions[];
+    sortingLayers?: BeatmapsetListSortingLayer[];
     queueId?: number;
 }
 
-export const getBeatmapsets = async (page: number, options: BeatmapsetListingOptions, init?: RequestInit): Promise<BeatmapsetListing[]> => {
+export const getBeatmapsets = async (page: number, options: BeatmapsetListingOptions) => {
     const searchParams = new URLSearchParams();
 
     const groupedFilters: Record<string, Record<string, FilterType<unknown>>> = {};
@@ -55,7 +65,11 @@ export const getBeatmapsets = async (page: number, options: BeatmapsetListingOpt
     searchParams.append('limit', (options.limit || 10).toString());
     searchParams.append('offset', ((options.offset || 0) + page * (options.limit || 10)).toString());
 
-    const response = await fetch(`/api/beatmapsets/listings?${searchParams}`, init);
+    const response = await fetch(`${API_URL}/beatmapsets/listings?${searchParams}`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch beatmapsets.');
+    }
 
     return await response.json() as BeatmapsetListing[];
 }
