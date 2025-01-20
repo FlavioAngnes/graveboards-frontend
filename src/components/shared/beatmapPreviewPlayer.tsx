@@ -46,7 +46,7 @@ const BeatmapPreviewPlayer = () => {
     return (
         <div
             className={clsx(
-                `bg-tertiary-100 m-4 dark:bg-tertiary-900 shadow p-4 rounded-xl fixed bottom-0 right-0 flex gap-4 items-center`,
+                `bg-tertiary-100 sm:m-4 z-40 dark:bg-tertiary-900 shadow p-4 sm:rounded-xl fixed bottom-0 right-0 flex gap-4 items-center sm:w-auto w-full`,
                 {"hidden": !src || !open}
                 )}>
             <audio ref={audioRef}
@@ -99,7 +99,7 @@ const BeatmapPreviewPlayer = () => {
                        if (audioRef.current) audioRef.current.currentTime = parseFloat(e.target.value) * audioRef.current.duration;
                    }}
                    disabled={!src}
-                   className={`w-64 ${!src ? 'opacity-50' : ''}`}
+                   className={`w-full sm:w-64 ${!src ? 'opacity-50' : ''}`}
             />
 
             <div className="flex items-center gap-2">
@@ -119,11 +119,11 @@ const BeatmapPreviewPlayer = () => {
                     )
                 }
                 <input type="range" min="0" max="1" step="0.01" value={volume}
-                       className="w-24"
+                       className="w-12 sm:w-24"
                        onChange={e => setVolume(parseFloat(e.target.value))}/>
             </div>
 
-            <MdClose className="size-6 cursor-pointer" onClick={() => {
+            <MdClose className="size-6 cursor-pointer shrink-0" onClick={() => {
                 setOpen(false);
                 audioRef.current!.pause();
                 setSrc(null);
