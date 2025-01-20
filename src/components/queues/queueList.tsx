@@ -1,3 +1,5 @@
+"use client";
+
 import React, {useEffect, useRef, useState} from 'react';
 import QueuePanel from "@/components/queues/panels/queuePanel";
 import QueuePanelSkeleton from "@/components/queues/panels/queuePanelSkeleton";
