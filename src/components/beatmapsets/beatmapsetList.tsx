@@ -52,7 +52,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
         setPage(0);
     }, [layersToUse, filtersToUse, search]);
 
-    const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page, queueId);
+    const {beatmapsets, isLoading, hasMore, error} = useBeatmapsets(page, queueId);
 
     const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -77,7 +77,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
     }, {} as Record<string, typeof beatmapsets>);
 
     useEffect(() => {
-        if (loading) return;
+        if (isLoading) return;
 
         if (observerRef.current) {
             const observer = new IntersectionObserver((entries) => {
@@ -94,7 +94,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
                 observer.disconnect();
             }
         }
-    }, [loading, hasMore]);
+    }, [isLoading, hasMore]);
 
     if (error) {
         return (
@@ -165,7 +165,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
                     )
                 }
 
-                {(loading || hasMore) && (
+                {(isLoading || hasMore) && (
                     <div ref={observerRef}>
                         <BeatmapsetPanelSkeleton view={view}/>
                     </div>
