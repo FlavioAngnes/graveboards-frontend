@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantPr
 }
 
 const buttonVariants = cva(
-    'flex items-center justify-center gap-2 overflow-hidden shrink-0 transition-all duration-300',
+    'whitespace-nowrap flex items-center justify-center gap-2 overflow-hidden shrink-0 transition-colors duration-300 ease-in-out',
     {
         variants: {
             size: {
@@ -16,13 +16,13 @@ const buttonVariants = cva(
                 'lg': 'h-12'
             },
             rounded: {
-                'sm': 'rounded-sm',
-                'md': 'rounded-md',
-                'lg': 'rounded-lg',
-                'xl': 'rounded-xl',
-                '2xl': 'rounded-2xl',
-                '3xl': 'rounded-3xl',
-                'full': 'rounded-full',
+                'sm': 'rounded-sm px-2',
+                'md': 'rounded-md px-2',
+                'lg': 'rounded-lg px-4',
+                'xl': 'rounded-xl px-6',
+                '2xl': 'rounded-2xl px-6',
+                '3xl': 'rounded-3xl px-6',
+                'full': 'rounded-full px-6',
             },
             variant: {
                 'fill': 'text-white bg-primary-500 hover:bg-primary-400 active:bg-primary-300 disabled:text-tertiary-600 disabled:bg-tertiary-200 disabled:dark:text-tertiary-900 disabled:dark:bg-tertiary-500',
