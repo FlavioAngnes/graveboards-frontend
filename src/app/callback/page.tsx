@@ -1,37 +1,17 @@
-'use client';
+import { redirect } from "next/navigation";
+import { verifySession } from "@/actions/session";
+import { CallbackContent } from "@/components/callback/callbackContent";
 
-import {redirect, useSearchParams} from "next/navigation";
-import {useEffect} from "react";
-import {useAuth} from "@/context/AuthContext";
+const CallbackPage = async () => {
+    const session = await verifySession();
 
-const CallbackPage = () => {
-    const searchParams = useSearchParams();
-    const { login } = useAuth();
-
-    useEffect(() => {
-        const code = searchParams.get('code');
-        const state = searchParams.get('state');
-        const error = searchParams.get('error');
-
-        if (error) {
-            redirect('/');
-        }
-
-        if (!code || !state) {
-            redirect('/');
-        }
-
-        login(code, state).catch((error) => {
-            console.error(error);
-            redirect('/');
-        });
-    }, [login, searchParams]);
+    if (!session?.userId) {
+        redirect("/");
+    }
 
     return (
-        <div className="w-full h-full flex items-center justify-center">
-            <p className="text-2xl">Logging in...</p>
-        </div>
-    )
+        <CallbackContent />
+    );
 };
 
 export default CallbackPage;
