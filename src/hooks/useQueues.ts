@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Queue} from "@/types/queue";
-import {getQueues} from "@/services/queueService";
+import {getQueues} from "@/actions/queues";
 
 interface QueueOptions {
     limit?: number;
@@ -20,11 +20,13 @@ const useQueues = (page: number) => {
         setLoading(true);
         setError(null);
 
-        const controller = new AbortController();
-        const {signal} = controller;
-
-        getQueues(page, options, {signal})
+        getQueues(page, options)
             .then(data => {
+                if (!data) {
+                    setLoading(false);
+                    return;
+                }
+
                 if (page === 0) {
                     setQueues(data);
                 } else {
@@ -35,11 +37,8 @@ const useQueues = (page: number) => {
             })
             .catch(e => {
                 setLoading(false);
-                if (signal.aborted) return;
                 setError(e.message);
             })
-
-        return () => controller.abort();
     }, [page]);
 
     return {queues, loading, error, hasMore}

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Queue} from "@/types/queue";
-import {getQueue} from "@/services/queueService";
+import {getQueue} from "@/actions/queues";
 
 const useQueue = (id: number) => {
     const [queue, setQueue] = useState<Queue>();
@@ -11,21 +11,15 @@ const useQueue = (id: number) => {
         setLoading(true);
         setError(null);
 
-        const controller = new AbortController();
-        const {signal} = controller;
-
-        getQueue(id, {signal})
+        getQueue(id)
             .then(data => {
                 setQueue(data);
                 setLoading(false);
             })
             .catch(e => {
                 setLoading(false);
-                if (signal.aborted) return;
                 setError(e.message);
             })
-
-        return () => controller.abort();
     }, [id]);
 
     return {queue, loading, error}
