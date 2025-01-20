@@ -68,7 +68,7 @@ const RequestList: FC<RequestListProps> = ({
 
     //#region Hooks
 
-    const {beatmapsets, loading, error, hasMore} = useBeatmapsets(page, queueId);
+    const {beatmapsets, isLoading, error, hasMore} = useBeatmapsets(page, queueId);
 
     const {search} = useSearch();
     const {filtersToUse} = useFilters();
@@ -108,7 +108,7 @@ const RequestList: FC<RequestListProps> = ({
     const observerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (loading || pagination) return;
+        if (isLoading || pagination) return;
 
         if (observerRef.current) {
             const observer = new IntersectionObserver((entries) => {
@@ -125,7 +125,7 @@ const RequestList: FC<RequestListProps> = ({
                 observer.disconnect();
             }
         }
-    }, [loading, hasMore, pagination]);
+    }, [isLoading, hasMore, pagination]);
 
     // Reset page when search, filters or sorting changes
     useEffect(() => {
@@ -193,7 +193,7 @@ const RequestList: FC<RequestListProps> = ({
 
                 }
 
-                {(loading || hasMore) && (
+                {(isLoading || hasMore) && (
                     <div ref={observerRef}>
                         <RequestPanelSkeleton view={view}/>
                     </div>
