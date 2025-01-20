@@ -8,7 +8,7 @@ import {useAuth} from "@/context/AuthContext";
 
 
 const Sidebar = () => {
-    const {user, isAuthenticated, isAdmin} = useAuth();
+    const {isAuthenticated} = useAuth();
 
     return (
         <div
