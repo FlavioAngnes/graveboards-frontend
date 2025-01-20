@@ -2,8 +2,8 @@ import React, {FC} from 'react';
 import Grouping from "@/components/beatmapsets/controls/grouping";
 import {ViewSwitch} from "@/components/beatmapsets/controls/viewSwitch";
 import Search from "@/components/beatmapsets/controls/search";
-import Filters from "@/components/beatmapsets/controls/filters/filters";
-import SortingLayers from "@/components/beatmapsets/controls/sortingLayers/sortingLayers";
+import FiltersList from "@/components/beatmapsets/controls/filters/filtersList";
+import SortingLayerList from "@/components/beatmapsets/controls/sortingLayers/sortingLayerList";
 
 interface ListControlsProps {
     showControls?: boolean;
@@ -64,13 +64,13 @@ const ListControls: FC<ListControlsProps> = ({
 
                 {
                     showFilters && (
-                        <Filters/>
+                        <FiltersList/>
                     )
                 }
 
                 {
                     showSorting && (
-                        <SortingLayers/>
+                        <SortingLayerList/>
                     )
                 }
             </div>
