@@ -2,9 +2,10 @@
 
 import React, {FC} from 'react';
 import {Queue} from "@/types/queue";
-import {MdChevronRight, MdCircle, MdEdit} from "react-icons/md";
+import { MdChevronRight, MdCircle, MdEdit } from "react-icons/md";
 import {useAuth} from "@/context/AuthContext";
 import Link from "next/link";
+import Button from "@/components/shared/button";
 
 interface QueuePanelProps {
     queue: Queue;
@@ -16,15 +17,14 @@ const QueuePanel: FC<QueuePanelProps> = ({queue}) => {
 
     return (
         <div className="flex rounded-xl overflow-hidden">
-            <div
-                className="z-10 px-8 py-6 flex-col gap-8 lg:flex-row w-full flex justify-between items-center rounded-xl bg-tertiary-50 dark:text-white dark:bg-tertiary-900 self-stretch transition-colors duration-300 ease-in-out overflow-hidden">
-                <div className="flex items-center gap-6 flex-1 overflow-hidden">
-                    <div className="max-[400px]:hidden size-24 rounded-xl shrink-0 bg-cover"
+            <div className="z-10 px-8 py-6 flex-col gap-8 lg:flex-row w-full flex justify-between items-center rounded-xl bg-tertiary-50 dark:text-white dark:bg-tertiary-900 self-stretch">
+                <div className="flex items-center gap-6 w-full">
+                    <div className="hidden lg:block size-24 rounded-xl shrink-0 bg-cover"
                          style={{backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})`}}></div>
-                    <div className="flex flex-col gap-1.5 flex-1 text-left">
+                    <div className="flex flex-col gap-1.5 w-full text-left">
                         <div>
-                            <div className="font-semibold">{queue.name}</div>
-                            <div className="text-sm text-tertiary-500">Owned by <Link
+                            <div className="font-semibold line-clamp-1 text-ellipsis">{queue.name}</div>
+                            <div className="text-sm text-tertiary-500 line-clamp-1 text-ellipsis">Owned by <Link
                                 href={`https://osu.ppy.sh/users/${queue.user_id}`}
                                 className="font-semibold"
                                 target="_blank">{queue.display_data.owner_profile.username}</Link>
@@ -46,7 +46,7 @@ const QueuePanel: FC<QueuePanelProps> = ({queue}) => {
                                 }
                             </div>
                         </div>
-                        <div className="text-sm text-tertiary-500 line-clamp-2 text-ellipsis">{queue.description}</div>
+                        <div className="text-sm text-tertiary-500 line-clamp-1 sm:line-clamp-2 text-ellipsis">{queue.description}</div>
                     </div>
                     <div className="flex items-center justify-self-end gap-8">
                         <div className="text-sm text-green-500 flex gap-1.5 items-center">
@@ -56,12 +56,11 @@ const QueuePanel: FC<QueuePanelProps> = ({queue}) => {
                             </div>
                         </div>
                         {(isManager || isAdmin) && (
-                            <Link
-                                href={`/queues/${queue.id}/manage`}
-                                className="bg-primary-500 hover:bg-primary-400 active:bg-primary-300 text-white px-6 py-2.5 rounded-full lg:flex hidden items-center gap-1.5 shrink-0 transition-all duration-300 ease-in-out min-w-12 lg:min-w-44">
-                                <MdEdit className="size-6"/>
-                                <p className="lg:block hidden">Manage Queue</p>
-                                <p className="block lg:hidden">Manage</p>
+                            <Link href={`/queues/${queue.id}/manage`}>
+                                <Button rounded="full" size="lg">
+                                    <MdEdit className="size-6"/>
+                                    <p className="lg:block hidden">Manage Queue</p>
+                                </Button>
                             </Link>
                         )}
                     </div>
