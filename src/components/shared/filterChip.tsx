@@ -3,6 +3,7 @@ import {GoX} from "react-icons/go";
 import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
 import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import {FilterOperators} from "@/types/filters";
+import clsx from "clsx";
 
 interface FilterChipProps {
     name: BeatmapsetListFilterValue;
@@ -28,10 +29,12 @@ const FilterChip: FC<FilterChipProps> = ({name, label, option}) => {
         key = "≠";
     }
 
-    const {removeFilter} = useFilters();
+    const {removeFilter, filtersToUse} = useFilters();
+
+    const filterInUse = filtersToUse.some(filter => filter.value === name && Object.keys(filter.options).some((o) => o === option.operation));
 
     return (
-        <div className="flex rounded-full overflow-hidden text-sm tracking-wide">
+        <div className={clsx("flex rounded-full overflow-hidden text-sm tracking-wide", {"opacity-50" : !filterInUse})}>
             <div
                 className="py-0.5 pl-2.5 pr-1.5 bg-primary-200 rounded-l-full dark:bg-transparent dark:border-primary-500 dark:border-[1px] dark:text-primary-500 text-black">
                 {label}
