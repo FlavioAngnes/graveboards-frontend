@@ -4,8 +4,8 @@ import QueueChip from "@/components/shared/queueChip";
 import { Queue } from "@/types/queue";
 import clsx from "clsx";
 import { MdCheck, MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { getQueue } from "@/services/queueService";
 import { useParams } from "next/navigation";
+import useQueue from "@/hooks/useQueue";
 
 interface SelectQueuesProps {
     onSelect: (queues: number[]) => void;
@@ -17,22 +17,35 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(0);
 
-    const [selectedQueues, setSelectedQueues] = useState<Queue[]>([]);
+    const [selected, setSelected] = useState<Queue[]>([]);
 
     const { queues, hasMore } = useQueues(page);
 
-    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const queue = useQueue(Number(params.id) || 1);
 
     useEffect(() => {
-        const fetchId = async () => {
-            const id = Number((await params).id) || 1;
-            const queue = await getQueue(id);
+        if (queue.queue) {
+            setSelected([queue.queue]);
+        }
+    }, [queue.queue]);
 
-            setSelectedQueues([queue]);
-        };
+    const handleRemove = (queue: Queue) => {
+        setSelected(selected.filter(selectedQueue => selectedQueue.id !== queue.id));
+    }
 
-        fetchId();
-    }, [params]);
+    const handleSelect = (queue: Queue) => {
+        if (selected.some(q => q.id === queue.id)) {
+            setSelected(selected.filter(selectedQueue => selectedQueue.id !== queue.id));
+        } else {
+            setSelected([...selected, queue]);
+        }
+
+        onSelect(selected.map(queue => queue.id));
+    }
+
+    const isSelected = (queue: Queue) => selected.some(q => q.id === queue.id);
+
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -46,10 +59,6 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
-
-    useEffect(() => {
-        onSelect(selectedQueues.map(queue => queue.id));
-    }, [selectedQueues]);
 
     return (
         <div
@@ -66,15 +75,11 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
                 )}
                 onClick={() => setOpen(!open)}>
                 <div className="flex items-center gap-1 w-full flex-wrap">
-                    {selectedQueues.map(queue => (
-                        <QueueChip key={queue.id} queue={queue} removeQueue={
-                            (queue) => {
-                                setSelectedQueues(selectedQueues.filter(selectedQueue => selectedQueue.id !== queue.id));
-                            }
-                        } />
+                    {selected.map(queue => (
+                        <QueueChip key={queue.id} queue={queue} removeQueue={handleRemove} />
                     ))}
 
-                    {selectedQueues.length === 0 && (
+                    {selected.length === 0 && (
                         <p
                             className={clsx(open ? "text-black dark:text-white" : "text-tertiary-400", "transition-colors duration-300 ease-in-out")}>BN
                             Queue</p>
@@ -90,16 +95,8 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
                         <SelectQueuesItem
                             key={queue.id}
                             queue={queue}
-                            selectQueue={
-                                (queue) => {
-                                    if (selectedQueues.some(q => q.id === queue.id)) {
-                                        setSelectedQueues(selectedQueues.filter(selectedQueue => selectedQueue.id !== queue.id));
-                                    } else {
-                                        setSelectedQueues([...selectedQueues, queue]);
-                                    }
-                                }
-                            }
-                            selected={selectedQueues.some(q => q.id === queue.id)}
+                            onSelect={handleSelect}
+                            selected={isSelected(queue)}
                         />
                     ))}
 
@@ -122,11 +119,11 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
 
 interface SelectQueuesItemProps {
     queue: Queue;
-    selectQueue: (queue: Queue) => void;
+    onSelect: (queue: Queue) => void;
     selected: boolean;
 }
 
-const SelectQueuesItem: FC<SelectQueuesItemProps> = ({ queue, selectQueue, selected }) => {
+const SelectQueuesItem: FC<SelectQueuesItemProps> = ({ queue, onSelect, selected }) => {
     return (
         <button
             type="button"
@@ -137,7 +134,7 @@ const SelectQueuesItem: FC<SelectQueuesItemProps> = ({ queue, selectQueue, selec
                 )
             }
             key={queue.id}
-            onClick={() => selectQueue(queue)}
+            onClick={() => onSelect(queue)}
         >
             <div className="flex items-center gap-1.5">
                 <div
