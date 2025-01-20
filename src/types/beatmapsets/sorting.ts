@@ -1,6 +1,6 @@
 import {SortingLayerOrders} from "@/types/sorting";
 
-export interface BeatmapsetListSortingLayerOptions {
+export interface BeatmapsetListSortingLayer {
     value: BeatmapsetListSortingLayerValue;
     order: SortingLayerOrders;
     isDefault?: true;

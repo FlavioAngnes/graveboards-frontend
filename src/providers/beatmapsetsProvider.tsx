@@ -1,7 +1,7 @@
 import {FC, ReactNode} from "react";
 import {BeatmapsetListSortingProvider} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import BeatmapsetList from "@/components/beatmapsets/beatmapsetList";
-import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
+import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
 import {BeatmapsetListFiltersProvider} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 import {BeatmapsetListSearchProvider} from "@/context/beatmapsets/BeatmapsetListSearchContext";
@@ -9,7 +9,7 @@ import {BeatmapsetListSearchProvider} from "@/context/beatmapsets/BeatmapsetList
 interface BeatmapsetsProviderProps {
     title?: string,
     defaultFilters?: Required<BeatmapsetListFilterOptions<never>>[];
-    defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[];
+    defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[];
     queueId?: number;
     showGrouping?: boolean;
     showViewSwitch?: boolean;

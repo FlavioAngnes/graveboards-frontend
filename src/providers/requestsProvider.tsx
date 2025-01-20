@@ -1,6 +1,6 @@
 import {FC, ReactNode} from "react";
 import {BeatmapsetListSortingProvider} from "@/context/beatmapsets/BeatmapsetListSortingContext";
-import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
+import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
 import {BeatmapsetListFiltersProvider} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 import {BeatmapsetListSearchProvider} from "@/context/beatmapsets/BeatmapsetListSearchContext";
@@ -9,7 +9,7 @@ import RequestList from "@/components/requests/requestList";
 interface RequestsProviderProps {
     title?: string,
     defaultFilters?: Required<BeatmapsetListFilterOptions<unknown>>[];
-    defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[];
+    defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[];
     queueId?: number;
     showControls?: boolean;
     showGrouping?: boolean;
