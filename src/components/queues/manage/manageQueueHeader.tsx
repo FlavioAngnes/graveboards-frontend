@@ -2,8 +2,8 @@
 
 import React, { FC, useState } from "react";
 import { Queue } from "@/types/queue";
-import QueueStatus from "@/components/queues/manage/queueStatus";
-import QueueStatusButton from "@/components/queues/manage/queueStatusButton";
+import QueueStatus from "@/components/queues/status/queueStatus";
+import QueueStatusButton from "@/components/queues/status/queueStatusButton";
 
 interface ManageQueueHeaderProps {
     queue: Queue;
