@@ -1,33 +1,18 @@
-'use client';
-
 import React, {FC} from 'react';
-import {RequestsProvider} from "@/providers/requestsProvider";
-import {useAuth} from "@/context/AuthContext";
+import RequestsContent from "@/components/requests/requestsContent";
+import { verifySession } from "@/actions/session";
+import { redirect } from "next/navigation";
 
-const Requests: FC = () => {
-    const {user} = useAuth();
+const RequestsPage: FC = async () => {
+    const session = await verifySession();
 
-    if (!user) {
-        return null;
+    if (!session?.userId) {
+        redirect("/");
     }
 
     return (
-        <div className="flex flex-col gap-6">
-            <RequestsProvider
-                title="My Requests"
-                defaultFilters={[
-                    {
-                        value: 'request_filter.user_id',
-                        options: {
-                            eq: user.id
-                        },
-                        isDefault: true
-                    }
-                ]}
-                pagination={true}
-            />
-        </div>
+        <RequestsContent />
     );
 };
 
-export default Requests;
+export default RequestsPage;
