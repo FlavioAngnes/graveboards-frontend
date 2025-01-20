@@ -1,29 +1,18 @@
-'use client';
-
-import React, {FC, useEffect, useState} from 'react';
-import {QueueContent} from "@/components/queues/queueContent";
+import React, { FC } from "react";
+import { QueueContent } from "@/components/queues/queueContent";
 
 interface QueuePageProps {
     params: Promise<{ id: string }>;
 }
 
-const QueuePage: FC<QueuePageProps> = ({params}) => {
-    const [id, setId] = useState<number | null>(null);
-
-    useEffect(() => {
-        const fetchId = async () => {
-            const id = Number((await params).id);
-            setId(id);
-        };
-
-        fetchId();
-    }, [params]);
+const QueuePage: FC<QueuePageProps> = async ({ params }) => {
+    const id = Number((await params).id);
 
     if (id === null) {
         return null;
     }
 
-    return <QueueContent id={id} />;
+    return (<QueueContent id={id} />);
 };
 
 export default QueuePage;
