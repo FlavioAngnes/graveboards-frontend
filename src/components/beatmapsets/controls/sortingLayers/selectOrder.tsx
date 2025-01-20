@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from "react";
 import {MdArrowDownward, MdArrowUpward, MdOutlineKeyboardArrowDown} from "react-icons/md";
-import {BeatmapsetListSortingLayerOptions} from "@/types/beatmapsets/sorting";
+import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
 import clsx from "clsx";
 import {SortingLayerOrders} from "@/types/sorting";
 
@@ -11,7 +11,7 @@ interface Order {
 }
 
 interface SelectOrderProps {
-    values: BeatmapsetListSortingLayerOptions[],
+    values: BeatmapsetListSortingLayer[],
     value: SortingLayerOrders,
     onChange?: (value: SortingLayerOrders) => void
 }

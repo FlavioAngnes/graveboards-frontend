@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {MdAdd, MdClose, MdImportExport, MdUndo} from "react-icons/md";
-import SortingLayer from "@/components/beatmapsets/controls/sortingLayers/sortingLayer";
+import SortingLayersItem from "@/components/beatmapsets/controls/sortingLayers/sortingLayersItem";
 import {Reorder} from 'motion/react';
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import clsx from "clsx";
 import {IoMdInformationCircleOutline} from "react-icons/io";
 
-const SortingLayers = () => {
+const SortingLayerList = () => {
     const [open, setOpen] = useState(false);
 
     const {
@@ -26,6 +26,7 @@ const SortingLayers = () => {
 
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const sortingRef = useRef<HTMLDivElement | null>(null);
+    const reorderRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -61,7 +62,7 @@ const SortingLayers = () => {
                 <div
                     ref={sortingRef}
                     className={
-                        `sm:absolute fixed w-screen h-screen sm:w-auto sm:h-auto top-0 sm:top-12 right-0 p-4 z-10 rounded-none border-0 sm:rounded-xl bg-tertiary-50 dark:bg-tertiary-900 flex flex-col gap-4 transition-colors duration-300 ease-in-out 
+                        `sm:absolute fixed w-screen h-screen sm:w-auto sm:h-auto top-0 sm:top-12 right-0 p-4 z-50 rounded-none border-0 sm:rounded-xl bg-tertiary-50 dark:bg-tertiary-900 flex flex-col gap-4 transition-colors duration-300 ease-in-out 
                             ${canApply ? "border-primary-500 sm:border-2" : "border-tertiary-300 dark:border-tertiary-700 sm:border-[1px]"}`
                     }
                 >
@@ -108,19 +109,21 @@ const SortingLayers = () => {
                     </div>
                     <div className="flex flex-col gap-4 flex-1">
                         {canClear && (
-                            <Reorder.Group as="div" onReorder={reorderLayers}
+                            <Reorder.Group as="div"
+                                           onReorder={reorderLayers}
+                                           ref={reorderRef}
                                            values={layers.map((layer => layer.value))}
                                            layout={"position"}
                                            className="flex flex-col gap-2">
                                 {layers.map((layer) => (
-                                    <SortingLayer values={layers} value={layer} onChange={updateLayer}
-                                                  onDestroy={removeLayer} key={layer.value}/>
+                                    <SortingLayersItem values={layers} value={layer} onChange={updateLayer}
+                                                       onDestroy={removeLayer} key={layer.value} containerRef={reorderRef}/>
                                 ))}
                             </Reorder.Group>
                         )}
                         <div className="flex flex-col gap-2">
                             {
-                                nextLayer && (
+                                nextLayer && layers.length < 5 && (
                                     <button
                                         onClick={() => addLayer()}
                                         className="flex items-center gap-1.5 whitespace-nowrap rounded-lg hover:bg-tertiary-200 dark:hover:bg-tertiary-800 dark:text-tertiary-400 text-tertiary-500 p-2">
@@ -161,4 +164,4 @@ const SortingLayers = () => {
     );
 };
 
-export default SortingLayers;
+export default SortingLayerList;
