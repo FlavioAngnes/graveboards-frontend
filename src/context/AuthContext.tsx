@@ -48,10 +48,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const logout = async () => {
         try {
             await logoutUser();
-            setUser(null);
         } catch (error) {
             console.error(error);
         }
+
+        setUser(null);
     };
 
     return (
