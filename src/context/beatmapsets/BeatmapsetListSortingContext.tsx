@@ -1,16 +1,16 @@
 'use client'
 
 import {createContext, FC, ReactNode, useContext, useState} from 'react';
-import {BeatmapsetListSortingLayerOptions, BeatmapsetListSortingLayerValue} from "@/types/beatmapsets/sorting";
+import {BeatmapsetListSortingLayer, BeatmapsetListSortingLayerValue} from "@/types/beatmapsets/sorting";
 import {BeatmapsetListSortingLayerMap} from "@/data/beatmapsets/sorting";
 
 interface BeatmapsetListSortingContextType {
-    layers: BeatmapsetListSortingLayerOptions[];
-    layersToUse: BeatmapsetListSortingLayerOptions[];
+    layers: BeatmapsetListSortingLayer[];
+    layersToUse: BeatmapsetListSortingLayer[];
     nextLayer: BeatmapsetListSortingLayerValue;
     addLayer: () => void;
     removeLayer: (index: number) => void;
-    updateLayer: (layer: BeatmapsetListSortingLayerOptions, index: number) => void;
+    updateLayer: (layer: BeatmapsetListSortingLayer, index: number) => void;
     canClear: boolean;
     clearLayers: () => void;
     canApply: boolean;
@@ -43,10 +43,10 @@ export const BeatmapsetListSortingContext = createContext<BeatmapsetListSortingC
 
 export const BeatmapsetListSortingProvider: FC<{
     children: ReactNode,
-    defaultSortingLayers?: Required<BeatmapsetListSortingLayerOptions>[]
+    defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[]
 }> = ({children, defaultSortingLayers}) => {
-    const [layers, setLayers] = useState<BeatmapsetListSortingLayerOptions[]>([]);
-    const [layersToUse, setLayersToUse] = useState<BeatmapsetListSortingLayerOptions[]>(defaultSortingLayers || []);
+    const [layers, setLayers] = useState<BeatmapsetListSortingLayer[]>([]);
+    const [layersToUse, setLayersToUse] = useState<BeatmapsetListSortingLayer[]>(defaultSortingLayers || []);
 
     const canClear = layers.length > 0;
     const canApply = JSON.stringify(layers) !== JSON.stringify(layersToUse.filter(layer => !layer.isDefault));
@@ -66,7 +66,7 @@ export const BeatmapsetListSortingProvider: FC<{
         setLayers((prev) => prev.filter((_, i) => i !== index));
     }
 
-    const updateLayer = (layer: BeatmapsetListSortingLayerOptions, index: number) => {
+    const updateLayer = (layer: BeatmapsetListSortingLayer, index: number) => {
         setLayers((prev) => prev.map((prevLayer, i) => i === index ? layer : prevLayer));
     }
 
