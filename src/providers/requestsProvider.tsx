@@ -33,8 +33,8 @@ export const RequestsProvider: FC<RequestsProviderProps> = ({
                                                                 showSearch = true,
                                                                 showFilters = true,
                                                                 showSorting = true,
-                                                                editMode = false,
-                                                                pagination = false,
+                                                                editMode,
+                                                                pagination,
                                                             }) => {
     return (
         <FiltersProvider defaultFilters={defaultFilters}>
