@@ -25,7 +25,7 @@ export const getRequests = async (page: number, options: ListingOptions) => {
     const session = await verifySession();
 
     if (!session) {
-        return;
+        return [];
     }
 
     const searchParams = new URLSearchParams();
