@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useFilters } from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import { useFilters } from "@/context/beatmapsets/FiltersContext";
 import FilterChip from "@/components/shared/filterChip";
 import { BeatmapsetListFiltersMap } from "@/data/beatmapsets/filters";
 import { FilterOperators } from "@/types/filters";

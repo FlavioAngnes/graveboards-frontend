@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {GoX} from "react-icons/go";
 import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
-import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import {FilterOperators} from "@/types/filters";
 import clsx from "clsx";
 
