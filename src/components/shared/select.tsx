@@ -10,6 +10,7 @@ interface SelectProps<T> extends HTMLAttributes<HTMLDivElement> {
     isSelected: (item: T) => boolean;
     selectedItem?: T | null;
     placeholder?: string;
+    disabled?: boolean;
 }
 
 const Select = <T, >({
@@ -20,6 +21,7 @@ const Select = <T, >({
                          selectedItem,
                          placeholder,
                          className,
+                         disabled,
                          ...props
                      }: SelectProps<T>) => {
     const [open, setOpen] = useState(false);
@@ -50,14 +52,15 @@ const Select = <T, >({
             className={cn(
                 className,
                 `border-transparent relative transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border-[1px] rounded-lg`,
-                { "sm:border-primary-500": open }
+                { "sm:border-primary-500": open },
             )}
             {...props}
         >
             <button
+                disabled={disabled}
                 type="button"
                 className={clsx(
-                    `${className} whitespace-nowrap p-2 sm:rounded-lg backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
+                    `${className} whitespace-nowrap p-2 sm:rounded-lg backdrop-blur border-[1px] enabled:hover:bg-tertiary-100 enabled:active:bg-tertiary-200 enabled:dark:hover:bg-tertiary-800 enabled:dark:active:bg-tertiary-700 disabled:opacity-50 flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
                     open ? "border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg" : "border-tertiary-300 dark:border-tertiary-700 rounded-lg"
                 )}
                 onClick={() => setOpen(!open)}>
