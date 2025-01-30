@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
-import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import {FilterOperators} from "@/types/filters";
 import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
 
