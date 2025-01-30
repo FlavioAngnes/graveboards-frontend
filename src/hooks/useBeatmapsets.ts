@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {BeatmapsetListingOptions, getBeatmapsets} from "@/actions/beatmapsets";
 import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
 import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
 import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import {Beatmapset} from "@/types/beatmapsets/beatmapset";
 
 const useBeatmapsets = (page: number, queueId?: number) => {
-    const [beatmapsets, setBeatmapsets] = useState<BeatmapsetListing[]>([]);
+    const [beatmapsets, setBeatmapsets] = useState<Beatmapset[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [hasMore, setHasMore] = useState(false);
     const [error, setError] = useState<string | null>(null);

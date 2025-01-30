@@ -2,7 +2,7 @@
 
 import {FC, useState} from "react";
 import clsx from "clsx";
-import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
+import {Beatmapset} from "@/types/beatmapsets/beatmapset";
 import {MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
@@ -12,7 +12,7 @@ import {useAuth} from "@/context/AuthContext";
 import {useBeatmapPreview} from "@/context/BeatmapPreviewContext";
 
 interface BeatmapsetProps {
-    beatmapset: BeatmapsetListing,
+    beatmapset: Beatmapset,
 }
 
 const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {

@@ -1,5 +1,5 @@
 import React, {FC, ReactNode, useState} from 'react';
-import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
+import {Beatmapset} from "@/types/beatmapsets/beatmapset";
 import BeatmapsetPanel from "@/components/beatmapsets/panels/beatmapsetPanel";
 import {MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp} from "react-icons/md";
 import clsx from "clsx";
@@ -7,7 +7,7 @@ import clsx from "clsx";
 interface BeatmapsetGroupProps {
     icon?: ReactNode;
     title: string;
-    beatmapsets: BeatmapsetListing[];
+    beatmapsets: Beatmapset[];
     view: 'list' | 'grid';
 }
 

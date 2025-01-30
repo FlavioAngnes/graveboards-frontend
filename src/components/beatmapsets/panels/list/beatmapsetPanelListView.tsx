@@ -1,11 +1,11 @@
 'use client'
 
 import React, {FC} from "react";
-import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
 import {MdChevronRight, MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
 import {ColorUtils} from "@/utils/colorUtils";
 import {TimeUtils} from "@/utils/timeUtils";
 import Link from "next/link";
+import { Beatmapset } from "@/types/beatmapsets/beatmapset";
 import clsx from "clsx";
 import {useAuth} from "@/context/AuthContext";
 import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
@@ -13,7 +13,7 @@ import Button from "@/components/shared/button";
 import {useBeatmapPreview} from "@/context/BeatmapPreviewContext";
 
 interface BeatmapsetProps {
-    beatmapset: BeatmapsetListing,
+    beatmapset: Beatmapset,
 }
 
 const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {

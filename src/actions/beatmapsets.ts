@@ -3,7 +3,7 @@
 import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 import {FilterType} from "@/types/filters";
-import { BeatmapsetListing } from "@/types/beatmapsets/beatmapset";
+import { Beatmapset } from "@/types/beatmapsets/beatmapset";
 
 const {API_URL} = process.env;
 
@@ -18,14 +18,14 @@ export interface Pagination {
     offset?: number;
 }
 
-export interface BeatmapsetListingOptions extends Pagination {
+export interface ListingOptions extends Pagination {
     search?: string;
     filters?: BeatmapsetListFilterOptions<unknown>[];
     sortingLayers?: BeatmapsetListSortingLayer[];
     queueId?: number;
 }
 
-export const getBeatmapsets = async (page: number, options: BeatmapsetListingOptions) => {
+export const getBeatmapsets = async (page: number, options: ListingOptions) => {
     const searchParams = new URLSearchParams();
 
     const groupedFilters: Record<string, Record<string, FilterType<unknown>>> = {};
@@ -71,5 +71,5 @@ export const getBeatmapsets = async (page: number, options: BeatmapsetListingOpt
         throw new Error('Failed to fetch beatmapsets.');
     }
 
-    return await response.json() as BeatmapsetListing[];
+    return await response.json() as Beatmapset[];
 }

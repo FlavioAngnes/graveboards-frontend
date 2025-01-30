@@ -1,4 +1,4 @@
-export interface BeatmapsetListing {
+export interface Beatmapset {
     id: number;
     beatmapset_snapshot: BeatmapsetSnapshot;
     display_data: BeatmapsetDisplayData;
