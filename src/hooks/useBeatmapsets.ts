@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {BeatmapsetListingOptions, getBeatmapsets} from "@/actions/beatmapsets";
+import {ListingOptions, getBeatmapsets} from "@/actions/beatmapsets";
 import {useSorting} from "@/context/beatmapsets/SortingContext";
 import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import {useSearch} from "@/context/beatmapsets/SearchContext";
