@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {BeatmapsetListingOptions, getBeatmapsets} from "@/actions/beatmapsets";
-import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
-import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
-import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import {useSorting} from "@/context/beatmapsets/SortingContext";
+import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import {useSearch} from "@/context/beatmapsets/SearchContext";
 import {Beatmapset} from "@/types/beatmapsets/beatmapset";
 
 const useBeatmapsets = (page: number, queueId?: number) => {
@@ -16,7 +16,7 @@ const useBeatmapsets = (page: number, queueId?: number) => {
     const {search} = useSearch();
 
     useEffect(() => {
-        const options: BeatmapsetListingOptions = {
+        const options: ListingOptions = {
             search: search,
             filters: filtersToUse,
             sortingLayers: layersToUse,

@@ -4,7 +4,7 @@ import {createContext, FC, ReactNode, useContext, useState} from 'react';
 import {BeatmapsetListSortingLayer, BeatmapsetListSortingLayerValue} from "@/types/beatmapsets/sorting";
 import {BeatmapsetListSortingLayerMap} from "@/data/beatmapsets/sorting";
 
-interface BeatmapsetListSortingContextType {
+interface SortingContextType {
     layers: BeatmapsetListSortingLayer[];
     layersToUse: BeatmapsetListSortingLayer[];
     nextLayer: BeatmapsetListSortingLayerValue;
@@ -19,7 +19,7 @@ interface BeatmapsetListSortingContextType {
     reorderLayers: (newLayers: BeatmapsetListSortingLayerValue[]) => void;
 }
 
-export const BeatmapsetListSortingContext = createContext<BeatmapsetListSortingContextType>({
+export const SortingContext = createContext<SortingContextType>({
     layers: [],
     layersToUse: [],
     nextLayer: 'Profile.country_code',
@@ -41,7 +41,7 @@ export const BeatmapsetListSortingContext = createContext<BeatmapsetListSortingC
     }
 })
 
-export const BeatmapsetListSortingProvider: FC<{
+export const SortingProvider: FC<{
     children: ReactNode,
     defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[]
 }> = ({children, defaultSortingLayers}) => {
@@ -101,7 +101,7 @@ export const BeatmapsetListSortingProvider: FC<{
     }
 
     return (
-        <BeatmapsetListSortingContext.Provider value={{
+        <SortingContext.Provider value={{
             layers,
             layersToUse,
             nextLayer,
@@ -116,8 +116,8 @@ export const BeatmapsetListSortingProvider: FC<{
             reorderLayers
         }}>
             {children}
-        </BeatmapsetListSortingContext.Provider>
+        </SortingContext.Provider>
     )
 }
 
-export const useSorting = () => useContext(BeatmapsetListSortingContext);
+export const useSorting = () => useContext(SortingContext);

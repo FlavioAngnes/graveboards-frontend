@@ -1,10 +1,10 @@
 import {FC, ReactNode} from "react";
-import {BeatmapsetListSortingProvider} from "@/context/beatmapsets/BeatmapsetListSortingContext";
+import {SortingProvider} from "@/context/beatmapsets/SortingContext";
 import BeatmapsetList from "@/components/beatmapsets/beatmapsetList";
 import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
-import {BeatmapsetListFiltersProvider} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import {FiltersProvider} from "@/context/beatmapsets/FiltersContext";
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
-import {BeatmapsetListSearchProvider} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import {SearchProvider} from "@/context/beatmapsets/SearchContext";
 
 interface BeatmapsetsProviderProps {
     title?: string,
@@ -31,9 +31,9 @@ export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
           showSorting = true,
       }) => {
     return (
-        <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
-            <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
-                <BeatmapsetListSearchProvider>
+        <FiltersProvider defaultFilters={defaultFilters}>
+            <SortingProvider defaultSortingLayers={defaultSortingLayers}>
+                <SearchProvider>
                     <BeatmapsetList title={title}
                                     queueId={queueId}
                                     showGrouping={showGrouping}
@@ -42,8 +42,8 @@ export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
                                     showFilters={showFilters}
                                     showSorting={showSorting}
                     />
-                </BeatmapsetListSearchProvider>
-            </BeatmapsetListSortingProvider>
-        </BeatmapsetListFiltersProvider>
+                </SearchProvider>
+            </SortingProvider>
+        </FiltersProvider>
     )
 }

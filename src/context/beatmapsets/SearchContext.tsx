@@ -2,29 +2,29 @@
 
 import {createContext, FC, ReactNode, useContext, useState} from 'react';
 
-interface BeatmapsetListSearchContextType {
+interface SearchContextType {
     search: string,
     setSearch: (search: string) => void,
 }
 
-export const BeatmapsetListSearchContext = createContext<BeatmapsetListSearchContextType>({
+export const SearchContext = createContext<SearchContextType>({
     search: "",
     setSearch: ()=>{},
 })
 
-export const BeatmapsetListSearchProvider: FC<{
+export const SearchProvider: FC<{
     children: ReactNode,
 }> = ({children}) => {
     const [search, setSearch] = useState<string>("");
 
     return (
-        <BeatmapsetListSearchContext.Provider value={{
+        <SearchContext.Provider value={{
             search: search,
             setSearch: setSearch,
         }}>
             {children}
-        </BeatmapsetListSearchContext.Provider>
+        </SearchContext.Provider>
     )
 }
 
-export const useSearch = () => useContext(BeatmapsetListSearchContext);
+export const useSearch = () => useContext(SearchContext);

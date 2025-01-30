@@ -3,7 +3,7 @@
 import {createContext, FC, ReactNode, useContext, useState} from 'react';
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
 
-interface BeatmapsetListFiltersContextType {
+interface FiltersContextType {
     filters: BeatmapsetListFilterOptions<unknown>[];
     userFilters: BeatmapsetListFilterOptions<unknown>[];
     filtersToUse: BeatmapsetListFilterOptions<unknown>[];
@@ -16,7 +16,7 @@ interface BeatmapsetListFiltersContextType {
     undoFilters: () => void;
 }
 
-export const BeatmapsetListFiltersContext = createContext<BeatmapsetListFiltersContextType>({
+export const FiltersContext = createContext<FiltersContextType>({
     filters: [],
     userFilters: [],
     filtersToUse: [],
@@ -29,7 +29,7 @@ export const BeatmapsetListFiltersContext = createContext<BeatmapsetListFiltersC
     undoFilters: () => {}
 })
 
-export const BeatmapsetListFiltersProvider: FC<{
+export const FiltersProvider: FC<{
     children: ReactNode,
     defaultFilters?: BeatmapsetListFilterOptions<unknown>[]
 }> = ({children, defaultFilters}) => {
@@ -92,7 +92,7 @@ export const BeatmapsetListFiltersProvider: FC<{
     }
 
     return (
-        <BeatmapsetListFiltersContext.Provider value={{
+        <FiltersContext.Provider value={{
             filters,
             userFilters,
             filtersToUse,
@@ -105,8 +105,8 @@ export const BeatmapsetListFiltersProvider: FC<{
             undoFilters
         }}>
             {children}
-        </BeatmapsetListFiltersContext.Provider>
+        </FiltersContext.Provider>
     )
 }
 
-export const useFilters = () => useContext(BeatmapsetListFiltersContext);
+export const useFilters = () => useContext(FiltersContext);

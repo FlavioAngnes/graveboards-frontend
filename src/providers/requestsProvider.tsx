@@ -1,9 +1,9 @@
 import {FC, ReactNode} from "react";
-import {BeatmapsetListSortingProvider} from "@/context/beatmapsets/BeatmapsetListSortingContext";
+import {SortingProvider} from "@/context/beatmapsets/SortingContext";
 import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
-import {BeatmapsetListFiltersProvider} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
+import {FiltersProvider} from "@/context/beatmapsets/FiltersContext";
 import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
-import {BeatmapsetListSearchProvider} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import {SearchProvider} from "@/context/beatmapsets/SearchContext";
 import RequestList from "@/components/requests/requestList";
 
 interface RequestsProviderProps {
@@ -37,9 +37,9 @@ export const RequestsProvider: FC<RequestsProviderProps> = ({
                                                                 pagination = false,
                                                             }) => {
     return (
-        <BeatmapsetListFiltersProvider defaultFilters={defaultFilters}>
-            <BeatmapsetListSortingProvider defaultSortingLayers={defaultSortingLayers}>
-                <BeatmapsetListSearchProvider>
+        <FiltersProvider defaultFilters={defaultFilters}>
+            <SortingProvider defaultSortingLayers={defaultSortingLayers}>
+                <SearchProvider>
                     <RequestList title={title}
                                  queueId={queueId}
                                  showControls={showControls}
@@ -51,8 +51,8 @@ export const RequestsProvider: FC<RequestsProviderProps> = ({
                                  editMode={editMode}
                                  pagination={pagination}
                     />
-                </BeatmapsetListSearchProvider>
-            </BeatmapsetListSortingProvider>
-        </BeatmapsetListFiltersProvider>
+                </SearchProvider>
+            </SortingProvider>
+        </FiltersProvider>
     )
 }
