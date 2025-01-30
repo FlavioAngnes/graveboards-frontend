@@ -1,8 +1,13 @@
-import {Profile} from "@/types/profile";
+import {UserProfile} from "@/types/userProfile";
+
+interface UserRole {
+    id: number;
+    name: string;
+}
 
 export interface User {
-    profile: Profile;
-    roles: { id: number; name: string }[];
+    profile: UserProfile;
+    roles: UserRole[];
     scores: string[];
     tokens: number[];
     queues: string[];

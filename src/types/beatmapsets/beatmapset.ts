@@ -1,7 +1,8 @@
+import { UserProfile } from "@/types/userProfile";
+
 export interface Beatmapset {
     id: number;
     beatmapset_snapshot: BeatmapsetSnapshot;
-    display_data: BeatmapsetDisplayData;
     updated_at: string;
 }
 
@@ -12,6 +13,7 @@ export interface BeatmapsetSnapshot {
     snapshot_date: string;
     checksum: string;
     verified: boolean;
+    user_profile: Partial<UserProfile>;
 
     // osu! API datastructure
     artist: string;
@@ -81,15 +83,4 @@ export interface BeatmapSnapshot {
     playcount: number;
     ranked: number;
     url: string;
-}
-
-export interface BeatmapsetDisplayData {
-    title: string;
-    artist: string;
-    thumbnail: string;
-    mapper: string;
-    mapper_avatar: string;
-    length: number;
-    difficulties: number[];
-    verified: boolean;
 }

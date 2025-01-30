@@ -1,4 +1,4 @@
-export interface Profile {
+export interface UserProfile {
     kudosu: {
         available: number;
         total: number;
