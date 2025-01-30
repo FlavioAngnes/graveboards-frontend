@@ -4,24 +4,24 @@ import React, {FC, useEffect, useRef} from 'react';
 import useBeatmapsets from "@/hooks/useBeatmapsets";
 import BeatmapsetPanel from "@/components/beatmapsets/panels/beatmapsetPanel";
 import BeatmapsetPanelSkeleton from "@/components/beatmapsets/panels/beatmapsetPanelSkeleton";
-import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
+import {useSorting} from "@/context/beatmapsets/SortingContext";
 import clsx from "clsx";
-import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
-import FilterChip from "@/components/shared/filterChip";
-import {FilterOperators} from "@/types/filters";
-import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
+import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import BeatmapsetGroup from "@/components/beatmapsets/beatmapsetGroup";
-import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import {useSearch} from "@/context/beatmapsets/SearchContext";
 import ListControls from "@/components/shared/lists/listControls";
+import { FilterChipList } from "@/components/shared/filterChipList";
 
 interface BeatmapsetsProps {
     title: string;
     queueId?: number;
+    showControls?: boolean;
     showGrouping?: boolean;
     showViewSwitch?: boolean;
     showSearch?: boolean;
     showFilters?: boolean;
     showSorting?: boolean;
+    editMode?: boolean;
 }
 
 type View = 'list' | 'grid';
@@ -31,31 +31,48 @@ export type BeatmapsetListGroup = 'artist' | 'mapper' | null;
 const BeatmapsetList: FC<BeatmapsetsProps> = ({
                                                   title,
                                                   queueId,
+                                                  showControls = true,
                                                   showGrouping = true,
                                                   showViewSwitch = true,
                                                   showSearch = true,
                                                   showSorting = true,
-                                                  showFilters = true
+                                                  showFilters = true,
+                                                  editMode = false
                                               }) => {
-    const showControls = showGrouping && showViewSwitch && showSearch && showFilters && showSorting;
     const id = title?.toLowerCase().replace(' ', '-');
 
-    const [view, setView] = React.useState<View>('grid');
+    //#region Controls
+    const [view, setView] = React.useState<View>(editMode ? 'list' : 'grid');
+
+    if (editMode) {
+        showViewSwitch = false;
+    }
+
+    showControls = showControls || (showGrouping && showViewSwitch && showSearch && showFilters && showSorting);
+
+    //#endregion
+
+    //#region Pagination
+
     const [page, setPage] = React.useState(0);
-    const [grouping, setGrouping] = React.useState<BeatmapsetListGroup>(null);
 
-    const {layersToUse} = useSorting();
-    const {filters, filtersToUse} = useFilters();
-    const {search} = useSearch();
+    //#endregion
 
-    useEffect(() => {
-        setPage(0);
-    }, [layersToUse, filtersToUse, search]);
+    //#region Hooks
 
     const {beatmapsets, isLoading, hasMore, error} = useBeatmapsets(page, queueId);
 
-    const observerRef = useRef<HTMLDivElement | null>(null);
+    const {search} = useSearch();
+    const {filtersToUse} = useFilters();
+    const {layersToUse} = useSorting();
 
+    //#endregion
+
+    //#region Beatmapset Grouping
+
+    const [grouping, setGrouping] = React.useState<BeatmapsetListGroup>(null);
+
+    // Group beatmapsets by artist, title or mapper
     const groupedBeatmapsets = beatmapsets.reduce((groups, beatmapset) => {
         if (!grouping) {
             return groups;
@@ -76,6 +93,12 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
         return groups;
     }, {} as Record<string, typeof beatmapsets>);
 
+    //#endregion
+
+    //#region Infinite scroll
+
+    const observerRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
         if (isLoading) return;
 
@@ -95,6 +118,13 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
             }
         }
     }, [isLoading, hasMore]);
+
+    // Reset page when search, filters or sorting changes
+    useEffect(() => {
+        setPage(0);
+    }, [layersToUse, filtersToUse, search]);
+
+    //#endregion
 
     if (error) {
         return (
@@ -130,36 +160,22 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
 
             </div>
 
-            {
-                filters.length > 0 && (
-                    <div className="flex gap-2">
-                        {filters.map((filter, index) => (
-                            Object.entries(filter.options).map(([key, value]) => (
-                                <FilterChip name={filter.value} key={`${index}-${key}`}
-                                            label={BeatmapsetListFiltersMap[filter.value].label} option={{
-                                    operation: key as FilterOperators,
-                                    value: value
-                                }}/>
-                            ))
-                        ))}
-                    </div>
-                )
-            }
+            <FilterChipList/>
 
             <div
                 className={clsx(
-                    {'flex flex-col': grouping},
-                    view === 'grid' && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))] gap-4` : `flex flex-col gap-2`
+                    `gap-4`,
+                    view === 'grid' && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
                 )}
             >
                 {
                     grouping ? (
                         Object.entries(groupedBeatmapsets).map(([artist, beatmaps]) => (
-                            <BeatmapsetGroup title={artist} beatmapsets={beatmaps} view={view} key={artist}/>
+                            <BeatmapsetGroup title={artist} beatmapsets={beatmaps} view={view} key={artist} editMode={editMode}/>
                         ))
                     ) : (
                         beatmapsets.map((beatmap) => (
-                                <BeatmapsetPanel key={beatmap.id} beatmapset={beatmap} view={view}/>
+                                <BeatmapsetPanel key={beatmap.id} beatmapset={beatmap} view={view} editMode={editMode}/>
                             )
                         )
                     )

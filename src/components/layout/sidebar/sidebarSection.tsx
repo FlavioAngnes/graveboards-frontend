@@ -9,7 +9,7 @@ interface SidebarSectionProps {
 
 const SidebarSection: FC<SidebarSectionProps> = ({label, children}) => {
     return (
-        <div className="flex flex-col flex-1 gap-6">
+        <div className="flex flex-col w-full gap-6">
             <div className="flex flex-col flex-1">
                 <div className="font-bold tracking-wide px-3 mb-4 dark:text-tertiary-400 text-tertiary-500">
                     {label}

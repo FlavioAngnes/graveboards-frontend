@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import useQueue from "@/hooks/useQueue";
+import useQueue from "@/hooks/queues/useQueue";
 import {RequestsProvider} from "@/providers/requestsProvider";
 import ManageQueueHeader from "@/components/queues/manage/manageQueueHeader";
 

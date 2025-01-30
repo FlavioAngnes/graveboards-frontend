@@ -10,6 +10,7 @@ const RequestPanelSkeletonListView = () => {
                         <div className="rounded-xl w-32 h-3 bg-tertiary-200 dark:bg-tertiary-750"></div>
                         <div className="rounded-xl w-24 h-2 bg-tertiary-200 dark:bg-tertiary-750"></div>
                         <div className="rounded-xl w-28 h-2 bg-tertiary-200 dark:bg-tertiary-750"></div>
+                        <div className="rounded-xl w-24 h-2 bg-tertiary-200 dark:bg-tertiary-750"></div>
                         <div className="block lg:hidden rounded-xl w-24 h-2 bg-tertiary-100 dark:bg-tertiary-750"></div>
                     </div>
 

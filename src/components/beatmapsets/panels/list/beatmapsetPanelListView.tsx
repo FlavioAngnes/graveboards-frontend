@@ -1,37 +1,38 @@
-'use client'
+"use client";
 
-import React, {FC} from "react";
-import {MdChevronRight, MdPlayArrow, MdRadioButtonChecked} from "react-icons/md";
-import {ColorUtils} from "@/utils/colorUtils";
-import {TimeUtils} from "@/utils/timeUtils";
-import Link from "next/link";
+import React, { FC } from "react";
 import { Beatmapset } from "@/types/beatmapsets/beatmapset";
+import { MdChevronRight, MdPlayArrow, MdRadioButtonChecked } from "react-icons/md";
+import { ColorUtils } from "@/utils/colorUtils";
+import { TimeUtils } from "@/utils/timeUtils";
 import clsx from "clsx";
-import {useAuth} from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
 import Button from "@/components/shared/button";
-import {useBeatmapPreview} from "@/context/BeatmapPreviewContext";
+import { useBeatmapPreview } from "@/context/BeatmapPreviewContext";
+import SelectBeatmapsetStatus from "@/components/requests/manage/selectBeatmapsetStatus";
 
 interface BeatmapsetProps {
     beatmapset: Beatmapset,
+    editMode?: boolean
 }
 
-const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
-    const {isAdmin} = useAuth();
+const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({ beatmapset, editMode }) => {
+    const { isAdmin } = useAuth();
 
-    const {setSrc} = useBeatmapPreview();
+    const { setSrc } = useBeatmapPreview();
 
     return (
         <div className="flex rounded-xl overflow-hidden h-24">
             <div
                 className="flex-col p-2.5 justify-end gap-3 items-end hidden xl:flex rounded-l-xl h-full aspect-video bg-center bg-no-repeat bg-[size:215%]"
-                style={{backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})`}}>
+                style={{ backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})` }}>
                 <div className="flex gap-1.5">
                     <Button className="px-1.5 gap-1 h-8.5 font-semibold text-sm"
                             onClick={() => {
                                 setSrc(beatmapset.beatmapset_snapshot.preview_url);
                             }}>
-                        <MdPlayArrow className="size-4 shrink-0"/>
+                        <MdPlayArrow className="size-4 shrink-0" />
                         PREVIEW
                     </Button>
                     <div
@@ -43,7 +44,7 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
             <div
                 className={clsx(
                     `bg-tertiary-50 dark:text-white dark:bg-tertiary-900 grid w-full items-center gap-8 px-4 relative tracking-wide rounded-xl xl:rounded-l-none xl:rounded-r-xl`,
-                    isAdmin ? 'lg:grid-cols-4 grid-cols-3' : 'lg:grid-cols-3 grid-cols-2'
+                    isAdmin ? "lg:grid-cols-4 grid-cols-3" : "lg:grid-cols-3 grid-cols-2"
                 )}>
                 <div className="truncate">
                     <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.beatmapset_snapshot.beatmapset_id}`}
@@ -55,27 +56,29 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                     </div>
                     <div className="block lg:hidden text-xs text-tertiary-500 dark:text-tertiary-400 truncate">
                         Mapped by <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
-                                     className="font-semibold" target="_blank">{beatmapset.beatmapset_snapshot.creator}</a>
+                                     className="font-semibold"
+                                     target="_blank">{beatmapset.beatmapset_snapshot.creator}</a>
                     </div>
                 </div>
 
                 <div className="hidden lg:flex items-center gap-2 truncate">
                     <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
                        className="size-10 shrink-0 bg-gray-500 rounded-full bg-cover" target="_blank"
-                       style={{backgroundImage: `url(${beatmapset.display_data.mapper_avatar})`}}></a>
+                       style={{ backgroundImage: `url(${beatmapset.beatmapset_snapshot.user_profile.avatar_url})` }}></a>
                     <div className="flex flex-col">
                         <div className="text-xs text-tertiary-500 dark:text-tertiary-400">
                             Mapped by
                         </div>
                         <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
-                           className="text-sm font-semibold" target="_blank">{beatmapset.beatmapset_snapshot.creator}</a>
+                           className="text-sm font-semibold"
+                           target="_blank">{beatmapset.beatmapset_snapshot.creator}</a>
                     </div>
                 </div>
 
                 <div
                     className="flex flex-col gap-0 transition-[gap] duration-300 delay-300 ease-out group hover:gap-2 hover:delay-0">
                     <div className="flex items-center gap-1 self-stretch">
-                        <MdRadioButtonChecked className="size-4 shrink-0 text-tertiary-500 dark:text-tertiary-400"/>
+                        <MdRadioButtonChecked className="size-4 shrink-0 text-tertiary-500 dark:text-tertiary-400" />
                         <div className="flex items-center gap-0.5">
                             {
                                 beatmapset.beatmapset_snapshot.beatmap_snapshots
@@ -83,7 +86,7 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                                     .slice(0, 6)
                                     .map((beatmap, index) => (
                                         <div key={index} className="w-1.5 h-4 bg-gray-500 rounded-full"
-                                             style={{backgroundColor: ColorUtils.forStarRating(beatmap.difficulty_rating)}}></div>
+                                             style={{ backgroundColor: ColorUtils.forStarRating(beatmap.difficulty_rating) }}></div>
                                     ))
                             }
 
@@ -97,21 +100,40 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({beatmapset}) => {
                 </div>
 
                 {
-                    isAdmin && (
-                        <div className="flex items-center justify-center">
-                            <BeatmapsetStatusBadge status={beatmapset.beatmapset_snapshot.verified ? "verified" : "unverified"}/>
-                        </div>
+                    editMode ? (
+                        <>
+                            {
+                                isAdmin && (
+                                    <div className="flex items-center justify-center">
+                                        <SelectBeatmapsetStatus
+                                            disabled={true}
+                                            initialStatus={beatmapset.beatmapset_snapshot.verified ? "verified" : "unverified"} />
+                                    </div>
+                                )
+                            }
+                        </>
+                    ) : (
+                        <>
+                            {
+                                isAdmin && (
+                                    <div className="flex items-center justify-center">
+                                        <BeatmapsetStatusBadge
+                                            status={beatmapset.beatmapset_snapshot.verified ? "verified" : "unverified"} />
+                                    </div>
+                                )
+                            }
+                        </>
                     )
                 }
             </div>
 
-            <Link
-                href={`/beatmapsets/${beatmapset.id}`}
-                className={`h-full flex items-center justify-center rounded-r-xl bg-tertiary-100 hover:bg-tertiary-200 active:bg-tertiary-300 dark:bg-tertiary-800 hover:dark:bg-tertiary-700 active:dark:bg-tertiary-600 pl-8 -ml-8 hover:w-20 w-14 transition-all duration-150 ease-in-out`}>
-                <MdChevronRight className="size-6 shrink-0 text-tertiary-500 justify-self-end"/>
-            </Link>
+            <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.id}`}
+               target="_blank"
+               className="h-full flex items-center justify-center rounded-r-xl bg-tertiary-100 hover:bg-tertiary-200 active:bg-tertiary-300 dark:bg-tertiary-800 hover:dark:bg-tertiary-700 active:dark:bg-tertiary-600 pl-8 -ml-8 hover:w-20 w-14 transition-all duration-150 ease-in-out">
+                <MdChevronRight className="size-6 shrink-0 text-tertiary-500 justify-self-end" />
+            </a>
         </div>
     );
-}
+};
 
 export default BeatmapsetPanelListView;

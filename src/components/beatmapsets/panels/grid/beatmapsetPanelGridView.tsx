@@ -54,7 +54,7 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({beatmapset}) => {
                 className="bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 flex gap-3 p-2.5 self-stretch min-w-24 transition-colors duration-300 ease-in-out overflow-hidden relative tracking-wide">
                 <a href={`https://osu.ppy.sh/users/${beatmapset.beatmapset_snapshot.user_id}`}
                    className="size-10 bg-gray-500 rounded-full bg-cover" target="_blank"
-                   style={{backgroundImage: `url(${beatmapset.display_data.mapper_avatar})`}}></a>
+                   style={{backgroundImage: `url(${beatmapset.beatmapset_snapshot.user_profile.avatar_url})`}}></a>
                 <div className="overflow-hidden flex-1 truncate">
                     <a href={`https://osu.ppy.sh/beatmapsets/${beatmapset.beatmapset_snapshot.beatmapset_id}`}
                        className="text-sm font-semibold leading-5" target="_blank">

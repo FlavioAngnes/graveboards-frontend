@@ -13,12 +13,9 @@ interface QueueStatusButtonProps {
 
 const QueueStatusButton: FC<QueueStatusButtonProps> = ({ isOpen, setIsOpen, queue }) => {
     const { user, isAdmin } = useAuth();
+    const isManager = user && queue.manager_profiles.some(manager => manager.id === user.id);
 
-    if (!(queue.display_data.manager_profiles.some(manager => manager.username === user?.profile.username) || isAdmin)) {
-        return null;
-    }
-
-    return (
+    return (isManager || isAdmin) && (
         <Button
             onClick={() => setIsOpen(!isOpen)}
             rounded="full"

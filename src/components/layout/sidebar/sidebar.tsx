@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
-import {MdChecklist, MdHome, MdList} from "react-icons/md";
+import React from "react";
+import { MdChecklist, MdHome, MdList } from "react-icons/md";
 import SidebarSection from "@/components/layout/sidebar/sidebarSection";
 import SidebarLink from "@/components/layout/sidebar/sidebarLink";
-import {useAuth} from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
+import SidebarManage from "@/components/layout/sidebar/sidebarManage";
 
 
 const Sidebar = () => {
@@ -16,15 +17,18 @@ const Sidebar = () => {
             <div className="text-2xl self-center">
                 Graveboards
             </div>
-            <SidebarSection label='Discover'>
-                <SidebarLink href={'/home'} label='Home' icon={<MdHome className='size-6'/>}/>
-                {isAuthenticated && (
-                    <>
-                        <SidebarLink href={'/requests'} label='My Requests' icon={<MdChecklist className='size-6'/>}/>
-                        <SidebarLink href={'/queues'} label='Queues' icon={<MdList className='size-6'/>}/>
-                    </>
-                )}
-            </SidebarSection>
+            <div className="flex-1 flex flex-col gap-4">
+                <SidebarSection label='Discover'>
+                    <SidebarLink href={'/home'} label='Home' icon={<MdHome className='size-6'/>}/>
+                    {isAuthenticated && (
+                        <>
+                            <SidebarLink href={'/requests'} label='My Requests' icon={<MdChecklist className='size-6'/>}/>
+                            <SidebarLink href={'/queues'} label='Queues' icon={<MdList className='size-6'/>}/>
+                        </>
+                    )}
+                </SidebarSection>
+                <SidebarManage/>
+            </div>
         </div>
     );
 };

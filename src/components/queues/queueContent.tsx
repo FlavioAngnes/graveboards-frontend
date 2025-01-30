@@ -1,7 +1,7 @@
 "use client";
 
 import React, {FC} from "react";
-import useQueue from "@/hooks/useQueue";
+import useQueue from "@/hooks/queues/useQueue";
 import {RequestsProvider} from "@/providers/requestsProvider";
 import QueueHeader from "@/components/queues/queueHeader";
 

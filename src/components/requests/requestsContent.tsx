@@ -25,7 +25,6 @@ const RequestsContent = () => {
                             isDefault: true
                         }
                     ]}
-                    pagination={true}
                 />
             </div>
     );

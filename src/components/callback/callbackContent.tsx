@@ -18,8 +18,7 @@ export const CallbackContent = () => {
 
         loginUser(code, state).catch((error) => {
             console.error(error);
-            redirect("/");
-        }).then(() => {
+        }).finally(() => {
             redirect("/");
         });
     }, [searchParams]);

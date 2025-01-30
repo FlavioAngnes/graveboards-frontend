@@ -8,13 +8,14 @@ import BeatmapsetPanelListView from "@/components/beatmapsets/panels/list/beatma
 interface BeatmapsetProps {
     beatmapset: Beatmapset;
     view: "list" | "grid";
+    editMode?: boolean;
 }
 
-const BeatmapsetPanel: FC<BeatmapsetProps> = ({beatmapset, view}) => {
+const BeatmapsetPanel: FC<BeatmapsetProps> = ({beatmapset, view, editMode}) => {
     return view === "grid" ? (
         <BeatmapsetPanelGridView beatmapset={beatmapset}/>
     ) : (
-        <BeatmapsetPanelListView beatmapset={beatmapset}/>
+        <BeatmapsetPanelListView beatmapset={beatmapset} editMode={editMode}/>
     );
 }
 

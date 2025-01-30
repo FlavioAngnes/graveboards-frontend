@@ -1,21 +1,21 @@
 'use client'
 
 import {FC} from "react";
-import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
+import {BeatmapsetRequest} from "@/types/requests/request";
 import RequestPanelGridView from "@/components/requests/panels/grid/requestPanelGridView";
 import RequestPanelListView from "@/components/requests/panels/list/requestPanelListView";
 
 interface RequestPanelProps {
-    beatmapset: BeatmapsetListing;
+    requests: BeatmapsetRequest;
     view: "list" | "grid";
     editMode?: boolean;
 }
 
-const RequestPanel: FC<RequestPanelProps> = ({beatmapset, view, editMode = false}) => {
+const RequestPanel: FC<RequestPanelProps> = ({requests, view, editMode = false}) => {
     return view === "grid" ? (
-        <RequestPanelGridView beatmapset={beatmapset}/>
+        <RequestPanelGridView request={requests}/>
     ) : (
-        <RequestPanelListView beatmapset={beatmapset} editMode={editMode}/>
+        <RequestPanelListView request={requests} editMode={editMode}/>
     );
 }
 

@@ -1,11 +1,11 @@
 'use client';
 
 import React, {FC, useEffect, useRef} from 'react';
-import useBeatmapsets from "@/hooks/useBeatmapsets";
-import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
+import useRequests from "@/hooks/useRequests";
+import {useSorting} from "@/context/beatmapsets/SortingContext";
 import clsx from "clsx";
-import {useFilters} from "@/context/beatmapsets/BeatmapsetListFiltersContext";
-import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import {useFilters} from "@/context/beatmapsets/FiltersContext";
+import {useSearch} from "@/context/beatmapsets/SearchContext";
 import RequestPanel from "@/components/requests/panels/requestPanel";
 import ListControls from "@/components/shared/lists/listControls";
 import Button from "@/components/shared/button";
@@ -29,7 +29,7 @@ interface RequestListProps {
 
 type View = 'list' | 'grid';
 
-export type BeatmapsetListGroup = 'artist' | 'mapper' | null;
+export type GroupKey = 'artist' | 'mapper' | null;
 
 const RequestList: FC<RequestListProps> = ({
                                                title,
@@ -68,7 +68,7 @@ const RequestList: FC<RequestListProps> = ({
 
     //#region Hooks
 
-    const {beatmapsets, isLoading, error, hasMore} = useBeatmapsets(page, queueId);
+    const {requests, isLoading, error, hasMore} = useRequests(page, queueId);
 
     const {search} = useSearch();
     const {filtersToUse} = useFilters();
@@ -78,28 +78,26 @@ const RequestList: FC<RequestListProps> = ({
 
     //#region Beatmapset Grouping
 
-    const [grouping, setGrouping] = React.useState<BeatmapsetListGroup>(null);
+    const [grouping, setGrouping] = React.useState<GroupKey>(null);
 
-    // Group beatmapsets by artist, title or mapper
-    const groupedBeatmapsets = beatmapsets.reduce((groups, beatmapset) => {
+    const groupedRequests = requests.reduce((groups, request) => {
         if (!grouping) {
             return groups;
         }
 
         const groupKey = ({
-            artist: beatmapset.beatmapset_snapshot.artist,
-            title: beatmapset.beatmapset_snapshot.title,
-            mapper: beatmapset.beatmapset_snapshot.creator
+            'artist': request.beatmapset_snapshot.artist,
+            'mapper': request.beatmapset_snapshot.creator,
         })[grouping];
 
         if (!groups[groupKey]) {
             groups[groupKey] = [];
         }
 
-        groups[groupKey].push(beatmapset);
+        groups[groupKey].push(request);
 
         return groups;
-    }, {} as Record<string, typeof beatmapsets>);
+    }, {} as Record<string, typeof requests>);
 
     //#endregion
 
@@ -168,24 +166,24 @@ const RequestList: FC<RequestListProps> = ({
 
             <div
                 className={clsx(
-                    {'flex flex-col': grouping},
-                    view === 'grid' && !grouping ? `grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-4` : `flex flex-col gap-2`
+                    `gap-4`,
+                    view === 'grid' && !grouping ? `grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))]` : `flex flex-col`
                 )}
             >
                 {
                     grouping ? (
-                        Object.entries(groupedBeatmapsets).map(([key, beatmapsets]) => (
-                            <RequestGroup title={key} beatmapsets={beatmapsets} view={view} key={key}/>
+                        Object.entries(groupedRequests).map(([key, requests]) => (
+                            <RequestGroup title={key} requests={requests} view={view} key={key} editMode={editMode}/>
                         ))
                     ) : (
                         pagination ? (
-                            beatmapsets.slice(page * 10, (page + 1) * 10).map((beatmapset) => (
-                                <RequestPanel key={beatmapset.id} beatmapset={beatmapset} view={view}
+                            requests.slice(page * 10, (page + 1) * 10).map((request) => (
+                                <RequestPanel key={request.id} requests={request} view={view}
                                               editMode={editMode}/>
                             ))
                         ) : (
-                            beatmapsets.map((beatmapset) => (
-                                <RequestPanel key={beatmapset.id} beatmapset={beatmapset} view={view}
+                            requests.map((request) => (
+                                <RequestPanel key={request.id} requests={request} view={view}
                                               editMode={editMode}/>
                             ))
                         )
@@ -212,7 +210,7 @@ const RequestList: FC<RequestListProps> = ({
                             Previous
                         </Button>
                         <span className="text-tertiary-500 dark:text-tertiary-400">
-                            Page <span className="font-semibold text-black dark:text-white">{page + 1}</span> of <span className="font-semibold text-black dark:text-white">{Math.ceil(beatmapsets.length / 10)}</span>
+                            Page <span className="font-semibold text-black dark:text-white">{page + 1}</span> of <span className="font-semibold text-black dark:text-white">{Math.ceil(requests.length / 10)}</span>
                         </span>
                         <Button
                             size="sm"

@@ -3,7 +3,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import QueuePanel from "@/components/queues/panels/queuePanel";
 import QueuePanelSkeleton from "@/components/queues/panels/queuePanelSkeleton";
-import useQueues from "@/hooks/useQueues";
+import useQueues from "@/hooks/queues/useQueues";
 
 const QueueList = () => {
     const [page, setPage] = useState(0);

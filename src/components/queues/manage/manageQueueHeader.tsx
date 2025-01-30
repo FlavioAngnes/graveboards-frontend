@@ -17,23 +17,23 @@ const ManageQueueHeader: FC<ManageQueueHeaderProps> = ({ queue }) => {
             className="px-8 py-6 flex-col gap-8 lg:flex-row flex justify-between items-center rounded-xl dark:text-white self-stretch transition-colors duration-300 ease-in-out">
             <div className="flex sm:flex-row flex-col items-center gap-6 flex-1">
                 <div className="size-24 rounded-xl shrink-0 bg-cover"
-                     style={{ backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})` }}></div>
+                     style={{ backgroundImage: `url(${queue.user_profile.avatar_url})` }}></div>
                 <div className="flex flex-col gap-1.5 flex-1">
                     <div>
                         <div className="font-semibold">{queue.name}</div>
                         <div className="text-sm text-tertiary-500">Owned by <a
                             href={`https://osu.ppy.sh/users/${queue.user_id}`}
-                            className="font-semibold" target="_blank">{queue.display_data.owner_profile.username}</a>
+                            className="font-semibold" target="_blank">{queue.user_profile.username}</a>
                             {
-                                queue.display_data.manager_profiles.length > 0 && (
+                                queue.manager_profiles.length > 0 && (
                                     <>
                                         • Managed by
                                         {
-                                            queue.display_data.manager_profiles.map((manager, index) => (
+                                            queue.manager_profiles.map((manager, index) => (
                                                 <span key={index}>
-                                                    <a href={`https://osu.ppy.sh/users/${manager}`}
+                                                    <a href={`https://osu.ppy.sh/users/${manager.id}`}
                                                        className="font-semibold" target="_blank">{manager.username}</a>
-                                                    {index < queue.display_data.manager_profiles.length - 1 && ", "}
+                                                    {index < queue.manager_profiles.length - 1 && ", "}
                                                 </span>
                                             ))
                                         }

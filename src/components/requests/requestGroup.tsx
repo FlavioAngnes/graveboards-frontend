@@ -1,17 +1,18 @@
-import React, {FC, ReactNode, useState} from 'react';
-import {BeatmapsetListing} from "@/types/beatmapsets/beatmapset";
-import {MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp} from "react-icons/md";
+import React, { FC, ReactNode, useState } from "react";
+import { BeatmapsetRequest } from "@/types/requests/request";
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md";
 import clsx from "clsx";
 import RequestPanel from "@/components/requests/panels/requestPanel";
 
 interface RequestGroupProps {
     icon?: ReactNode;
     title: string;
-    beatmapsets: BeatmapsetListing[];
-    view: 'list' | 'grid';
+    requests: BeatmapsetRequest[];
+    view: "list" | "grid";
+    editMode?: boolean;
 }
 
-const RequestGroup: FC<RequestGroupProps> = ({icon, title, beatmapsets, view}) => {
+const RequestGroup: FC<RequestGroupProps> = ({ icon, title, requests, view, editMode = false }) => {
     const [open, setOpen] = useState(true);
 
     return (
@@ -29,22 +30,22 @@ const RequestGroup: FC<RequestGroupProps> = ({icon, title, beatmapsets, view}) =
                         {title}
                     </div>
                 </div>
-                    {open ? (
-                        <MdOutlineKeyboardArrowUp className="size-5"/>
-                    ) : (
-                        <MdOutlineKeyboardArrowDown className="size-5"/>
-                    )}
+                {open ? (
+                    <MdOutlineKeyboardArrowUp className="size-5" />
+                ) : (
+                    <MdOutlineKeyboardArrowDown className="size-5" />
+                )}
             </button>
 
             {open && (
                 <div
                     className={clsx(
-                        'gap-4',
-                        view === 'grid' ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
+                        "gap-4",
+                        view === "grid" ? `grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))]` : `flex flex-col`
                     )}
                 >
-                    {beatmapsets.map(beatmapset => (
-                        <RequestPanel beatmapset={beatmapset} view={view} key={beatmapset.id}/>
+                    {requests.map(request => (
+                        <RequestPanel requests={request} view={view} key={request.id} editMode={editMode} />
                     ))}
                 </div>
             )}

@@ -9,9 +9,10 @@ interface BeatmapsetGroupProps {
     title: string;
     beatmapsets: Beatmapset[];
     view: 'list' | 'grid';
+    editMode?: boolean;
 }
 
-const BeatmapsetGroup: FC<BeatmapsetGroupProps> = ({icon, title, beatmapsets, view}) => {
+const BeatmapsetGroup: FC<BeatmapsetGroupProps> = ({icon, title, beatmapsets, view, editMode}) => {
     const [open, setOpen] = useState(true);
 
     return (
@@ -44,7 +45,7 @@ const BeatmapsetGroup: FC<BeatmapsetGroupProps> = ({icon, title, beatmapsets, vi
                     )}
                 >
                     {beatmapsets.map(beatmapset => (
-                        <BeatmapsetPanel beatmapset={beatmapset} view={view} key={beatmapset.id}/>
+                        <BeatmapsetPanel beatmapset={beatmapset} view={view} key={beatmapset.id} editMode={editMode}/>
                     ))}
                 </div>
             )}

@@ -5,9 +5,10 @@ import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStat
 
 interface SelectBeatmapsetStatusProps {
     initialStatus: "verified" | "unverified";
+    disabled?: boolean;
 }
 
-const SelectBeatmapsetStatus: FC<SelectBeatmapsetStatusProps> = ({initialStatus}) => {
+const SelectBeatmapsetStatus: FC<SelectBeatmapsetStatusProps> = ({ initialStatus, disabled }) => {
     const [open, setOpen] = useState(false);
 
     const [status, setStatus] = useState<"verified" | "unverified">(initialStatus);
@@ -34,13 +35,14 @@ const SelectBeatmapsetStatus: FC<SelectBeatmapsetStatusProps> = ({initialStatus}
             ref={dropdownRef}
             className={clsx(
                 `relative transition-colors duration-300 ease-in-out border-0 rounded-none`,
-                open ? "border-primary-500" : "border-transparent"
+                open ? "border-primary-500" : "border-transparent",
             )}>
             <button
+                disabled={disabled}
                 type="button"
                 className={clsx(
-                    `w-full whitespace-nowrap p-2 rounded-lg hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
-                    open ? 'border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg' : 'border-tertiary-300 dark:border-tertiary-700 rounded-lg'
+                    `w-full whitespace-nowrap p-2 rounded-lg border-[1px] enabled:hover:bg-tertiary-100 enabled:active:bg-tertiary-200 enabled:dark:hover:bg-tertiary-800 enabled:dark:active:bg-tertiary-700 disabled:opacity-50 flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
+                    open ? 'border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg' : 'border-tertiary-300 dark:border-tertiary-700 rounded-lg',
                 )}
                 onClick={() => setOpen(!open)}>
                 <div className="flex items-center gap-1 flex-wrap">
