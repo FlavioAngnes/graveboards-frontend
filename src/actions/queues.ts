@@ -53,3 +53,21 @@ export const getQueue = async (id: number) => {
 
     return await response.json() as Queue;
 }
+
+export const getQueueByUser = async (user_id: number) => {
+    const session = await verifySession();
+
+    if (!session) {
+        return;
+    }
+
+    const response = await fetch(`${API_URL}/queues?user_id=${user_id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${session?.token}`,
+        },
+    });
+
+    return await response.json() as Queue[];
+}
