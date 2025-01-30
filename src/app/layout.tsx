@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/navbar/navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import { BeatmapPreviewProvider } from "@/context/BeatmapPreviewContext";
 import BeatmapPreviewPlayer from "@/components/shared/beatmapPreviewPlayer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
     title: "Graveboards",
@@ -19,6 +20,7 @@ const RootLayout = ({
 }>) => (
     <html lang="en">
     <body className="bg-white dark:bg-black text-black dark:text-white antialiased">
+    <Toaster position={"bottom-center"}/>
     <AuthProvider>
         <BeatmapPreviewProvider>
             <div className="flex">
