@@ -8,7 +8,7 @@ import {SearchProvider} from "@/context/beatmapsets/SearchContext";
 
 interface BeatmapsetsProviderProps {
     title?: string,
-    defaultFilters?: Required<BeatmapsetListFilterOptions<never>>[];
+    defaultFilters?: Required<BeatmapsetListFilterOptions<unknown>>[];
     defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[];
     queueId?: number;
     showGrouping?: boolean;
@@ -17,6 +17,7 @@ interface BeatmapsetsProviderProps {
     showFilters?: boolean;
     showSorting?: boolean;
     children?: ReactNode;
+    editMode?: boolean;
 }
 
 export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
@@ -29,6 +30,7 @@ export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
           showSearch = true,
           showFilters = true,
           showSorting = true,
+          editMode,
       }) => {
     return (
         <FiltersProvider defaultFilters={defaultFilters}>
@@ -41,6 +43,7 @@ export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
                                     showSearch={showSearch}
                                     showFilters={showFilters}
                                     showSorting={showSorting}
+                                    editMode={editMode}
                     />
                 </SearchProvider>
             </SortingProvider>
