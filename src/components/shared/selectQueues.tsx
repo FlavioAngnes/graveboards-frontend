@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import useQueues from "@/hooks/useQueues";
+import useQueues from "@/hooks/queues/useQueues";
 import QueueChip from "@/components/shared/queueChip";
 import { Queue } from "@/types/queue";
 import clsx from "clsx";
 import { MdCheck, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useParams } from "next/navigation";
-import useQueue from "@/hooks/useQueue";
+import useQueue from "@/hooks/queues/useQueue";
 
 interface SelectQueuesProps {
     onSelect: (queues: number[]) => void;
@@ -20,30 +20,30 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
     const [selected, setSelected] = useState<Queue[]>([]);
 
     const { queues, hasMore } = useQueues(page);
-
-    const queue = useQueue(Number(params.id) || 1);
-
-    useEffect(() => {
-        if (queue.queue) {
-            setSelected([queue.queue]);
-        }
-    }, [queue.queue]);
-
-    const handleRemove = (queue: Queue) => {
-        setSelected(selected.filter(selectedQueue => selectedQueue.id !== queue.id));
-    }
-
-    const handleSelect = (queue: Queue) => {
-        if (selected.some(q => q.id === queue.id)) {
-            setSelected(selected.filter(selectedQueue => selectedQueue.id !== queue.id));
-        } else {
-            setSelected([...selected, queue]);
-        }
-
-        onSelect(selected.map(queue => queue.id));
-    }
+    const { queue } = useQueue(Number(params.id) || 1);
 
     const isSelected = (queue: Queue) => selected.some(q => q.id === queue.id);
+
+    const handleRemove = (queue: Queue) => {
+        onSelect(selected.filter(q => q.id !== queue.id).map(queue => queue.id));
+        setSelected(selected.filter(q => q.id !== queue.id));
+    };
+
+    const handleSelect = (queue: Queue) => {
+        if (isSelected(queue)) {
+            handleRemove(queue);
+        } else {
+            setSelected([...selected, queue]);
+            onSelect([...selected, queue].map(queue => queue.id));
+        }
+    };
+
+    useEffect(() => {
+        if (queue) {
+            setSelected([queue]);
+            onSelect([queue.id]);
+        }
+    }, [queue]);
 
     const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -64,14 +64,14 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
         <div
             ref={dropdownRef}
             className={clsx(
-                `relative w-full transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border-[1px] rounded-lg`,
+                `w-full border-transparent relative transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border-[1px] rounded-lg`,
                 open ? "border-primary-500" : "border-transparent"
             )}>
             <button
                 type="button"
                 className={clsx(
-                    `w-full whitespace-nowrap p-2 sm:rounded-lg sm:backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
-                    open ? "border-transparent sm:border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg" : "border-tertiary-300 dark:border-tertiary-700 rounded-lg"
+                    `w-full whitespace-nowrap p-2 sm:rounded-lg backdrop-blur border-[1px] enabled:hover:bg-tertiary-100 enabled:active:bg-tertiary-200 enabled:dark:hover:bg-tertiary-800 enabled:dark:active:bg-tertiary-700 disabled:opacity-50 flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
+                    open ? "border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg" : "border-tertiary-300 dark:border-tertiary-700 rounded-lg"
                 )}
                 onClick={() => setOpen(!open)}>
                 <div className="flex items-center gap-1 w-full flex-wrap">
@@ -86,11 +86,11 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
                     )}
                 </div>
 
-                <MdOutlineKeyboardArrowDown className="size-5" />
+                <MdOutlineKeyboardArrowDown className="size-5 shrink-0" />
             </button>
             {open && (
                 <div
-                    className="sm:absolute overflow-hidden sm:mt-2 flex flex-col z-10 bg-tertiary-100 dark:bg-tertiary-900 sm:border-[1px] border-tertiary-400 dark:border-tertiary-700 border-[1px] rounded-b-lg sm:rounded-lg min-w-full max-h-[19.25rem] snap-y">
+                    className="absolute overflow-hidden sm:mt-2 flex flex-col z-50 bg-tertiary-100 dark:bg-tertiary-900 sm:border-[1px] border-t-0 sm:border-t-[1px] border-tertiary-400 dark:border-tertiary-700 border-[1px] rounded-b-lg sm:rounded-lg min-w-full max-h-[19.25rem] snap-y">
                     {queues.map(queue => (
                         <SelectQueuesItem
                             key={queue.id}
@@ -139,7 +139,7 @@ const SelectQueuesItem: FC<SelectQueuesItemProps> = ({ queue, onSelect, selected
             <div className="flex items-center gap-1.5">
                 <div
                     className="size-4 bg-gray-500 rounded-full bg-cover"
-                    style={{ backgroundImage: `url(${queue.display_data.owner_profile.avatar_url})` }}></div>
+                    style={{ backgroundImage: `url(${queue.user_profile.avatar_url})` }}></div>
                 {queue.name}
             </div>
 
