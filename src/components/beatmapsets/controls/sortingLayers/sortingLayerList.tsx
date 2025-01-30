@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {MdAdd, MdClose, MdImportExport, MdUndo} from "react-icons/md";
 import SortingLayersItem from "@/components/beatmapsets/controls/sortingLayers/sortingLayersItem";
 import {Reorder} from 'motion/react';
-import {useSorting} from "@/context/beatmapsets/BeatmapsetListSortingContext";
+import {useSorting} from "@/context/beatmapsets/SortingContext";
 import clsx from "clsx";
 import {IoMdInformationCircleOutline} from "react-icons/io";
 

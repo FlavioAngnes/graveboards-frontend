@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {MdClose, MdSearch} from "react-icons/md";
-import {useSearch} from "@/context/beatmapsets/BeatmapsetListSearchContext";
+import {useSearch} from "@/context/beatmapsets/SearchContext";
 
 interface SearchProps {
     listId: string;
