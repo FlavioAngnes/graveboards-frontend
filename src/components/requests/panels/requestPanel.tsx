@@ -6,16 +6,16 @@ import RequestPanelGridView from "@/components/requests/panels/grid/requestPanel
 import RequestPanelListView from "@/components/requests/panels/list/requestPanelListView";
 
 interface RequestPanelProps {
-    requests: BeatmapsetRequest;
+    request: BeatmapsetRequest;
     view: "list" | "grid";
     editMode?: boolean;
 }
 
-const RequestPanel: FC<RequestPanelProps> = ({requests, view, editMode = false}) => {
+const RequestPanel: FC<RequestPanelProps> = ({request, view, editMode = false}) => {
     return view === "grid" ? (
-        <RequestPanelGridView request={requests}/>
+        <RequestPanelGridView request={request}/>
     ) : (
-        <RequestPanelListView request={requests} editMode={editMode}/>
+        <RequestPanelListView request={request} editMode={editMode}/>
     );
 }
 

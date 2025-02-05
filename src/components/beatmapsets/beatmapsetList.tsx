@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import React, {FC, useEffect, useRef} from 'react';
-import useBeatmapsets from "@/hooks/useBeatmapsets";
+import React, { FC, useEffect } from "react";
+import useSWRBeatmapsets from "@/hooks/useSWRBeatmapsets";
 import BeatmapsetPanel from "@/components/beatmapsets/panels/beatmapsetPanel";
 import BeatmapsetPanelSkeleton from "@/components/beatmapsets/panels/beatmapsetPanelSkeleton";
-import {useSorting} from "@/context/beatmapsets/SortingContext";
-import clsx from "clsx";
-import {useFilters} from "@/context/beatmapsets/FiltersContext";
-import BeatmapsetGroup from "@/components/beatmapsets/beatmapsetGroup";
-import {useSearch} from "@/context/beatmapsets/SearchContext";
+import { useSorting } from "@/context/beatmapsets/SortingContext";
+import { useFilters } from "@/context/beatmapsets/FiltersContext";
+import { useSearch } from "@/context/beatmapsets/SearchContext";
 import ListControls from "@/components/shared/lists/listControls";
 import { FilterChipList } from "@/components/shared/filterChipList";
+import clsx from "clsx";
+import InfiniteScroll from "react-infinite-scroll-component";
+import BeatmapsetGroup from "@/components/beatmapsets/beatmapsetGroup";
 
 interface BeatmapsetsProps {
     title: string;
@@ -24,9 +25,9 @@ interface BeatmapsetsProps {
     editMode?: boolean;
 }
 
-type View = 'list' | 'grid';
+type View = "list" | "grid";
 
-export type BeatmapsetListGroup = 'artist' | 'mapper' | null;
+export type BeatmapsetListGroup = "artist" | "mapper" | null;
 
 const BeatmapsetList: FC<BeatmapsetsProps> = ({
                                                   title,
@@ -37,12 +38,12 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
                                                   showSearch = true,
                                                   showSorting = true,
                                                   showFilters = true,
-                                                  editMode = false
+                                                  editMode
                                               }) => {
-    const id = title?.toLowerCase().replace(' ', '-');
+    const id = title?.toLowerCase().replace(" ", "-");
 
     //#region Controls
-    const [view, setView] = React.useState<View>(editMode ? 'list' : 'grid');
+    const [view, setView] = React.useState<View>(editMode ? "list" : "grid");
 
     if (editMode) {
         showViewSwitch = false;
@@ -52,19 +53,19 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
 
     //#endregion
 
-    //#region Pagination
-
-    const [page, setPage] = React.useState(0);
-
-    //#endregion
-
     //#region Hooks
 
-    const {beatmapsets, isLoading, hasMore, error} = useBeatmapsets(page, queueId);
+    const { search } = useSearch();
+    const { filtersToUse } = useFilters();
+    const { layersToUse } = useSorting();
 
-    const {search} = useSearch();
-    const {filtersToUse} = useFilters();
-    const {layersToUse} = useSorting();
+    const { beatmapsets, error, size, setSize, isReachingEnd } = useSWRBeatmapsets({
+        limit: 10,
+        filters: filtersToUse,
+        sortingLayers: layersToUse,
+        searchQuery: search,
+        queueId: queueId
+    });
 
     //#endregion
 
@@ -73,7 +74,7 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
     const [grouping, setGrouping] = React.useState<BeatmapsetListGroup>(null);
 
     // Group beatmapsets by artist, title or mapper
-    const groupedBeatmapsets = beatmapsets.reduce((groups, beatmapset) => {
+    const groupedBeatmapsets = beatmapsets?.reduce((groups, beatmapset) => {
         if (!grouping) {
             return groups;
         }
@@ -95,41 +96,14 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
 
     //#endregion
 
-    //#region Infinite scroll
-
-    const observerRef = useRef<HTMLDivElement | null>(null);
-
     useEffect(() => {
-        if (isLoading) return;
 
-        if (observerRef.current) {
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && hasMore) {
-                    setPage(prev => prev + 1);
-                }
-            }, {
-                threshold: 0.5
-            });
-
-            observer.observe(observerRef.current);
-
-            return () => {
-                observer.disconnect();
-            }
-        }
-    }, [isLoading, hasMore]);
-
-    // Reset page when search, filters or sorting changes
-    useEffect(() => {
-        setPage(0);
-    }, [layersToUse, filtersToUse, search]);
-
-    //#endregion
+    }, [beatmapsets, view]);
 
     if (error) {
         return (
             <div className="text-center text-2xl font-semibold text-red-500">
-                {error}
+                Failed to load beatmapsets
             </div>
         );
     }
@@ -141,52 +115,49 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
                     {title}
                 </div>
 
-                {
-                    showControls && (
-                        <ListControls
-                            id={id}
-                            showViewSwitch={showViewSwitch}
-                            view={view}
-                            setView={setView}
-                            showGrouping={showGrouping}
-                            grouping={grouping}
-                            setGrouping={setGrouping}
-                            showSearch={showSearch}
-                            showFilters={showFilters}
-                            showSorting={showSorting}
-                        />
-                    )
-                }
 
+                <ListControls
+                    id={id}
+                    showControls={showControls}
+                    showViewSwitch={showViewSwitch}
+                    view={view}
+                    setView={setView}
+                    showGrouping={showGrouping}
+                    grouping={grouping}
+                    setGrouping={setGrouping}
+                    showSearch={showSearch}
+                    showFilters={showFilters}
+                    showSorting={showSorting}
+                />
             </div>
 
-            <FilterChipList/>
+            <FilterChipList />
 
-            <div
-                className={clsx(
-                    `gap-4`,
-                    view === 'grid' && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
-                )}
+            <InfiniteScroll next={() => setSize(size + 1)}
+                            hasMore={!isReachingEnd}
+                            loader={<BeatmapsetPanelSkeleton view={view} />}
+                            dataLength={beatmapsets?.length || 0}
+                            className={clsx(
+                                `gap-4`,
+                                view === "grid" && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
+                            )}
+                            scrollThreshold={0.9}
             >
                 {
                     grouping ? (
-                        Object.entries(groupedBeatmapsets).map(([artist, beatmaps]) => (
-                            <BeatmapsetGroup title={artist} beatmapsets={beatmaps} view={view} key={artist} editMode={editMode}/>
+                        Object.entries(groupedBeatmapsets || []).map(([artist, beatmapsets]) => (
+                            <BeatmapsetGroup title={artist} beatmapsets={beatmapsets} view={view} key={artist}
+                                             editMode={editMode} />
                         ))
                     ) : (
-                        beatmapsets.map((beatmap) => (
-                                <BeatmapsetPanel key={beatmap.id} beatmapset={beatmap} view={view} editMode={editMode}/>
+                        beatmapsets?.map((beatmapset) => (
+                                <BeatmapsetPanel key={beatmapset.id} beatmapset={beatmapset} view={view}
+                                                 editMode={editMode} />
                             )
                         )
                     )
                 }
-
-                {(isLoading || hasMore) && (
-                    <div ref={observerRef}>
-                        <BeatmapsetPanelSkeleton view={view}/>
-                    </div>
-                )}
-            </div>
+            </InfiniteScroll>
         </div>
     );
 };

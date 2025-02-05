@@ -1,21 +1,29 @@
 import SidebarSection from "@/components/layout/sidebar/sidebarSection";
 import { useAuth } from "@/context/AuthContext";
 import React from "react";
-import useUserQueue from "@/hooks/queues/useUserQueue";
 import SidebarQueueLink from "@/components/layout/sidebar/sidebarQueueLink";
+import useSWR from "swr";
+import { fetcher } from "@/utils/fetcher";
+import { Queue } from "@/types/queue";
 
 const SidebarManage = () => {
     const { isAuthenticated, user, isAdmin } = useAuth();
 
-    const { queue } = useUserQueue(user?.id);
+    const { data: queues, isLoading, error } = useSWR<Queue[]>(user ? `/api/queues?user_id=${user.id}` : null, fetcher, {
+        revalidateOnFocus: false
+    });
 
-    if (!isAuthenticated || !queue) {
+    if (!isAuthenticated || isLoading || error) {
         return null;
     }
 
     return (
         <SidebarSection label="Manage">
-            <SidebarQueueLink queue={queue} label={"Your Queue"} />
+            {
+                queues?.map(queue => (
+                    <SidebarQueueLink key={queue.id} queue={queue} />
+                ))
+            }
             {/*
                 isAdmin && (
                     <SidebarLink href={`/requests/manage`} label="Verify Requests" icon={<MdPlaylistAdd className="size-6"/>} />

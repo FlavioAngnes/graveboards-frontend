@@ -2,7 +2,7 @@
 
 import { FC, useState } from "react";
 import clsx from "clsx";
-import { BeatmapsetRequest, RequestStatuses } from "@/types/requests/request";
+import { BeatmapsetRequest } from "@/types/requests/request";
 import { MdPlayArrow, MdRadioButtonChecked } from "react-icons/md";
 import { ColorUtils } from "@/utils/colorUtils";
 import { TimeUtils } from "@/utils/timeUtils";
@@ -54,9 +54,9 @@ const RequestPanelGridView: FC<RequestPanelProps> = ({request, showQueue = true}
             </div>
             <div
                 className={clsx(`bg-tertiary-50 hover:bg-tertiary-100 hover:dark:bg-tertiary-800 dark:text-white dark:bg-tertiary-900 flex gap-3 p-2.5 self-stretch min-w-24 transition-colors duration-300 ease-in-out overflow-hidden relative tracking-wide`, {"rounded-b-xl": showQueue})}>
-                <a href={`https://osu.ppy.sh/users/${request.user_id}`}
+                <a href={`https://osu.ppy.sh/users/${request.beatmapset_snapshot.user_profile.user_id}`}
                    className="size-10 bg-gray-500 rounded-full bg-cover" target="_blank"
-                   style={{backgroundImage: `url(${request.user_profile.avatar_url})`}}></a>
+                   style={{backgroundImage: `url(${request.beatmapset_snapshot.user_profile.avatar_url})`}}></a>
                 <div className="overflow-hidden flex-1 truncate">
                     <a href={`https://osu.ppy.sh/beatmapsets/${request.beatmapset_id}`}
                        className="text-sm font-semibold leading-5" target="_blank">
@@ -74,7 +74,7 @@ const RequestPanelGridView: FC<RequestPanelProps> = ({request, showQueue = true}
                          className="flex flex-col mt-2 gap-0 transition-[gap] duration-300 delay-300 ease-out group hover:gap-2 hover:delay-0">
                         <div className="flex items-center gap-1 self-stretch">
                             <div className="flex items-center justify-center">
-                                <RequestStatusBadge status={RequestStatuses.Pending}/>
+                                <RequestStatusBadge status={request.status}/>
                             </div>
 
                             <MdRadioButtonChecked className="size-4 shrink-0 text-tertiary-500 dark:text-tertiary-400"/>

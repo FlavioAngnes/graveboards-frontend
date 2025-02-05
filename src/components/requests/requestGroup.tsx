@@ -45,7 +45,7 @@ const RequestGroup: FC<RequestGroupProps> = ({ icon, title, requests, view, edit
                     )}
                 >
                     {requests.map(request => (
-                        <RequestPanel requests={request} view={view} key={request.id} editMode={editMode} />
+                        <RequestPanel request={request} view={view} key={request.id} editMode={editMode} />
                     ))}
                 </div>
             )}

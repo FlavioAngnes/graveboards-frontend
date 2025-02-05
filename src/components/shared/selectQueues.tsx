@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import useQueues from "@/hooks/queues/useQueues";
+import useSWRQueues from "@/hooks/queues/useSWRQueues";
 import QueueChip from "@/components/shared/queueChip";
 import { Queue } from "@/types/queue";
 import clsx from "clsx";
 import { MdCheck, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useParams } from "next/navigation";
-import useQueue from "@/hooks/queues/useQueue";
+import useSWR from "swr";
+import { fetcher } from "@/utils/fetcher";
 
 interface SelectQueuesProps {
     onSelect: (queues: number[]) => void;
@@ -15,12 +16,13 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
     const params = useParams<{ id: string }>();
 
     const [open, setOpen] = useState(false);
-    const [page, setPage] = useState(0);
 
     const [selected, setSelected] = useState<Queue[]>([]);
 
-    const { queues, hasMore } = useQueues(page);
-    const { queue } = useQueue(Number(params.id) || 1);
+    const { queues, hasMore, size, setSize } = useSWRQueues({ limit: 10 });
+    const { data: queue } = useSWR(`/api/queues/${Number(params.id) || 1}`, fetcher, {
+        revalidateOnFocus: false
+    });
 
     const isSelected = (queue: Queue) => selected.some(q => q.id === queue.id);
 
@@ -104,7 +106,7 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
                         hasMore && (
                             <button
                                 type="button"
-                                onClick={() => setPage(page + 1)}
+                                onClick={() => setSize(size + 1)}
                                 className="p-2 text-tertiary-500 dark:text-tertiary-400 hover:bg-tertiary-200 active:bg-tertiary-300 dark:hover:bg-tertiary-800 active:dark:bg-tertiary-700 transition-colors duration-300 ease-in-out">
                                 Load More
                             </button>

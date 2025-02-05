@@ -1,7 +1,6 @@
 "use server";
 
-import {Queue} from "@/types/queue";
-import {Pagination} from "@/actions/beatmapsets";
+import { Queue } from "@/types/queue";
 import { cache } from "react";
 import { verifySession } from "@/actions/session";
 
@@ -13,28 +12,29 @@ if (!API_URL) {
     );
 }
 
-export const getQueues = cache(async (page: number, options: Pagination) => {
+export const getQueues = cache(async (params?: URLSearchParams) => {
     const session = await verifySession();
 
     if (!session) {
         return;
     }
 
-    const searchParams = new URLSearchParams();
+    const url = new URL(`${API_URL}/queues`);
 
-    searchParams.append('limit', (options.limit || 10).toString());
-    searchParams.append('offset', ((options.offset || 0) + page * (options.limit || 10)).toString());
+    if (params) {
+        url.search = params.toString();
+    }
 
-    const response = await fetch(`${API_URL}/queues?${searchParams}`, {
+    const response = await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${session?.token}`,
-        },
+            "Authorization": `Bearer ${session?.token}`
+        }
     });
 
     return await response.json() as Queue[];
-})
+});
 
 export const getQueue = async (id: number) => {
     const session = await verifySession();
@@ -47,27 +47,28 @@ export const getQueue = async (id: number) => {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${session?.token}`,
-        },
+            "Authorization": `Bearer ${session?.token}`
+        }
     });
 
     return await response.json() as Queue;
-}
+};
 
-export const getQueueByUser = async (user_id: number) => {
+export const postQueue = async (queue: Partial<Queue>) => {
     const session = await verifySession();
 
     if (!session) {
         return;
     }
 
-    const response = await fetch(`${API_URL}/queues?user_id=${user_id}`, {
-        method: "GET",
+    const response = await fetch(`${API_URL}/queues`, {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${session?.token}`,
+            "Authorization": `Bearer ${session?.token}`
         },
+        body: JSON.stringify(queue)
     });
 
-    return await response.json() as Queue[];
-}
+    return await response.json() as Queue;
+};

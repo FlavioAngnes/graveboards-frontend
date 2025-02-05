@@ -138,27 +138,11 @@ interface SelectSortingItemProps {
 const SelectSortingItem: FC<SelectSortingItemProps> = ({ icon, label, values, onSelect }) => {
     const [open, setOpen] = useState(false);
 
-    const dropdownRef = useRef<HTMLDivElement | null>(null);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setOpen(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
     return (
         <>
             <div
-                ref={dropdownRef}
                 className={clsx(
-                    `w-full whitespace-nowrap p-2.5 flex items-center justify-between hover:bg-tertiary-200 dark:hover:bg-tertiary-800 active:dark:bg-tertiary-700 active:bg-tertiary-300 transition-colors duration-300 ease-in-out`,
+                    `relative cursor-pointer w-full whitespace-nowrap p-2.5 flex items-center justify-between hover:bg-tertiary-200 dark:hover:bg-tertiary-800 active:dark:bg-tertiary-700 active:bg-tertiary-300 transition-colors duration-300 ease-in-out`,
                     open ? "bg-tertiary-100 dark:bg-tertiary-800 text-black dark:text-white" : "text-tertiary-500 dark:text-tertiary-400"
                 )}
                 onClick={() => setOpen(!open)}>
