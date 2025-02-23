@@ -19,7 +19,7 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
 
     const [selected, setSelected] = useState<Queue[]>([]);
 
-    const { queues, hasMore, size, setSize } = useSWRQueues({ limit: 10 });
+    const { queues, isReachingEnd, size, setSize } = useSWRQueues({ limit: 10 });
     const { data: queue } = useSWR(`/api/queues/${Number(params.id) || 1}`, fetcher, {
         revalidateOnFocus: false
     });
@@ -103,7 +103,8 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
                     ))}
 
                     {
-                        hasMore && (
+                        (
+                            !isReachingEnd &&
                             <button
                                 type="button"
                                 onClick={() => setSize(size + 1)}

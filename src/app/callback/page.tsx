@@ -1,8 +1,11 @@
 import { CallbackContent } from "@/components/callback/callbackContent";
+import { Suspense } from "react";
 
 const CallbackPage = async () => {
     return (
-        <CallbackContent />
+        <Suspense>
+            <CallbackContent />
+        </Suspense>
     );
 };
 

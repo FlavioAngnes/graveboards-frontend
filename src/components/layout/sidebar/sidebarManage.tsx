@@ -7,7 +7,7 @@ import { fetcher } from "@/utils/fetcher";
 import { Queue } from "@/types/queue";
 
 const SidebarManage = () => {
-    const { isAuthenticated, user, isAdmin } = useAuth();
+    const { isAuthenticated, user } = useAuth();
 
     const { data: queues, isLoading, error } = useSWR<Queue[]>(user ? `/api/queues?user_id=${user.id}` : null, fetcher, {
         revalidateOnFocus: false
