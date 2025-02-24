@@ -7,8 +7,6 @@ import Dialog from "@/components/shared/dialog";
 import Button from "@/components/shared/button";
 import { postQueue } from "@/actions/queues";
 import toast from "react-hot-toast";
-import { router } from "next/client";
-
 
 interface RequestDialogProps {
     onClose: () => void;
@@ -22,6 +20,7 @@ const CreateQueueDialog = forwardRef<HTMLDialogElement, RequestDialogProps>(
 
         const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
+
             if (!isAdmin || !user) return;
 
             const result = await postQueue({
@@ -32,8 +31,6 @@ const CreateQueueDialog = forwardRef<HTMLDialogElement, RequestDialogProps>(
 
             if (result) {
                 toast.success("Queue created successfully");
-                // TODO: This is temporary, we should update the queue list instead / revalidate the cache
-                router.reload();
             } else {
                 toast.error("Failed to create queue");
             }
