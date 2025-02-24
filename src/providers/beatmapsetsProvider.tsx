@@ -11,6 +11,7 @@ interface BeatmapsetsProviderProps {
     defaultFilters?: Required<BeatmapsetListFilterOptions<unknown>>[];
     defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[];
     queueId?: number;
+    showControls?: boolean;
     showGrouping?: boolean;
     showViewSwitch?: boolean;
     showSearch?: boolean;
@@ -25,6 +26,7 @@ export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
           defaultFilters = [],
           defaultSortingLayers = [],
           queueId,
+          showControls = true,
           showGrouping = true,
           showViewSwitch = true,
           showSearch = true,
@@ -38,6 +40,7 @@ export const BeatmapsetsProvider: FC<BeatmapsetsProviderProps> = ({
                 <SearchProvider>
                     <BeatmapsetList title={title}
                                     queueId={queueId}
+                                    showControls={showControls}
                                     showGrouping={showGrouping}
                                     showViewSwitch={showViewSwitch}
                                     showSearch={showSearch}
