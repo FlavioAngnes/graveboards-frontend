@@ -13,64 +13,32 @@ body {
     font-family: Nunito, Helvetica, sans-serif;
 }
 
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
+/* Range Slider as a Single Thumb Slider */
+.single-thumb .range-slider__thumb[data-lower] {
+    width: 0;
+    height: 0;
 }
 
-input[type="range"]:focus {
-    outline: none;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-    background-color: theme('colors.tertiary.300');
+.range-slider .range-slider__range {
+    background: theme('colors.primary.500');
     border-radius: 0.5rem;
-    height: 0.25rem;
 }
 
-input[type="range"]::-moz-range-track {
+.range-slider .range-slider__thumb {
+    background: theme('colors.primary.500');
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+}
+
+.range-slider {
     background-color: theme('colors.tertiary.300');
     border-radius: 0.5rem;
     height: 0.25rem;
 }
 
 @media (prefers-color-scheme: dark) {
-    input[type="range"]::-webkit-slider-runnable-track {
+    .range-slider {
         background-color: theme('colors.tertiary.700');
     }
-
-    input[type="range"]::-moz-range-track {
-        background-color: theme('colors.tertiary.700');
-    }
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    margin-top: -0.375rem;
-    background-color: theme('colors.primary.500');
-    height: 1rem;
-    width: 1rem;
-    border-radius: 50%;
-}
-
-input[type="range"]::-moz-range-progress {
-    background-color: theme('colors.primary.500');
-    border-radius: 0.5rem;
-    height: 0.25rem;
-}
-
-input[type="range"]::-moz-range-thumb {
-    border: none;
-    border-radius: 50%;
-    background-color: theme('colors.primary.500');
-    height: 1rem;
-    width: 1rem;
-}
-
-input[type="range"]:focus::-webkit-slider-thumb, input[type="range"]:focus::-moz-range-thumb {
-    border: none;
-    outline: none;
 }
