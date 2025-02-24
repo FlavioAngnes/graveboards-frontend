@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useActionState, useState } from "react";
+import React, { FC, useActionState, useEffect, useState } from "react";
 import { BeatmapsetRequest, RequestStatus } from "@/types/requests/request";
 import { MdChevronRight, MdComment, MdPlayArrow, MdRadioButtonChecked } from "react-icons/md";
 import { ColorUtils } from "@/utils/colorUtils";
@@ -23,6 +23,8 @@ interface RequestPanelProps {
 }
 
 const RequestPanelListView: FC<RequestPanelProps> = ({ request, editMode = false }) => {
+    const [status, setStatus] = useState<RequestStatus>(request.status);
+
     const { isAdmin } = useAuth();
     const { setSrc } = useBeatmapPreview();
 
@@ -30,19 +32,25 @@ const RequestPanelListView: FC<RequestPanelProps> = ({ request, editMode = false
 
     const formRef = React.useRef<HTMLFormElement>(null);
 
-    const [selectRequestStatusState, dispatchSelectRequestStatus, isSelectRequestStatusPending] = useActionState(async (prevState: { status: RequestStatus }, formData: FormData) => {
-        const newStatus = Number(formData.get("status")) as RequestStatus;
-
-        const result = await patchRequest(request.id, { status: newStatus });
+    const [selectRequestStatusState, dispatchSelectRequestStatus, isSelectRequestStatusPending] = useActionState(async (prevState: {
+        status: RequestStatus
+    }, { status }: { status: RequestStatus }) => {
+        const result = await patchRequest(request.id, { status });
 
         if (result) {
             toast.success("Request status updated");
-            return { status: newStatus };
+            return { status };
         } else {
             toast.error("Failed to update request status");
             return prevState;
         }
     }, { status: request.status });
+
+    useEffect(() => {
+        if (status !== selectRequestStatusState.status) {
+            formRef?.current?.requestSubmit();
+        }
+    }, [status, selectRequestStatusState.status]);
 
     return (
         <div className="flex rounded-xl h-24">
@@ -173,10 +181,14 @@ const RequestPanelListView: FC<RequestPanelProps> = ({ request, editMode = false
                                     </div>
                                 )
                             }
-                            <form ref={formRef} action={dispatchSelectRequestStatus}>
-                            <div className="flex items-center justify-center">
-                                <SelectRequestStatus name="status" initialStatus={selectRequestStatusState.status} onSelect={()=> formRef?.current?.requestSubmit()} isPending={isSelectRequestStatusPending} />
-                            </div>
+                            <form ref={formRef} action={() => dispatchSelectRequestStatus({ status })}>
+                                <div className="flex items-center justify-center">
+                                    <SelectRequestStatus
+                                        name="status"
+                                        initialStatus={selectRequestStatusState.status}
+                                        onSelect={(item) => setStatus(item)}
+                                        isPending={isSelectRequestStatusPending} />
+                                </div>
                             </form>
                         </>
                     ) : (
