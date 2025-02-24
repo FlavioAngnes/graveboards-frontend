@@ -3,6 +3,7 @@
 import { Queue } from "@/types/queue";
 import { cache } from "react";
 import { verifySession } from "@/actions/session";
+import { revalidatePath } from "next/cache";
 
 const { API_URL } = process.env;
 
@@ -70,5 +71,9 @@ export const postQueue = async (queue: Partial<Queue>) => {
         body: JSON.stringify(queue)
     });
 
-    return await response.json() as Queue;
+    const q = await response.json() as Queue;
+
+    revalidatePath("/queues");
+
+    return q;
 };
