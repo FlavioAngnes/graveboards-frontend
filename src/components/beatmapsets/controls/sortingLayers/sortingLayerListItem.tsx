@@ -5,7 +5,6 @@ import SelectValue from "@/components/beatmapsets/controls/sortingLayers/selectV
 import { Reorder, useDragControls } from "motion/react";
 import { SortingLayerOrders } from "@/types/sorting";
 import Select from "@/components/shared/select";
-import clsx from "clsx";
 
 interface SortingLayerProps {
     values: BeatmapsetListSortingLayer[],
@@ -31,7 +30,7 @@ const orders: OrderItem[] = [{
     icon: <MdArrowDownward className="size-4" />
 }];
 
-const SortingLayersItem: FC<SortingLayerProps> = ({ values, value, onChange, onDestroy, containerRef }) => {
+const SortingLayerListItem: FC<SortingLayerProps> = ({ values, value, onChange, onDestroy, containerRef }) => {
     const [sorting, setSorting] = useState<BeatmapsetListSortingLayer>(value);
 
     const handleValueSelect = (value: BeatmapsetListSortingLayerValue) => {
@@ -88,7 +87,7 @@ const SortingLayersItem: FC<SortingLayerProps> = ({ values, value, onChange, onD
             dragControls={controls}
             dragConstraints={containerRef}
             dragElastic={0}
-            className={clsx("flex items-center gap-2 rounded-lg h-24 sm:h-[2.625rem] w-full sm:w-[600px]")}
+            className="flex items-center gap-2 rounded-lg h-24 sm:h-[2.625rem] w-full sm:w-[600px]"
         >
             <MdDragIndicator
                 onPointerDown={(e) => {
@@ -111,7 +110,7 @@ const SortingLayersItem: FC<SortingLayerProps> = ({ values, value, onChange, onD
                         </div>
                     )}
                     onItemSelect={(item) => handleOrderSelect(item?.value || "asc")}
-                    selectedItem={orders.find((order) => order.value === sorting.order)}
+                    selected={orders.find((order) => order.value === sorting.order)}
                     isSelected={(item) => item.value === sorting.order}
                     className={"w-full sm:w-auto"}
                 />
@@ -125,4 +124,4 @@ const SortingLayersItem: FC<SortingLayerProps> = ({ values, value, onChange, onD
     );
 };
 
-export default SortingLayersItem;
+export default SortingLayerListItem;

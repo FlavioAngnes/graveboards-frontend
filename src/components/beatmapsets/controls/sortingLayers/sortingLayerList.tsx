@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {MdAdd, MdClose, MdImportExport, MdUndo} from "react-icons/md";
-import SortingLayersItem from "@/components/beatmapsets/controls/sortingLayers/sortingLayersItem";
+import SortingLayerListItem from "@/components/beatmapsets/controls/sortingLayers/sortingLayerListItem";
 import {Reorder} from 'motion/react';
 import {useSorting} from "@/context/beatmapsets/SortingContext";
 import clsx from "clsx";
@@ -11,7 +11,7 @@ const SortingLayerList = () => {
 
     const {
         layers,
-        layersToUse,
+        currentLayers,
         nextLayer,
         addLayer,
         removeLayer,
@@ -71,7 +71,7 @@ const SortingLayerList = () => {
                             <div className="text-black dark:text-white font-semibold flex gap-1 items-center">
                                 <MdImportExport className="size-4"/>
                                 Sorting Layers
-                                {layersToUse.some((layer) => layer.isDefault) && (
+                                {currentLayers.some((layer) => layer.isDefault) && (
                                     <IoMdInformationCircleOutline
                                         className="cursor-pointer"
                                         onMouseEnter={() => setPopoverOpen(true)}
@@ -85,7 +85,7 @@ const SortingLayerList = () => {
                                         >
                                             Sorting applied may not work as expected due to default sorting layers being active in this list.
                                             <ul className="list-disc pl-4">
-                                                {layersToUse
+                                                {currentLayers
                                                     .filter((layer) => layer.isDefault)
                                                     .map((layer) => (
                                                     <li key={layer.value}>
@@ -116,8 +116,8 @@ const SortingLayerList = () => {
                                            layout={"position"}
                                            className="flex flex-col gap-2">
                                 {layers.map((layer) => (
-                                    <SortingLayersItem values={layers} value={layer} onChange={updateLayer}
-                                                       onDestroy={removeLayer} key={layer.value} containerRef={reorderRef}/>
+                                    <SortingLayerListItem values={layers} value={layer} onChange={updateLayer}
+                                                          onDestroy={removeLayer} key={layer.value} containerRef={reorderRef}/>
                                 ))}
                             </Reorder.Group>
                         )}
