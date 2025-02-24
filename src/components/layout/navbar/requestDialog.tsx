@@ -1,12 +1,52 @@
 "use client";
 
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, startTransition, useActionState, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { createPortal } from "react-dom";
 import Dialog from "@/components/shared/dialog";
 import SelectQueues from "@/components/shared/selectQueues";
 import Button from "@/components/shared/button";
 import { postRequest } from "@/actions/requests";
+import toast from "react-hot-toast";
+import { FaCircleNotch } from "react-icons/fa6";
+
+interface SubmitRequestParams {
+    beatmapsetId: number;
+    queues: number[];
+    comment: string;
+    userId: number;
+}
+
+interface SubmitRequestState {
+    success: boolean | null;
+    message: string;
+}
+
+
+const submitRequest = async (
+    prevState: SubmitRequestState,
+    { beatmapsetId, queues, comment, userId }: SubmitRequestParams
+): Promise<SubmitRequestState> => {
+    if (beatmapsetId === -1) {
+        return { success: false, message: "Invalid beatmap link." };
+    }
+
+    for (const queue of queues) {
+        const result = await postRequest({
+            beatmapset_id: beatmapsetId,
+            queue_id: queue,
+            comment,
+            user_id: userId,
+            mv_checked: true,
+        });
+
+        if (!result) {
+            return { success: false, message: "Failed to submit request." };
+        }
+    }
+
+    return { success: true, message: "Your request has been submitted and is being processed!" };
+};
 
 interface RequestDialogProps {
     onClose: () => void;
@@ -24,31 +64,46 @@ const RequestDialog = forwardRef<HTMLDialogElement, RequestDialogProps>(
         };
 
         const handleQueuesChange = (queues: number[]) => {
-            setQueues(queues);
+            if (queues.length < 3) setQueues(queues);
         };
 
         const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
+
             if (!isAuthenticated || !user) return;
 
             const beatmapsetId = getBeatmapsetId(beatmapLink);
 
-            if (beatmapsetId === -1) {
-                return;
-            }
-
-            for (const queue of queues) {
-                await postRequest({
-                    beatmapset_id: beatmapsetId,
-                    queue_id: queue,
-                    comment,
-                    user_id: user.id,
-                    mv_checked: true
-                });
-            }
-
-            onClose();
+            startTransition(
+                () => {
+                    dispatch({
+                        beatmapsetId,
+                        queues,
+                        comment,
+                        userId: user.id,
+                    });
+                }
+            );
         };
+
+        const [state, dispatch, isPending] = useActionState<SubmitRequestState, SubmitRequestParams>(
+            submitRequest,
+            { success: null, message: "" }
+        );
+
+        useEffect(() => {
+            if (state.success) {
+                toast.success(state.message);
+
+                setBeatmapLink("");
+                setQueues([]);
+                setComment("");
+
+                onClose();
+            } else if (state.success === false) {
+                toast.error(state.message);
+            }
+        }, [state]);
 
         const { user, isAuthenticated } = useAuth();
 
@@ -60,22 +115,27 @@ const RequestDialog = forwardRef<HTMLDialogElement, RequestDialogProps>(
                     <form className="flex flex-col gap-3 mt-2" onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-1">
                             <span className="font-semibold dark:text-white">
-                                Beatmap Link<span className="text-red-500">*</span>
+                                Beatmapset Link<span className="text-red-500">*</span>
                             </span>
                             <input
                                 className=
                                     "w-full sm:w-auto placeholder-tertiary-500 dark:placeholder-tertiary-400 whitespace-nowrap p-2 rounded-lg dark:bg-tertiary-900 outline-none border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out focus:border-primary-500 focus:bg-tertiary-100 focus:dark:bg-tertiary-800 border-tertiary-300 dark:border-tertiary-700"
                                 type="url"
-                                placeholder="Beatmap Link"
+                                placeholder="Beatmapset Link"
                                 value={beatmapLink}
                                 onChange={(e) => setBeatmapLink(e.target.value)}
                             />
                         </div>
                         <div className="flex flex-col gap-1">
                             <span className="font-semibold dark:text-white">
-                                BN Queue<span className="text-red-500">*</span>
+                                Queue(s)<span className="text-red-500">*</span>
                             </span>
+
                             <SelectQueues onSelect={handleQueuesChange} />
+
+                            <span className="px-2 text-sm dark:text-tertiary-500 text-tertiary-400">
+                                You can select up to 3 queues at once.
+                            </span>
                         </div>
 
                         <div className="flex flex-col gap-1">
@@ -95,8 +155,22 @@ const RequestDialog = forwardRef<HTMLDialogElement, RequestDialogProps>(
                                 rounded="lg"
                                 className="px-4 py-2"
                                 type="submit"
+                                disabled={!beatmapLink || !queues.length || isPending}
                             >
-                                Request
+                                {isPending ? (
+                                    <>
+                                        Processing
+
+                                        <div className="items-center justify-center flex ml-1.5">
+                                            <FaCircleNotch className="size-4 animate-spin"/>
+                                        </div>
+                                    </>
+
+                                ) : (
+                                    <>
+                                        Request
+                                    </>
+                                )}
                             </Button>
                         </footer>
                     </form>
