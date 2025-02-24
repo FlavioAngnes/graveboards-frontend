@@ -58,12 +58,12 @@ const RequestList: FC<RequestListProps> = ({
 
     const { search } = useSearch();
     const { filtersToUse } = useFilters();
-    const { layersToUse } = useSorting();
+    const { currentLayers } = useSorting();
 
     const { requests, error, size, setSize, isReachingEnd } = useSWRRequests({
         limit: 10,
         filters: filtersToUse,
-        sortingLayers: layersToUse,
+        sortingLayers: currentLayers,
         searchQuery: search,
         queueId: queueId
     });
@@ -127,31 +127,34 @@ const RequestList: FC<RequestListProps> = ({
 
             <FilterChipList />
 
-            <InfiniteScroll next={() => setSize(size + 1)}
-                            hasMore={!isReachingEnd}
-                            loader={<BeatmapsetPanelSkeleton view={view} />}
-                            dataLength={requests?.length || 0}
-                            className={clsx(
-                                `gap-4`,
-                                view === "grid" && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
-                            )}
-                            scrollThreshold={0.9}
-            >
-                {
-                    grouping ? (
-                        Object.entries(groupedRequests || []).map(([artist, requests]) => (
-                            <RequestGroup title={artist} requests={requests} view={view} key={artist}
-                                          editMode={editMode} />
-                        ))
-                    ) : (
-                        requests?.map((request) => (
-                                <RequestPanel key={request.id} request={request} view={view}
+            <div id="scrollable-div">
+                <InfiniteScroll next={() => setSize(size + 1)}
+                                hasMore={!isReachingEnd}
+                                loader={<BeatmapsetPanelSkeleton view={view} />}
+                                dataLength={requests?.length || 0}
+                                className={clsx(
+                                    `gap-4`,
+                                    view === "grid" && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
+                                )}
+                                scrollableTarget={"scrollable-div"}
+                                scrollThreshold={0.9}
+                >
+                    {
+                        grouping ? (
+                            Object.entries(groupedRequests || []).map(([artist, requests]) => (
+                                <RequestGroup title={artist} requests={requests} view={view} key={artist}
                                               editMode={editMode} />
+                            ))
+                        ) : (
+                            requests?.map((request) => (
+                                    <RequestPanel key={request.id} request={request} view={view}
+                                                  editMode={editMode} />
+                                )
                             )
                         )
-                    )
-                }
-            </InfiniteScroll>
+                    }
+                </InfiniteScroll>
+            </div>
         </div>
     );
 };

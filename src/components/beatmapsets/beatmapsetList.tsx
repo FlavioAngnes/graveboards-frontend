@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import useSWRBeatmapsets from "@/hooks/useSWRBeatmapsets";
 import BeatmapsetPanel from "@/components/beatmapsets/panels/beatmapsetPanel";
 import BeatmapsetPanelSkeleton from "@/components/beatmapsets/panels/beatmapsetPanelSkeleton";
@@ -49,20 +49,19 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
         showViewSwitch = false;
     }
 
-    showControls = showControls || (showGrouping && showViewSwitch && showSearch && showFilters && showSorting);
-
+    showControls = showControls && (showGrouping && showViewSwitch && showSearch && showFilters && showSorting);
     //#endregion
 
     //#region Hooks
 
     const { search } = useSearch();
     const { filtersToUse } = useFilters();
-    const { layersToUse } = useSorting();
+    const { currentLayers } = useSorting();
 
     const { beatmapsets, error, size, setSize, isReachingEnd } = useSWRBeatmapsets({
         limit: 10,
         filters: filtersToUse,
-        sortingLayers: layersToUse,
+        sortingLayers: currentLayers,
         searchQuery: search,
         queueId: queueId
     });
@@ -129,31 +128,35 @@ const BeatmapsetList: FC<BeatmapsetsProps> = ({
 
             <FilterChipList />
 
-            <InfiniteScroll next={() => setSize(size + 1)}
-                            hasMore={!isReachingEnd}
-                            loader={<BeatmapsetPanelSkeleton view={view} />}
-                            dataLength={beatmapsets?.length || 0}
-                            className={clsx(
-                                `gap-4`,
-                                view === "grid" && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
-                            )}
-                            scrollThreshold={0.9}
-            >
-                {
-                    grouping ? (
-                        Object.entries(groupedBeatmapsets || []).map(([artist, beatmapsets]) => (
-                            <BeatmapsetGroup title={artist} beatmapsets={beatmapsets} view={view} key={artist}
-                                             editMode={editMode} />
-                        ))
-                    ) : (
-                        beatmapsets?.map((beatmapset) => (
-                                <BeatmapsetPanel key={beatmapset.id} beatmapset={beatmapset} view={view}
+            <div id="scrollable-div">
+                <InfiniteScroll next={() => setSize(size + 1)}
+                                hasMore={!isReachingEnd}
+                                loader={<BeatmapsetPanelSkeleton view={view} />}
+                                dataLength={beatmapsets?.length || 0}
+                                className={clsx(
+                                    `gap-4 overflow-visible`,
+                                    view === "grid" && !grouping ? `grid grid-cols-[repeat(auto-fill,_minmax(18rem,_1fr))]` : `flex flex-col`
+                                )}
+                                scrollableTarget={"scrollable-div"}
+                                scrollThreshold={0.9}
+                >
+                    {
+                        grouping ? (
+                            Object.entries(groupedBeatmapsets || []).map(([artist, beatmapsets]) => (
+                                <BeatmapsetGroup title={artist} beatmapsets={beatmapsets} view={view} key={artist}
                                                  editMode={editMode} />
+                            ))
+                        ) : (
+                            beatmapsets?.map((beatmapset) => (
+                                    <BeatmapsetPanel key={beatmapset.id} beatmapset={beatmapset} view={view}
+                                                     editMode={editMode} />
+                                )
                             )
                         )
-                    )
-                }
-            </InfiniteScroll>
+                    }
+                </InfiniteScroll>
+            </div>
+
         </div>
     );
 };
