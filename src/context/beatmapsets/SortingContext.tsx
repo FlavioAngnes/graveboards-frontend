@@ -6,7 +6,7 @@ import {BeatmapsetListSortingLayerMap} from "@/data/beatmapsets/sorting";
 
 interface SortingContextType {
     layers: BeatmapsetListSortingLayer[];
-    layersToUse: BeatmapsetListSortingLayer[];
+    currentLayers: BeatmapsetListSortingLayer[];
     nextLayer: BeatmapsetListSortingLayerValue;
     addLayer: () => void;
     removeLayer: (index: number) => void;
@@ -21,7 +21,7 @@ interface SortingContextType {
 
 export const SortingContext = createContext<SortingContextType>({
     layers: [],
-    layersToUse: [],
+    currentLayers: [],
     nextLayer: 'Profile.country_code',
     addLayer: () => {
     },
@@ -46,10 +46,10 @@ export const SortingProvider: FC<{
     defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[]
 }> = ({children, defaultSortingLayers}) => {
     const [layers, setLayers] = useState<BeatmapsetListSortingLayer[]>([]);
-    const [layersToUse, setLayersToUse] = useState<BeatmapsetListSortingLayer[]>(defaultSortingLayers || []);
+    const [currentLayers, setCurrentLayers] = useState<BeatmapsetListSortingLayer[]>(defaultSortingLayers || []);
 
     const canClear = layers.length > 0;
-    const canApply = JSON.stringify(layers) !== JSON.stringify(layersToUse.filter(layer => !layer.isDefault));
+    const canApply = JSON.stringify(layers) !== JSON.stringify(currentLayers.filter(layer => !layer.isDefault));
 
     const nextLayer = Object.keys(BeatmapsetListSortingLayerMap).find(option => !layers.some(sorting => sorting.value === option)) as BeatmapsetListSortingLayerValue;
 
@@ -67,7 +67,11 @@ export const SortingProvider: FC<{
     }
 
     const updateLayer = (layer: BeatmapsetListSortingLayer, index: number) => {
-        setLayers((prev) => prev.map((prevLayer, i) => i === index ? layer : prevLayer));
+        setLayers((prev) => {
+            const newLayers = [...prev];
+            newLayers[index] = layer;
+            return newLayers;
+        });
     }
 
     const clearLayers = () => {
@@ -75,13 +79,12 @@ export const SortingProvider: FC<{
     }
 
     const applyLayers = () => {
-        const defaultLayers = layersToUse.filter(layer => layer.isDefault);
-        const updatedLayersToUse = [...defaultLayers, ...layers];
-        setLayersToUse(updatedLayersToUse);
+        const defaultLayers = currentLayers.filter(layer => layer.isDefault);
+        setCurrentLayers([...layers, ...defaultLayers]);
     }
 
     const undoLayers = () => {
-        setLayers(layersToUse.filter(layer => !layer.isDefault));
+        setLayers(currentLayers.filter(layer => !layer.isDefault));
     }
 
     const reorderLayers = (items: BeatmapsetListSortingLayerValue[]) => {
@@ -103,7 +106,7 @@ export const SortingProvider: FC<{
     return (
         <SortingContext.Provider value={{
             layers,
-            layersToUse,
+            currentLayers,
             nextLayer,
             addLayer,
             removeLayer,
