@@ -24,11 +24,6 @@ const SidebarManage = () => {
                     <SidebarQueueLink key={queue.id} queue={queue} />
                 ))
             }
-            {/*
-                isAdmin && (
-                    <SidebarLink href={`/requests/manage`} label="Verify Requests" icon={<MdPlaylistAdd className="size-6"/>} />
-                )
-             */}
         </SidebarSection>
     );
 };
