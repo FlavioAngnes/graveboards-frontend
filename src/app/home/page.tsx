@@ -13,7 +13,8 @@ const Home = async () => {
                             isDefault: true
                         }
                     ]
-                }/>
+                }
+                showControls={false} />
         </div>
     );
 };
