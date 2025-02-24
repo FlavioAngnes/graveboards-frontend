@@ -22,7 +22,7 @@ const RequestPanelGridView: FC<RequestPanelProps> = ({request, showQueue = true}
     const {setSrc} = useBeatmapPreview();
 
     return (
-        <div className="flex flex-col items-start shrink-0 rounded-xl overflow-hidden self-stretch min-w-72 h-72">
+        <div className="flex flex-col items-start shrink-0 rounded-xl overflow-hidden self-stretch min-w-72 h-[17.5rem]">
             <div
                 className={clsx(
                     "relative flex flex-col items-end p-2.5 justify-end gap-3 grow shrink-0 basis-0 self-stretch transition-[filter] duration-300 ease-in-out bg-center bg-no-repeat bg-[size:215%] tracking-[0.25px]",
