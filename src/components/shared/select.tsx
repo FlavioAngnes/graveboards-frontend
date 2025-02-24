@@ -7,10 +7,12 @@ interface SelectProps<T> extends HTMLAttributes<HTMLDivElement> {
     items: T[];
     onItemSelect: (selectedItem: T | null) => void;
     renderItem: (item: T) => React.ReactNode;
+    renderSelected?: (item: T) => React.ReactNode;
     isSelected: (item: T) => boolean;
-    selectedItem?: T | null;
+    selected?: T | T[] | null;
     placeholder?: string;
     disabled?: boolean;
+    footer?: React.ReactNode;
 }
 
 const Select = <T, >({
@@ -18,10 +20,12 @@ const Select = <T, >({
                          onItemSelect,
                          isSelected,
                          renderItem,
-                         selectedItem,
+                         renderSelected,
+                         selected,
                          placeholder,
                          className,
                          disabled,
+                         footer,
                          ...props
                      }: SelectProps<T>) => {
     const [open, setOpen] = useState(false);
@@ -52,7 +56,7 @@ const Select = <T, >({
             className={cn(
                 className,
                 `border-transparent relative transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border-[1px] rounded-lg`,
-                { "sm:border-primary-500": open },
+                { "sm:border-primary-500": open }
             )}
             {...props}
         >
@@ -65,11 +69,21 @@ const Select = <T, >({
                 )}
                 onClick={() => setOpen(!open)}>
                 <div className="flex items-center gap-1 w-full flex-wrap">
-                    {selectedItem ? (
-                        renderItem(selectedItem)
-                    ) : (
-                        <p className={clsx(open ? "text-black dark:text-white" : "text-tertiary-400", "transition-colors duration-300 ease-in-out")}>{placeholder || "Select Item"}</p>
-                    )}
+                    {
+                        selected instanceof Array ? (
+                            selected.length > 0 ? selected.map((item, index) => (
+                                <div key={index} className="flex items-center gap-1.5">
+                                    {renderSelected ? renderSelected(item) : renderItem(item)}
+                                </div>
+                            )) : (
+                                <p className={clsx(open ? "text-black dark:text-white" : "text-tertiary-400", "transition-colors duration-300 ease-in-out")}>{placeholder || "Select Item(s)"}</p>
+                            )
+                        ) : (selected !== null && selected !== undefined) ? (
+                            renderSelected ? renderSelected(selected) : renderItem(selected)
+                        ) : (
+                            <p className={clsx(open ? "text-black dark:text-white" : "text-tertiary-400", "transition-colors duration-300 ease-in-out")}>{placeholder || "Select Item"}</p>
+                        )
+                    }
                 </div>
 
                 {
@@ -99,6 +113,8 @@ const Select = <T, >({
                             )}
                         </div>
                     ))}
+
+                    {footer}
                 </div>
             )}
         </div>
