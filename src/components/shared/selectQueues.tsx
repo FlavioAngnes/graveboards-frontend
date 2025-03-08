@@ -16,10 +16,8 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
 
     const [selected, setSelected] = useState<Queue[]>([]);
 
-    const { queues, isReachingEnd, size, setSize } = useSWRQueues({ limit: 10 });
-    const { data: queue } = useSWR(`/api/queues/${Number(params.id) || 1}`, fetcher, {
-        revalidateOnFocus: false
-    });
+    const { queues, isReachingEnd, size, setSize } = useSWRQueues({ limit: 10, is_open: true });
+    const { data: queue } = useSWR<Queue>(`/api/queues/${Number(params.id) || 1}`, fetcher);
 
     const isSelected = (queue: Queue) => selected.some(q => q.id === queue.id);
 
@@ -39,8 +37,13 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
 
     useEffect(() => {
         if (queue) {
-            setSelected([queue]);
-            onSelect([queue.id]);
+            if (queue.is_open) {
+                setSelected([queue]);
+                onSelect([queue.id]);
+            } else {
+                setSelected([]);
+                onSelect([]);
+            }
         }
     }, [queue]);
 
