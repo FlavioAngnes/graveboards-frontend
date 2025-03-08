@@ -1,4 +1,4 @@
-import { ListingOptions } from "@/actions/beatmapsets";
+import { ListingOptions } from "@/types/beatmapsets/beatmapset";
 import { BeatmapsetRequest } from "@/types/requests/request";
 import { getListingSearchParams } from "@/hooks/useSWRBeatmapsets";
 import useSWRInfinite from "swr/infinite";

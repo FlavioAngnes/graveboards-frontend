@@ -1,4 +1,18 @@
 import { UserProfile } from "@/types/userProfile";
+import { BeatmapsetListFilterOptions } from "@/types/beatmapsets/filters";
+import { BeatmapsetListSortingLayer } from "@/types/beatmapsets/sorting";
+
+export interface Pagination {
+    limit?: number;
+    offset?: number;
+}
+
+export interface ListingOptions extends Pagination {
+    filters?: BeatmapsetListFilterOptions<unknown>[];
+    sortingLayers?: BeatmapsetListSortingLayer[];
+    searchQuery?: string;
+    queueId?: number;
+}
 
 export interface Beatmapset {
     id: number;

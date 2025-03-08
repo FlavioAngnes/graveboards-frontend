@@ -1,4 +1,4 @@
-import { ListingOptions } from "@/actions/beatmapsets";
+import { ListingOptions } from "@/types/beatmapsets/beatmapset";
 import { Beatmapset } from "@/types/beatmapsets/beatmapset";
 import useSWRInfinite from "swr/infinite";
 import { FilterType } from "@/types/filters";
