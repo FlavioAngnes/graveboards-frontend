@@ -1,30 +1,24 @@
 "use client";
 
-import { redirect, useSearchParams } from "next/navigation";
 import { loginUser } from "@/actions/auth";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
+import { FaCircleNotch } from "react-icons/fa6";
 
-export const CallbackContent = () => {
-    const searchParams = useSearchParams();
+interface CallbackContentProps {
+    code: string;
+    state: string;
+}
 
+export const CallbackContent: FC<CallbackContentProps> = ({code, state}) => {
     useEffect(() => {
-        const code = searchParams.get("code");
-        const state = searchParams.get("state");
-        const error = searchParams.get("error");
-
-        if (error || !code || !state) {
-            redirect("/");
-        }
-
-        loginUser(code, state).catch((error) => {
-            console.error(error);
-        }).finally(() => {
-            redirect("/");
+        loginUser(code, state).then(() => {
+            window.location.href = "/";
         });
-    }, [searchParams]);
+    }, [code, state]);
 
     return (
-        <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full h-[80vh] flex flex-col gap-2 items-center justify-center">
+            <FaCircleNotch className="size-8 animate-spin text-primary-500" />
             <p className="text-2xl">Logging in...</p>
         </div>
     );
