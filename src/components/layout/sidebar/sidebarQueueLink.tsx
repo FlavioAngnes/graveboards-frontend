@@ -8,7 +8,6 @@ interface SidebarQueueLinkProps {
 }
 
 const SidebarQueueLink: FC<SidebarQueueLinkProps> = ({ queue, label }) => {
-
     return (
         queue &&
         (
@@ -17,7 +16,9 @@ const SidebarQueueLink: FC<SidebarQueueLinkProps> = ({ queue, label }) => {
                          icon={
                              <div className="size-6 bg-tertiary-500 rounded bg-cover"
                                   style={{ backgroundImage: `url(${queue.user_profile.avatar_url})` }} />
-                         } />
+                         }
+                         isActive={(pathname, href) => pathname.includes(href)}
+            />
         )
     );
 };

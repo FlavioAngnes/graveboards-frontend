@@ -6,15 +6,16 @@ interface SidebarLinkProps {
     label?: string;
     href: string;
     icon?: React.ReactNode;
+    isActive?: (pathname:string, href: string) => boolean;
 }
 
-const SidebarLink: FC<SidebarLinkProps> = ({label, href, icon}) => {
+const SidebarLink: FC<SidebarLinkProps> = ({label, href, icon, isActive}) => {
     const pathname = usePathname();
-    const isActive = (href: string) => pathname.startsWith(href);
+    if (!isActive) isActive = (pathname: string, href: string) => pathname === href;
 
     return (
         <Link href={href} className={`flex items-center px-3 py-2 self-stretch gap-2 rounded-lg hover:bg-primary-20 transition-colors duration-300 ease-in-out 
-        ${isActive(href) ? 'bg-primary-100 dark:bg-primary-500 text-black dark:text-white dark:hover:bg-primary-400' : 'text-tertiary-500 dark:text-tertiary-400 dark:hover:bg-tertiary-900'}`}>
+        ${isActive(pathname, href) ? 'bg-primary-100 dark:bg-primary-500 text-black dark:text-white dark:hover:bg-primary-400' : 'text-tertiary-500 dark:text-tertiary-400 dark:hover:bg-tertiary-900'}`}>
             {icon}
             <div>
                 {label}
