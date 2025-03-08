@@ -6,7 +6,7 @@ import SidebarSection from "@/components/layout/sidebar/sidebarSection";
 import SidebarLink from "@/components/layout/sidebar/sidebarLink";
 import { useAuth } from "@/context/AuthContext";
 import SidebarManage from "@/components/layout/sidebar/sidebarManage";
-
+import { FaGithub } from "react-icons/fa";
 
 const Sidebar = () => {
     const {isAuthenticated} = useAuth();
@@ -28,6 +28,22 @@ const Sidebar = () => {
                     )}
                 </SidebarSection>
                 <SidebarManage/>
+            </div>
+            <div className="w-full flex flex-col gap-2 items-center justify-center text-sm text-tertiary-500 dark:text-tertiary-400">
+                <div>
+                    Graveboards © 2025
+                </div>
+                <div className="flex gap-2">
+                    <a href="https://github.com/FlavioAngnes/graveboards-frontend" target="_blank" className="flex gap-1 items-center">
+                        <FaGithub className='size-4'/>
+                        Front-end
+                    </a>
+                    <span>•</span>
+                    <a href="https://github.com/pianosuki/graveboards" target="_blank" className="flex gap-1 items-center">
+                        <FaGithub className='size-4'/>
+                        Back-end
+                    </a>
+                </div>
             </div>
         </div>
     );
