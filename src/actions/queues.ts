@@ -77,3 +77,37 @@ export const postQueue = async (queue: Partial<Queue>) => {
 
     return q;
 };
+
+export const patchQueue = async (id: number, queue: {
+    name?: string;
+    description?: string;
+    is_open?: boolean;
+    visibility?: 0 | 1 | 2;
+}) => {
+    const session = await verifySession();
+
+    if (!session) {
+        return;
+    }
+
+    const response = await fetch(`${API_URL}/queues/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${session?.token}`
+        },
+        body: JSON.stringify({
+            name: queue.name,
+            description: queue.description,
+            is_open: queue.is_open,
+            visibility: queue.visibility
+        })
+    });
+
+    const q = await response.json() as Queue;
+
+    revalidatePath("/queues");
+    revalidatePath(`/queues/${id}`);
+
+    return q;
+};
