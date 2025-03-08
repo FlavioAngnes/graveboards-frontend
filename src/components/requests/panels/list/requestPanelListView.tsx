@@ -8,7 +8,7 @@ import RequestStatusBadge from "@/components/requests/badge/requestStatusBadge";
 import SelectRequestStatus from "@/components/requests/manage/selectRequestStatus";
 import clsx from "clsx";
 import { useAuth } from "@/context/AuthContext";
-import { TimeUtils } from "@/utils/timeUtils";
+import { formatTime } from "@/utils/timeUtils";
 import Button from "@/components/shared/button";
 import { useBeatmapPreview } from "@/context/BeatmapPreviewContext";
 import { patchRequest } from "@/actions/requests";
@@ -65,7 +65,7 @@ const RequestPanelListView: FC<RequestPanelProps> = ({ request, editMode = false
                     </Button>
                     <div
                         className="bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden max-h-7 box-border">
-                        {TimeUtils.formatTime(request.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
+                        {formatTime(request.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
                     </div>
                 </div>
             </div>

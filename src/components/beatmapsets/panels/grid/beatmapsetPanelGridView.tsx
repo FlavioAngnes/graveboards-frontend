@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { Beatmapset } from "@/types/beatmapsets/beatmapset";
 import { MdPlayArrow, MdRadioButtonChecked } from "react-icons/md";
 import { ColorUtils } from "@/utils/colorUtils";
-import { TimeUtils } from "@/utils/timeUtils";
+import { formatTime } from "@/utils/timeUtils";
 import Button from "@/components/shared/button";
 import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
 import { useAuth } from "@/context/AuthContext";
@@ -45,7 +45,7 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({ beatmapset }) => {
                             "bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out",
                             { "opacity-0": hover }
                         )}>
-                        {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
+                        {formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
                     </div>
                 </div>
                 <div

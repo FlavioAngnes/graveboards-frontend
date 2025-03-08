@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useBeatmapPreview } from "@/context/BeatmapPreviewContext";
 import { MdClose, MdPause, MdPlayArrow, MdVolumeOff, MdVolumeUp } from "react-icons/md";
-import { TimeUtils } from "@/utils/timeUtils";
+import { formatTime } from "@/utils/timeUtils";
 import clsx from "clsx";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
@@ -44,7 +44,6 @@ const BeatmapPreviewPlayer = () => {
 
     const audioRef = useRef<HTMLAudioElement>(null);
 
-    // TODO: Chrome styling for range inputs
     return (
         <div
             className={clsx(
@@ -88,10 +87,10 @@ const BeatmapPreviewPlayer = () => {
 
             <div className="flex items-center gap-2">
                 <div className="font-bold">
-                    {TimeUtils.formatTime(Number(currentTime.toFixed()))}
+                    {formatTime(Number(currentTime.toFixed()))}
                 </div>
                 <div className="text-tertiary-500">
-                    {isNaN(duration) ? "00:00" : TimeUtils.formatTime(Number(duration.toFixed()))}
+                    {isNaN(duration) ? "00:00" : formatTime(Number(duration.toFixed()))}
                 </div>
             </div>
 

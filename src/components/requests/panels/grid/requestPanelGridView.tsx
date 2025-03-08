@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { BeatmapsetRequest } from "@/types/requests/request";
 import { MdPlayArrow, MdRadioButtonChecked } from "react-icons/md";
 import { ColorUtils } from "@/utils/colorUtils";
-import { TimeUtils } from "@/utils/timeUtils";
+import { formatTime } from "@/utils/timeUtils";
 import Button from "@/components/shared/button";
 import RequestStatusBadge from "@/components/requests/badge/requestStatusBadge";
 import { useBeatmapPreview } from "@/context/BeatmapPreviewContext";
@@ -46,7 +46,7 @@ const RequestPanelGridView: FC<RequestPanelProps> = ({request, showQueue = true}
                             "bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden transition-[opacity, max-height] box-border duration-300 ease-in-out",
                             {"opacity-0": hover}
                         )}>
-                        {TimeUtils.formatTime(request.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
+                        {formatTime(request.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
                     </div>
                 </div>
                 <div

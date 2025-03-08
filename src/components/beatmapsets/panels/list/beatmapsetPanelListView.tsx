@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { Beatmapset } from "@/types/beatmapsets/beatmapset";
 import { MdChevronRight, MdPlayArrow, MdRadioButtonChecked } from "react-icons/md";
 import { ColorUtils } from "@/utils/colorUtils";
-import { TimeUtils } from "@/utils/timeUtils";
+import { formatTime } from "@/utils/timeUtils";
 import clsx from "clsx";
 import { useAuth } from "@/context/AuthContext";
 import BeatmapsetStatusBadge from "@/components/beatmapsets/badge/beatmapsetStatusBadge";
@@ -37,7 +37,7 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({ beatmapset, editMode }) 
                     </Button>
                     <div
                         className="bg-black bg-opacity-80 text-white rounded-lg p-1.5 leading-none text-sm overflow-hidden max-h-7 box-border">
-                        {TimeUtils.formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
+                        {formatTime(beatmapset.beatmapset_snapshot.beatmap_snapshots[0].total_length)}
                     </div>
                 </div>
             </div>
