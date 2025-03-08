@@ -1,13 +1,13 @@
 import { Queue } from "@/types/queue";
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "@/utils/fetcher";
+import { Pagination } from "@/types/beatmapsets/beatmapset"
 
-interface QueueOptions {
-    limit?: number;
-    offset?: number;
+interface QueueOptions extends Pagination {
+    is_open?: boolean;
 }
 
-const useSWRQueues = ({ limit, offset }: QueueOptions) => {
+const useSWRQueues = ({ limit, offset, is_open }: QueueOptions) => {
     const getKey = (pageIndex: number) => {
         const searchParams = new URLSearchParams();
 
@@ -17,6 +17,11 @@ const useSWRQueues = ({ limit, offset }: QueueOptions) => {
 
         searchParams.append("limit", limit.toString());
         searchParams.append("offset", offset.toString());
+
+        // Add filter
+        if (is_open !== undefined) {
+            searchParams.append("is_open", is_open.toString());
+        }
 
         return `/api/queues?${searchParams}`;
     };
