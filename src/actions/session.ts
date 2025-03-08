@@ -67,5 +67,7 @@ export const verifySession = async () => {
 export const deleteSession = async () => {
     const cookieStore = await cookies();
 
-    cookieStore.delete("session");
+    if (cookieStore.get("session")) {
+        cookieStore.delete("session");
+    }
 }
