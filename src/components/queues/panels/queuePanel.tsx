@@ -2,10 +2,11 @@
 
 import React, { FC } from "react";
 import { Queue } from "@/types/queue";
-import { MdChevronRight, MdCircle, MdEdit } from "react-icons/md";
+import { MdChevronRight, MdEdit } from "react-icons/md";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import Button from "@/components/shared/button";
+import QueueStatus from "@/components/queues/status/queueStatus";
 
 interface QueuePanelProps {
     queue: Queue;
@@ -51,12 +52,8 @@ const QueuePanel: FC<QueuePanelProps> = ({ queue }) => {
                             className="text-sm text-tertiary-500 line-clamp-1 sm:line-clamp-2 text-ellipsis">{queue.description}</div>
                     </div>
                     <div className="flex items-center justify-self-end gap-8">
-                        <div className="text-sm text-green-500 flex gap-1.5 items-center">
-                            <MdCircle />
-                            <div className="hidden sm:block">
-                                Open
-                            </div>
-                        </div>
+                        <QueueStatus isOpen={queue.is_open} />
+
                         {(isManager || isAdmin) && (
                             <Link href={`/queues/${queue.id}/manage`}>
                                 <Button rounded="full" size="lg">

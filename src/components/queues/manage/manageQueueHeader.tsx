@@ -46,7 +46,10 @@ const ManageQueueHeader: FC<ManageQueueHeaderProps> = ({ queue }) => {
                 </div>
                 <div className="flex items-center justify-self-end gap-4">
                     <QueueStatus isOpen={isOpen} />
-                    <QueueStatusButton isOpen={isOpen} setIsOpen={setIsOpen} queue={queue} />
+
+                    <QueueStatusButton
+                        onClick={(status) => setIsOpen(status)}
+                        queue={queue} />
                 </div>
             </div>
         </div>
