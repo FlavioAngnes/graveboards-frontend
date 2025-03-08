@@ -4,6 +4,7 @@ import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
 import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import {FilterOperators} from "@/types/filters";
 import clsx from "clsx";
+import { getOperatorSymbol } from "@/utils/operators";
 
 interface FilterChipProps {
     name: BeatmapsetListFilterValue;
@@ -15,19 +16,7 @@ interface FilterChipProps {
 }
 
 const FilterChip: FC<FilterChipProps> = ({name, label, option}) => {
-    let key = option.operation as string;
-
-    if (key === "gt") {
-        key = ">";
-    } else if (key === "lt") {
-        key = "<";
-    } else if (key === "gte") {
-        key = "≥";
-    } else if (key === "lte") {
-        key = "≤";
-    } else if (key === "neq") {
-        key = "≠";
-    }
+    const key =  getOperatorSymbol(option.operation);
 
     const {removeFilter, filtersToUse} = useFilters();
 
@@ -47,7 +36,6 @@ const FilterChip: FC<FilterChipProps> = ({name, label, option}) => {
                             {key}
                         </div>
                     )
-
                 }
                 <div className="py-0.5 px-1.5 bg-primary-500 text-white">
                     {option.value}

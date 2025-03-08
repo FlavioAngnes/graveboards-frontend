@@ -3,6 +3,7 @@ import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
 import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import {FilterOperators} from "@/types/filters";
 import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
+import { getOperatorSymbol } from "@/utils/operators";
 
 interface FiltersInputProps {
     name: BeatmapsetListFilterValue;
@@ -75,7 +76,7 @@ const FiltersInput: FC<FiltersInputProps> = ({
                         `size-10 p-2 active:text-black active:dark:text-white rounded-lg hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 active:dark:bg-tertiary-700 text-tertiary-400 flex items-center justify-center text-xl gap-1 transition-colors duration-300 ease-in-out`
                     }
                     onClick={handleOperatorChange}>
-                    {operator === 'eq' ? '=' : operator === 'neq' ? '≠' : operator === 'gt' ? '>' : operator === 'lt' ? '<' : operator === 'gte' ? '≥' : '≤'}
+                    {getOperatorSymbol(operator)}
                 </button>
                 <input
                     className=
