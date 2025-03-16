@@ -7,7 +7,7 @@ import { FilterType } from "@/types/filters";
 interface FiltersContextType {
     filters: FilterOptions<unknown>[];
     appliedFilters: FilterOptions<unknown>[];
-    addFilter: <T = unknown,>(value: FilterValue, options: FilterType<T>) => void;
+    addFilter: <T = unknown, >(value: FilterValue, options: FilterType<T>, replace?: boolean) => void;
     removeFilter: (filter: FilterValue) => void;
     canClear: boolean;
     clearFilters: () => void;
@@ -19,13 +19,18 @@ interface FiltersContextType {
 export const FiltersContext = createContext<FiltersContextType>({
     filters: [],
     appliedFilters: [],
-    addFilter: () => {},
-    removeFilter: () => {},
+    addFilter: () => {
+    },
+    removeFilter: () => {
+    },
     canClear: false,
-    clearFilters: () => {},
+    clearFilters: () => {
+    },
     canApply: false,
-    applyFilters: () => {},
-    undoFilters: () => {}
+    applyFilters: () => {
+    },
+    undoFilters: () => {
+    }
 });
 
 export const FiltersProvider: FC<{
@@ -37,12 +42,12 @@ export const FiltersProvider: FC<{
     // The filters that are applied to the query.
     const [appliedFilters, setAppliedFilters] = useState<FilterOptions<unknown>[]>(filters);
 
-    const canClear = Object.keys(filters).length > 0;
+    const canClear = filters.filter(f => !f.isDefault).length > 0;
     const canApply = JSON.stringify(filters.filter(f => !f.isDefault)) !== JSON.stringify(appliedFilters.filter(f => !f.isDefault));
 
-    const addFilter = <T = unknown,>(value: FilterValue, options: FilterType<T>) => {
+    const addFilter = <T = unknown, >(value: FilterValue, options: FilterType<T>, replace?: boolean) => {
         if (filters.some(f => f.value === value)) {
-            updateFilter(value, options);
+            updateFilter(value, options, replace);
         } else {
             setFilters([...filters, {
                 value,
@@ -51,10 +56,13 @@ export const FiltersProvider: FC<{
         }
     };
 
-    const updateFilter = <T = unknown,>(value: FilterValue, options: FilterType<T>) => {
+    const updateFilter = <T = unknown, >(value: FilterValue, options: FilterType<T>, replace?: boolean) => {
         setFilters(filters.map(f => f.value === value ? {
             ...f,
-            options
+            options: replace ? options : {
+                ...f.options,
+                ...options
+            }
         } : f));
     };
 
@@ -62,7 +70,7 @@ export const FiltersProvider: FC<{
         setFilters(filters.filter(f => f.value !== value));
     };
 
-    const clearFilters = () => setFilters([]);
+    const clearFilters = () => setFilters(filters.filter(f => f.isDefault));
 
     const applyFilters = () => setAppliedFilters(filters);
 
