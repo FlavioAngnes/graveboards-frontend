@@ -5,13 +5,13 @@ import { BeatmapsetListFiltersMap } from "@/data/beatmapsets/filters";
 import { FilterOperators } from "@/types/filters";
 
 export const FilterChipList: FC = () => {
-    const { userFilters: filters} = useFilters();
+    const { filters } = useFilters();
 
     if (filters.length === 0) return null;
 
     return (
         <div className="flex gap-2">
-            {filters.map((filter, index) => (
+            {filters.filter(f => !f.isDefault).map((filter, index) => (
                 Object.entries(filter.options).map(([key, value]) => (
                     <FilterChip
                         name={filter.value}

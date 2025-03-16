@@ -1,21 +1,20 @@
 import React, { FC, useState } from "react";
 import { MdArrowDownward, MdArrowUpward, MdClose, MdDragIndicator } from "react-icons/md";
-import { BeatmapsetListSortingLayer, BeatmapsetListSortingLayerValue } from "@/types/beatmapsets/sorting";
+import { Sorting, SortingValue } from "@/types/beatmapsets/sorting";
 import SelectValue from "@/components/beatmapsets/controls/sortingLayers/selectValue";
 import { Reorder, useDragControls } from "motion/react";
-import { SortingLayerOrders } from "@/types/sorting";
+import { Order } from "@/types/sorting";
 import Select from "@/components/shared/select";
+import { useSorting } from "@/context/beatmapsets/SortingContext";
 
 interface SortingLayerProps {
-    values: BeatmapsetListSortingLayer[],
-    value: BeatmapsetListSortingLayer,
-    onChange?: (newValue: BeatmapsetListSortingLayer, index: number) => void,
-    onDestroy?: (index: number) => void,
+    values: Sorting[],
+    value: Sorting,
     containerRef?: React.RefObject<HTMLDivElement>
 }
 
 interface OrderItem {
-    value: SortingLayerOrders,
+    value: Order,
     label: string,
     icon: React.ReactNode
 }
@@ -30,52 +29,30 @@ const orders: OrderItem[] = [{
     icon: <MdArrowDownward className="size-4" />
 }];
 
-const SortingLayerListItem: FC<SortingLayerProps> = ({ values, value, onChange, onDestroy, containerRef }) => {
-    const [sorting, setSorting] = useState<BeatmapsetListSortingLayer>(value);
+const SortingLayerListItem: FC<SortingLayerProps> = ({ values, value, containerRef }) => {
+    const [sorting, setSorting] = useState<Sorting>(value);
 
-    const handleValueSelect = (value: BeatmapsetListSortingLayerValue) => {
-        setSorting((prev) => {
-            if (prev) {
-                return {
-                    ...prev,
-                    value
-                };
-            }
-            return prev;
+    const { removeLayer, updateLayerOrder, updateLayerValue } = useSorting();
+
+    const handleValueSelect = (value: SortingValue) => {
+        updateLayerValue(sorting.value, value);
+
+        setSorting({
+            ...sorting,
+            value
         });
-
-        if (onChange) {
-            onChange({
-                ...sorting,
-                value
-            }, values.indexOf(sorting));
-        }
-    };
-
-    const handleOrderSelect = (order: SortingLayerOrders) => {
-        setSorting((prev) => {
-            if (prev) {
-                return {
-                    ...prev,
-                    order
-                };
-            }
-            return prev;
-        });
-
-        if (onChange) {
-            onChange({
-                ...sorting,
-                order
-            }, values.indexOf(sorting));
-        }
     }
 
-    const handleRemove = () => {
-        if (onDestroy) {
-            onDestroy(values.findIndex((layer) => layer.value === sorting.value));
-        }
-    };
+    const handleOrderSelect = (order: Order) => {
+        updateLayerOrder(sorting.value, order);
+
+        setSorting({
+            ...sorting,
+            order
+        });
+    }
+
+    const handleRemove = () => removeLayer(sorting.value);
 
     const controls = useDragControls();
 
@@ -109,7 +86,7 @@ const SortingLayerListItem: FC<SortingLayerProps> = ({ values, value, onChange, 
                             <p>{item.label}</p>
                         </div>
                     )}
-                    onItemSelect={(item) => handleOrderSelect(item?.value || "asc")}
+                    onItemSelect={(item) => handleOrderSelect(item!.value)}
                     selected={orders.find((order) => order.value === sorting.order)}
                     isSelected={(item) => item.value === sorting.order}
                     className={"w-full sm:w-auto"}

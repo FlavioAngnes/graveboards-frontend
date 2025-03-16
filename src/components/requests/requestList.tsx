@@ -57,13 +57,13 @@ const RequestList: FC<RequestListProps> = ({
     //#region Hooks
 
     const { search } = useSearch();
-    const { filtersToUse } = useFilters();
-    const { currentLayers } = useSorting();
+    const { appliedFilters } = useFilters();
+    const { activeLayers } = useSorting();
 
     const { requests, error, size, setSize, isReachingEnd } = useSWRRequests({
         limit: 10,
-        filters: filtersToUse,
-        sortingLayers: currentLayers,
+        filters: appliedFilters,
+        sortingLayers: activeLayers,
         searchQuery: search,
         queueId: queueId
     });

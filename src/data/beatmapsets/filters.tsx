@@ -6,9 +6,9 @@ import {
     MdOutlineRadioButtonChecked,
     MdOutlineTextFormat
 } from "react-icons/md";
-import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
+import {FilterValue} from "@/types/beatmapsets/filters";
 
-export const BeatmapsetListFiltersMap: Record<BeatmapsetListFilterValue, {
+export const BeatmapsetListFiltersMap: Record<FilterValue, {
     icon: ReactNode,
     label: string,
 }> = {

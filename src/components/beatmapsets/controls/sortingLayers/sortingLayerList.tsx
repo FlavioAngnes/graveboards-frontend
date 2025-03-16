@@ -4,18 +4,14 @@ import SortingLayerListItem from "@/components/beatmapsets/controls/sortingLayer
 import {Reorder} from 'motion/react';
 import {useSorting} from "@/context/beatmapsets/SortingContext";
 import clsx from "clsx";
-import {IoMdInformationCircleOutline} from "react-icons/io";
 
 const SortingLayerList = () => {
     const [open, setOpen] = useState(false);
 
     const {
         layers,
-        currentLayers,
         nextLayer,
         addLayer,
-        removeLayer,
-        updateLayer,
         reorderLayers,
         clearLayers,
         undoLayers,
@@ -41,8 +37,6 @@ const SortingLayerList = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         }
     }, []);
-
-    const [popoverOpen, setPopoverOpen] = useState(false);
 
     return (
         <>
@@ -71,31 +65,6 @@ const SortingLayerList = () => {
                             <div className="text-black dark:text-white font-semibold flex gap-1 items-center">
                                 <MdImportExport className="size-4"/>
                                 Sorting Layers
-                                {currentLayers.some((layer) => layer.isDefault) && (
-                                    <IoMdInformationCircleOutline
-                                        className="cursor-pointer"
-                                        onMouseEnter={() => setPopoverOpen(true)}
-                                        onMouseLeave={() => setPopoverOpen(false)}
-                                    />
-                                )}
-                                {popoverOpen && (
-                                    <div className="relative">
-                                        <div
-                                            className="absolute z-10 w-64 p-2 bg-white border rounded-lg text-tertiary-500 dark:text-tertiary-400 dark:bg-tertiary-800 dark:border-tertiary-700 right-0 top-full mt-4"
-                                        >
-                                            Sorting applied may not work as expected due to default sorting layers being active in this list.
-                                            <ul className="list-disc pl-4">
-                                                {currentLayers
-                                                    .filter((layer) => layer.isDefault)
-                                                    .map((layer) => (
-                                                    <li key={layer.value}>
-                                                        {layer.value}, {layer.order}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                )}
                             </div>
                             <div className="text-tertiary-500 dark:text-tertiary-400 text-sm">
                                 Drag and drop to reorder the sorting layers.
@@ -116,8 +85,7 @@ const SortingLayerList = () => {
                                            layout={"position"}
                                            className="flex flex-col gap-2">
                                 {layers.map((layer) => (
-                                    <SortingLayerListItem values={layers} value={layer} onChange={updateLayer}
-                                                          onDestroy={removeLayer} key={layer.value} containerRef={reorderRef}/>
+                                    <SortingLayerListItem values={layers} value={layer} key={layer.value} containerRef={reorderRef}/>
                                 ))}
                             </Reorder.Group>
                         )}

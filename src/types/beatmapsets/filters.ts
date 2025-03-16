@@ -1,7 +1,7 @@
 import {FilterType} from "@/types/filters";
 
-export interface BeatmapsetListFilterOptions<T> {
-    value: BeatmapsetListFilterValue;
+export interface FilterOptions<T> {
+    value: FilterValue;
     options: FilterType<T>;
     isDefault?: true;
 }
@@ -12,7 +12,7 @@ export interface RequestFilterOptions<T> {
     isDefault?: true;
 }
 
-export type BeatmapsetListFilterValue = MapperFilterValue | BeatmapsetFilterValue | BeatmapFilterValue | RequestFilterValue;
+export type FilterValue = MapperFilterValue | BeatmapsetFilterValue | BeatmapFilterValue | RequestFilterValue;
 
 export type MapperFilterValue = "mapper_filter.kudosu.available" |
     "mapper_filter.user_id" |

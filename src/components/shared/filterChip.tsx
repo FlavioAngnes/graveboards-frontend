@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import {GoX} from "react-icons/go";
-import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
+import {FilterValue} from "@/types/beatmapsets/filters";
 import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import {FilterOperators} from "@/types/filters";
 import clsx from "clsx";
 import { getOperatorSymbol } from "@/utils/operators";
 
 interface FilterChipProps {
-    name: BeatmapsetListFilterValue;
+    name: FilterValue;
     label: string;
     option: {
         operation: FilterOperators;
@@ -18,9 +18,9 @@ interface FilterChipProps {
 const FilterChip: FC<FilterChipProps> = ({name, label, option}) => {
     const key =  getOperatorSymbol(option.operation);
 
-    const {removeFilter, filtersToUse} = useFilters();
+    const {removeFilter, appliedFilters} = useFilters();
 
-    const filterInUse = filtersToUse.some(filter => filter.value === name && Object.keys(filter.options).some((o) => o === option.operation));
+    const filterInUse = appliedFilters.some(filter => filter.value === name && Object.keys(filter.options).some((o) => o === option.operation));
 
     return (
         <div className={clsx("flex rounded-full overflow-hidden text-sm tracking-wide", {"opacity-50" : !filterInUse})}>

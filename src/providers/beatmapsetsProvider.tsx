@@ -1,15 +1,15 @@
 import {FC, ReactNode} from "react";
 import {SortingProvider} from "@/context/beatmapsets/SortingContext";
 import BeatmapsetList from "@/components/beatmapsets/beatmapsetList";
-import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
+import {Sorting} from "@/types/beatmapsets/sorting";
 import {FiltersProvider} from "@/context/beatmapsets/FiltersContext";
-import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
+import {FilterOptions} from "@/types/beatmapsets/filters";
 import {SearchProvider} from "@/context/beatmapsets/SearchContext";
 
 interface BeatmapsetsProviderProps {
     title?: string,
-    defaultFilters?: Required<BeatmapsetListFilterOptions<unknown>>[];
-    defaultSortingLayers?: Required<BeatmapsetListSortingLayer>[];
+    defaultFilters?: Required<FilterOptions<unknown>>[];
+    defaultSortingLayers?: Required<Sorting>[];
     queueId?: number;
     showControls?: boolean;
     showGrouping?: boolean;

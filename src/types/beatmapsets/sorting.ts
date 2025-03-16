@@ -1,60 +1,12 @@
-import {SortingLayerOrders} from "@/types/sorting";
+import {Order} from "@/types/sorting";
 
-export interface BeatmapsetListSortingLayer {
-    value: BeatmapsetListSortingLayerValue;
-    order: SortingLayerOrders;
+export interface Sorting {
+    value: SortingValue;
+    order: Order;
     isDefault?: true;
 }
 
-export type BeatmapsetListSortingLayerValue =
-    | 'Profile.country_code'
-    | 'Profile.graveyard_beatmapset_count'
-    | 'Profile.loved_beatmapset_count'
-    | 'Profile.pending_beatmapset_count'
-    | 'Profile.ranked_beatmapset_count'
-    | 'Profile.total_maps'
-    | 'Profile.total_kudosu'
-    | 'BeatmapSnapshot.beatmap_id'
-    | 'BeatmapSnapshot.user_id'
-    | 'BeatmapSnapshot.difficulty_rating'
-    | 'BeatmapSnapshot.mode'
-    | 'BeatmapSnapshot.total_length'
-    | 'BeatmapSnapshot.version'
-    | 'BeatmapSnapshot.accuracy'
-    | 'BeatmapSnapshot.ar'
-    | 'BeatmapSnapshot.bpm'
-    | 'BeatmapSnapshot.count_circles'
-    | 'BeatmapSnapshot.count_sliders'
-    | 'BeatmapSnapshot.count_spinners'
-    | 'BeatmapSnapshot.cs'
-    | 'BeatmapSnapshot.drain'
-    | 'BeatmapSnapshot.last_updated'
-    | 'BeatmapSnapshot.passcount'
-    | 'BeatmapSnapshot.playcount'
-    | 'BeatmapsetSnapshot.beatmapset_id'
-    | 'BeatmapsetSnapshot.user_id'
-    | 'BeatmapsetSnapshot.artist'
-    | 'BeatmapsetSnapshot.artist_unicode'
-    | 'BeatmapsetSnapshot.creator'
-    | 'BeatmapsetSnapshot.favourite_count'
-    | 'BeatmapsetSnapshot.offset'
-    | 'BeatmapsetSnapshot.play_count'
-    | 'BeatmapsetSnapshot.source'
-    | 'BeatmapsetSnapshot.status'
-    | 'BeatmapsetSnapshot.title'
-    | 'BeatmapsetSnapshot.title_unicode'
-    | 'BeatmapsetSnapshot.track_id'
-    | 'BeatmapsetSnapshot.num_difficulties'
-    | 'BeatmapsetSnapshot.sr_gaps.min'
-    | 'BeatmapsetSnapshot.sr_gaps.max'
-    | 'BeatmapsetSnapshot.sr_gaps.avg'
-    | 'Request.comment'
-    | 'Request.mv_checked'
-    | 'Request.created_at'
-    | 'Request.updated_at'
-    | 'Request.status';
-
-/*export const BeatmapsetssSortingLayerValues: BeatmapsetsSortingLayerValues[] = [
+export const BeatmapsetSortingValues = [
     'Profile.country_code',
     'Profile.graveyard_beatmapset_count',
     'Profile.loved_beatmapset_count',
@@ -101,7 +53,9 @@ export type BeatmapsetListSortingLayerValue =
     'Request.created_at',
     'Request.updated_at',
     'Request.status',
-];*/
+] as const;
+
+export type SortingValue = typeof BeatmapsetSortingValues[number];
 
 /*
 export const BeatmapsetsSortingLayerOptions = {

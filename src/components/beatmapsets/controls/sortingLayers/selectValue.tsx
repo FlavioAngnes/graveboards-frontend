@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { BeatmapsetListSortingLayerValue } from "@/types/beatmapsets/sorting";
+import { SortingValue } from "@/types/beatmapsets/sorting";
 import {
     MdMusicNote,
     MdOutlineKeyboardArrowDown,
@@ -12,15 +12,15 @@ import clsx from "clsx";
 import { BeatmapsetListSortingLayerMap } from "@/data/beatmapsets/sorting";
 
 interface SelectValueProps {
-    items: BeatmapsetListSortingLayerValue[],
-    selectedItem: BeatmapsetListSortingLayerValue,
-    onSelect: (value: BeatmapsetListSortingLayerValue) => void,
+    items: SortingValue[],
+    selectedItem: SortingValue,
+    onSelect: (value: SortingValue) => void,
 }
 
 const SelectValue: FC<SelectValueProps> = ({items, selectedItem, onSelect }) => {
     const [open, setOpen] = useState(false);
 
-    const handleSelect = (value: BeatmapsetListSortingLayerValue) => {
+    const handleSelect = (value: SortingValue) => {
         onSelect(value);
         setOpen(false);
     };
@@ -28,7 +28,7 @@ const SelectValue: FC<SelectValueProps> = ({items, selectedItem, onSelect }) => 
     const filterByCategory = (category: string) =>
         Object.entries(BeatmapsetListSortingLayerMap).filter(
             ([key]) => key.startsWith(`${category}.`) &&
-                !items.some((item) => item === key as BeatmapsetListSortingLayerValue)
+                !items.some((item) => item === key as SortingValue)
         );
 
     const groups = {
@@ -112,7 +112,7 @@ const SelectValue: FC<SelectValueProps> = ({items, selectedItem, onSelect }) => 
                                     value.values.map(([key, value]) => ({
                                         icon: value.icon,
                                         label: value.label,
-                                        value: key as BeatmapsetListSortingLayerValue
+                                        value: key as SortingValue
                                     }))
                                 }
                                 onSelect={handleSelect} />
@@ -130,9 +130,9 @@ interface SelectSortingItemProps {
     values: {
         icon: React.ReactNode;
         label: string;
-        value: BeatmapsetListSortingLayerValue;
+        value: SortingValue;
     }[];
-    onSelect: (value: BeatmapsetListSortingLayerValue) => void;
+    onSelect: (value: SortingValue) => void;
 }
 
 const SelectSortingItem: FC<SelectSortingItemProps> = ({ icon, label, values, onSelect }) => {

@@ -8,9 +8,9 @@ import {
     MdPersonOutline, MdPlayArrow,
     MdRadioButtonChecked
 } from "react-icons/md";
-import {BeatmapsetListSortingLayerValue} from "@/types/beatmapsets/sorting";
+import {SortingValue} from "@/types/beatmapsets/sorting";
 
-export const BeatmapsetListSortingLayerMap: Record<BeatmapsetListSortingLayerValue, {
+export const BeatmapsetListSortingLayerMap: Record<SortingValue, {
     icon: React.ReactNode,
     label: string
 }> = {

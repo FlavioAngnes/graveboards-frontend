@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
-import {createContext, FC, ReactNode, useContext, useState} from 'react';
-import {BeatmapsetListFilterOptions} from "@/types/beatmapsets/filters";
+import { createContext, FC, ReactNode, useContext, useState } from "react";
+import { FilterOptions, FilterValue } from "@/types/beatmapsets/filters";
+import { FilterType } from "@/types/filters";
 
 interface FiltersContextType {
-    filters: BeatmapsetListFilterOptions<unknown>[];
-    userFilters: BeatmapsetListFilterOptions<unknown>[];
-    filtersToUse: BeatmapsetListFilterOptions<unknown>[];
-    putFilter: (filter: BeatmapsetListFilterOptions<unknown>) => void;
-    removeFilter: (filter: BeatmapsetListFilterOptions<unknown>) => void;
+    filters: FilterOptions<unknown>[];
+    appliedFilters: FilterOptions<unknown>[];
+    addFilter: <T = unknown,>(value: FilterValue, options: FilterType<T>) => void;
+    removeFilter: (filter: FilterValue) => void;
     canClear: boolean;
     clearFilters: () => void;
     canApply: boolean;
@@ -18,85 +18,61 @@ interface FiltersContextType {
 
 export const FiltersContext = createContext<FiltersContextType>({
     filters: [],
-    userFilters: [],
-    filtersToUse: [],
-    putFilter: () => {},
+    appliedFilters: [],
+    addFilter: () => {},
     removeFilter: () => {},
     canClear: false,
     clearFilters: () => {},
     canApply: false,
     applyFilters: () => {},
     undoFilters: () => {}
-})
+});
 
 export const FiltersProvider: FC<{
     children: ReactNode,
-    defaultFilters?: BeatmapsetListFilterOptions<unknown>[]
-}> = ({children, defaultFilters}) => {
-    const [filters, setFilters] = useState<BeatmapsetListFilterOptions<unknown>[]>([]);
-    const [userFilters, setUserFilters] = useState<BeatmapsetListFilterOptions<unknown>[]>([]);
-    const [filtersToUse, setFiltersToUse] = useState<BeatmapsetListFilterOptions<unknown>[]>(defaultFilters || []);
+    defaultFilters?: FilterOptions<unknown>[]
+}> = ({ children, defaultFilters }) => {
+    // The filters that are on the list but don't apply to the query. Any mutations have to be made to this list.
+    const [filters, setFilters] = useState<FilterOptions<unknown>[]>(defaultFilters || []);
+    // The filters that are applied to the query.
+    const [appliedFilters, setAppliedFilters] = useState<FilterOptions<unknown>[]>(filters);
 
     const canClear = Object.keys(filters).length > 0;
-    const canApply = JSON.stringify(filters) !== JSON.stringify(filtersToUse.filter(layer => !layer.isDefault));
+    const canApply = JSON.stringify(filters.filter(f => !f.isDefault)) !== JSON.stringify(appliedFilters.filter(f => !f.isDefault));
 
-    const putFilter = (filter: BeatmapsetListFilterOptions<unknown>) => {
-        const updatedFilters = filters.filter(f => f.value !== filter.value);
-        setFilters([...updatedFilters, filter]);
-    }
+    const addFilter = <T = unknown,>(value: FilterValue, options: FilterType<T>) => {
+        if (filters.some(f => f.value === value)) {
+            updateFilter(value, options);
+        } else {
+            setFilters([...filters, {
+                value,
+                options
+            }]);
+        }
+    };
 
-    const removeFilter = (filter: BeatmapsetListFilterOptions<unknown>) => {
-        // Removes the options provided by the filter from the filter options.
-        // If the options are empty afterward, the filter is removed.
-        const updatedFilters = filters
-            .map(({ value, options }) => {
-                if (value === filter.value) {
-                    const updatedOptions = { ...options };
-                    Object.keys(filter.options).forEach((key) => {
-                        // @ts-expect-error - TS doesn't know that the key is a valid key of options. see FilterOperators
-                        delete updatedOptions[key];
-                    });
+    const updateFilter = <T = unknown,>(value: FilterValue, options: FilterType<T>) => {
+        setFilters(filters.map(f => f.value === value ? {
+            ...f,
+            options
+        } : f));
+    };
 
-                    if (Object.keys(updatedOptions).length === 0) {
-                        return null;
-                    }
+    const removeFilter = (value: FilterValue) => {
+        setFilters(filters.filter(f => f.value !== value));
+    };
 
-                    return { value, options: updatedOptions };
-                }
+    const clearFilters = () => setFilters([]);
 
-                return { value, options };
-            })
-            .filter((filter) => filter !== null);
-        setFilters(updatedFilters);
+    const applyFilters = () => setAppliedFilters(filters);
 
-        const defaultFilters = filtersToUse.filter(layer => layer.isDefault);
-        const updatedLayersToUse = [...defaultFilters, ...updatedFilters];
-        setUserFilters(updatedFilters);
-        setFiltersToUse(updatedLayersToUse);
-    }
-
-    const clearFilters = () => {
-        setFilters([]);
-        setUserFilters([]);
-    }
-
-    const applyFilters = () => {
-        const defaultFilters = filtersToUse.filter(layer => layer.isDefault);
-        const updatedLayersToUse = [...defaultFilters, ...filters];
-        setUserFilters(filters);
-        setFiltersToUse(updatedLayersToUse);
-    }
-
-    const undoFilters = () => {
-        setFilters(filtersToUse.filter(layer => !layer.isDefault));
-    }
+    const undoFilters = () => setFilters(appliedFilters);
 
     return (
         <FiltersContext.Provider value={{
             filters,
-            userFilters,
-            filtersToUse,
-            putFilter,
+            appliedFilters,
+            addFilter,
             removeFilter,
             canClear,
             clearFilters,
@@ -106,7 +82,7 @@ export const FiltersProvider: FC<{
         }}>
             {children}
         </FiltersContext.Provider>
-    )
-}
+    );
+};
 
 export const useFilters = () => useContext(FiltersContext);

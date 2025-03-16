@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
-import {BeatmapsetListFilterValue} from "@/types/beatmapsets/filters";
+import {FilterValue} from "@/types/beatmapsets/filters";
 import {useFilters} from "@/context/beatmapsets/FiltersContext";
 import {FilterOperators} from "@/types/filters";
 import {BeatmapsetListFiltersMap} from "@/data/beatmapsets/filters";
 import { getOperatorSymbol } from "@/utils/operators";
 
 interface FiltersInputProps {
-    name: BeatmapsetListFilterValue;
+    name: FilterValue;
     allowedOperators?: FilterOperators[];
 }
 
@@ -15,7 +15,7 @@ const FiltersInput: FC<FiltersInputProps> = ({
                                                  allowedOperators = ['eq', 'neq']
                                              }) => {
 
-    const {filters, putFilter, removeFilter} = useFilters();
+    const {filters, addFilter, removeFilter} = useFilters();
 
     const initialFilter = filters.find(f => f.value === name);
 
@@ -26,40 +26,28 @@ const FiltersInput: FC<FiltersInputProps> = ({
     const [operator, setOperator] = React.useState<FilterOperators>(initialOperator);
 
     const handleOperatorChange = () => {
-        setOperator(allowedOperators[(allowedOperators.indexOf(operator) + 1) % allowedOperators.length]);
+        const newOperator = allowedOperators[(allowedOperators.indexOf(operator) + 1) % allowedOperators.length];
 
-        if(value.length !== 0) {
-            putFilter({
-                value: name,
-                options: {
-                    [operator]: value
-                }
-            });
-        }
-    }
+        setOperator(newOperator);
 
-    const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
-
-        if (e.target.value.length === 0) {
-            removeFilter({
-                value: name,
-                options: {
-                    [operator]: e.target.value
-                }
-            });
-
+        if(value.length === 0) {
             return;
         }
 
-        putFilter(
-            {
-                value: name,
-                options: {
-                    [operator]: e.target.value
-                }
-            }
-        );
+        addFilter(name, { [newOperator]: value });
+    }
+
+    const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.value;
+
+        setValue(newValue);
+
+        if (newValue.length === 0) {
+            removeFilter(name);
+            return;
+        }
+
+        addFilter(name, { [operator]: newValue });
     }
 
     return (

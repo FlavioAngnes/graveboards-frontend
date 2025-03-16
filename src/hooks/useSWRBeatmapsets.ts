@@ -3,10 +3,10 @@ import { Beatmapset } from "@/types/beatmapsets/beatmapset";
 import useSWRInfinite from "swr/infinite";
 import { FilterType } from "@/types/filters";
 import { fetcher } from "@/utils/fetcher";
-import { BeatmapsetListFilterOptions } from "@/types/beatmapsets/filters";
-import { BeatmapsetListSortingLayer } from "@/types/beatmapsets/sorting";
+import { FilterOptions } from "@/types/beatmapsets/filters";
+import { Sorting } from "@/types/beatmapsets/sorting";
 
-export const getGroupedFilters = (filters: BeatmapsetListFilterOptions<unknown>[]) => {
+export const getGroupedFilters = (filters: FilterOptions<unknown>[]) => {
     if (filters.length === 0) {
         return {};
     }
@@ -35,7 +35,7 @@ export const getGroupedFilters = (filters: BeatmapsetListFilterOptions<unknown>[
     return filterGroups;
 };
 
-export const getListingSearchParams = (filters?: BeatmapsetListFilterOptions<unknown>[], sortingLayers?: BeatmapsetListSortingLayer[], searchQuery?: string, queueId?: number) => {
+export const getListingSearchParams = (filters?: FilterOptions<unknown>[], sortingLayers?: Sorting[], searchQuery?: string, queueId?: number) => {
     const searchParams = new URLSearchParams();
 
     // Group filters by type

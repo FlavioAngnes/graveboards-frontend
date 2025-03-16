@@ -48,9 +48,10 @@ const QueueStatusButton: FC<QueueStatusButtonProps> = ({
             <Button
                 disabled={disabled || isPending}
                 rounded="full"
+                variant="fill"
                 size="lg"
                 className={clsx(
-                    state.is_open ? "bg-primary-500 hover:bg-primary-400 active:bg-primary-300" : "bg-green-500 hover:bg-green-400 active:bg-green-300"
+                    state.is_open ? "border-primary-500 hover:border-primary-400 active:border-primary-300" : "bg-green-500 hover:bg-green-400 active:bg-green-300"
                 )}
             >
                 {isPending ? (

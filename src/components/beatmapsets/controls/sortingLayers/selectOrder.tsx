@@ -1,25 +1,25 @@
 import React, {FC, useEffect, useRef, useState} from "react";
 import {MdArrowDownward, MdArrowUpward, MdOutlineKeyboardArrowDown} from "react-icons/md";
-import {BeatmapsetListSortingLayer} from "@/types/beatmapsets/sorting";
+import {Sorting} from "@/types/beatmapsets/sorting";
 import clsx from "clsx";
-import {SortingLayerOrders} from "@/types/sorting";
+import {Order} from "@/types/sorting";
 
 interface Order {
     icon: React.ReactNode,
     label: string,
-    value: SortingLayerOrders
+    value: Order
 }
 
 interface SelectOrderProps {
-    values: BeatmapsetListSortingLayer[],
-    value: SortingLayerOrders,
-    onChange?: (value: SortingLayerOrders) => void
+    values: Sorting[],
+    value: Order,
+    onChange?: (value: Order) => void
 }
 
 const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
     const [open, setOpen] = useState(false);
 
-    const [order, setOrder] = useState<SortingLayerOrders>(value);
+    const [order, setOrder] = useState<Order>(value);
 
     const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -36,7 +36,7 @@ const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
         };
     }, []);
 
-    const handleChange = (value: SortingLayerOrders) => {
+    const handleChange = (value: Order) => {
         setOrder(value);
 
         if (onChange) {
@@ -94,7 +94,7 @@ const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
 
 interface SelectSortingOrderItemProps {
     order: Order;
-    setOrder: (order: SortingLayerOrders) => void;
+    setOrder: (order: Order) => void;
 }
 
 const SelectSortingOrderItem: FC<SelectSortingOrderItemProps> = ({order, setOrder}) => {

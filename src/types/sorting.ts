@@ -1,1 +1,3 @@
-export type SortingLayerOrders = 'asc' | 'desc';
+export const Orders = ['asc', 'desc'] as const;
+
+export type Order = typeof Orders[number];
