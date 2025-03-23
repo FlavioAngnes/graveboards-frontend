@@ -27,7 +27,7 @@ const buttonVariants = cva(
             variant: {
                 'fill': 'text-white bg-primary-500 hover:bg-primary-400 active:bg-primary-300 disabled:text-tertiary-600 disabled:bg-tertiary-200 disabled:dark:text-tertiary-900 disabled:dark:bg-tertiary-500',
                 'outline': 'text-primary-500 bg-transparent border-2 border-primary-500 hover:bg-primary-100 active:bg-primary-200 dark:border-primary-500 dark:hover:bg-primary-400 dark:hover:text-white dark:active:bg-primary-300 dark:active:text-white disabled:text-tertiary-600 disabled:border-tertiary-600 disabled:dark:text-tertiary-700 disabled:dark:border-tertiary-700 disabled:dark:border-2',
-                'clear': 'text-white bg-transparent hover:bg-tertiary-100 dark:hover:bg-tertiary-900 active:bg-tertiary-200 dark:active:bg-tertiary-800',
+                'clear': 'text-tertiary-500 dark:text-tertiary-400 hover:text-tertiary-800 dark:hover:text-tertiary-100 bg-transparent hover:bg-tertiary-100 dark:hover:bg-tertiary-900 active:bg-tertiary-200 dark:active:bg-tertiary-800',
             },
         },
         defaultVariants: {

@@ -7,6 +7,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { BeatmapPreviewProvider } from "@/context/BeatmapPreviewContext";
 import BeatmapPreviewPlayer from "@/components/shared/beatmapPreviewPlayer";
 import { Toaster } from "react-hot-toast";
+import { SidebarProvider } from "@/context/layout/SidebarContext";
 
 export const metadata: Metadata = {
     title: "Graveboards",
@@ -23,15 +24,17 @@ const RootLayout = ({
     <Toaster position={"bottom-center"}/>
     <AuthProvider>
         <BeatmapPreviewProvider>
-            <div className="flex">
-                <Sidebar />
-                <div className="flex-1">
-                    <Navbar />
-                    <div className="px-5 pb-5">
-                        {children}
+            <SidebarProvider>
+                <div className="flex">
+                    <Sidebar />
+                    <div className="flex-1">
+                        <Navbar />
+                        <div className="px-5 pb-5">
+                            {children}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </SidebarProvider>
             <BeatmapPreviewPlayer />
         </BeatmapPreviewProvider>
     </AuthProvider>

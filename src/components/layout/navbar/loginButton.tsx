@@ -34,7 +34,7 @@ const LoginButton = () => {
                     setDisabled(true);
                 }}>
                 <MdPerson className="size-6 text-white" />
-                <span className="text-white">Login</span>
+                <span className="text-white">Log In</span>
             </button>
         )
     );
