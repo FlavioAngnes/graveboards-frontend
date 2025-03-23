@@ -26,7 +26,7 @@ const RequestGroup: FC<RequestGroupProps> = ({ icon, title, requests, view, edit
                             {icon}
                         </div>
                     )}
-                    <div className="text-2xl font-bold truncate transition-all duration-300 ease-in-out">
+                    <div className="text-2xl font-semibold truncate transition-all duration-300 ease-in-out">
                         {title}
                     </div>
                 </div>

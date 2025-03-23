@@ -25,6 +25,15 @@ const RequestsContent = () => {
                             isDefault: true
                         }
                     ]}
+                    defaultSortingLayers={
+                        [
+                            {
+                                value: 'Request.created_at',
+                                order: 'desc',
+                                isDefault: true
+                            }
+                        ]
+                    }
                 />
             </div>
     );

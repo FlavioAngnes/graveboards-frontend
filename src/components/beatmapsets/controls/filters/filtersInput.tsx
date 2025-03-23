@@ -42,7 +42,7 @@ const FiltersInput: FC<FiltersInputProps> = ({
             return;
         }
 
-        addFilter(name, { [newOperator]: value });
+        addFilter(name, { [newOperator]: value }, true);
     };
 
     const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +55,7 @@ const FiltersInput: FC<FiltersInputProps> = ({
             return;
         }
 
-        addFilter(name, { [operator]: newValue });
+        addFilter(name, { [operator]: newValue }, true);
     };
 
     return (
