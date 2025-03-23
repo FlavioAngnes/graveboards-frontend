@@ -4,7 +4,7 @@ import {Sorting} from "@/types/beatmapsets/sorting";
 import clsx from "clsx";
 import {Order} from "@/types/sorting";
 
-interface Order {
+interface LabeledOrder {
     icon: React.ReactNode,
     label: string,
     value: Order
@@ -50,12 +50,12 @@ const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
         <div
             ref={dropdownRef}
             className={clsx(
-                `relative transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border-[1px] rounded-lg`,
+                `relative transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border rounded-lg`,
                 open ? "border-primary-500" : "border-transparent"
             )}>
             <button
                 className={clsx(
-                    `w-full sm:w-auto whitespace-nowrap p-2 sm:rounded-lg sm:backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 sm:border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
+                    `w-full sm:w-auto whitespace-nowrap p-2 sm:rounded-lg sm:backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 sm:border flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
                     open ? 'border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg' : 'border-tertiary-300 dark:border-tertiary-700 rounded-lg'
                 )}
                 onClick={() => setOpen(!open)}>
@@ -68,7 +68,7 @@ const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
             </button>
             {open && (
                 <div
-                    className="sm:absolute overflow-hidden sm:overflow-visible sm:mt-2 flex flex-col z-10 bg-tertiary-100 dark:bg-tertiary-900 sm:border-[1px] border-tertiary-500 rounded-b-lg sm:rounded-lg min-w-full max-h-[19.25rem] snap-y">
+                    className="sm:absolute overflow-hidden sm:overflow-visible sm:mt-2 flex flex-col z-10 bg-tertiary-100 dark:bg-tertiary-900 sm:border border-tertiary-500 rounded-b-lg sm:rounded-lg min-w-full max-h-[19.25rem] snap-y">
                     <SelectSortingOrderItem
                         order={{
                             icon: <MdArrowUpward className="size-4"/>,
@@ -93,7 +93,7 @@ const SelectOrder: FC<SelectOrderProps> = ({value, onChange}) => {
 };
 
 interface SelectSortingOrderItemProps {
-    order: Order;
+    order: LabeledOrder;
     setOrder: (order: Order) => void;
 }
 

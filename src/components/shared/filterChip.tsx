@@ -25,7 +25,7 @@ const FilterChip: FC<FilterChipProps> = ({name, label, option}) => {
     return (
         <div className={clsx("flex rounded-full overflow-hidden text-sm tracking-wide", {"opacity-50" : !filterInUse})}>
             <div
-                className="py-0.5 pl-2.5 pr-1.5 bg-primary-200 rounded-l-full dark:bg-transparent dark:border-primary-500 dark:border-[1px] dark:text-primary-500 text-black">
+                className="py-0.5 pl-2.5 pr-1.5 bg-primary-200 rounded-l-full dark:bg-transparent dark:border-primary-500 dark:border dark:text-primary-500 text-black">
                 {label}
             </div>
             <div className="flex">

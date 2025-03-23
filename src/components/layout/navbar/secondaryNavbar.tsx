@@ -18,7 +18,7 @@ const SecondaryNavbar: FC<SecondaryNavbarProps> = ({items}) => {
 
     return (
         <div
-            className="flex flex-1 border-b-[1px] justify-center border-tertiary-200 dark:border-tertiary-800 items-center gap-6 sticky top-0 z-10 backdrop-blur bg-white dark:bg-transparent dark:backdrop-brightness-[0.1]">
+            className="flex flex-1 border-b justify-center border-tertiary-200 dark:border-tertiary-800 items-center gap-6 sticky top-0 z-10 backdrop-blur bg-white dark:bg-transparent dark:backdrop-brightness-[0.1]">
             {
                 items.map((item, index) => (
                     <Link

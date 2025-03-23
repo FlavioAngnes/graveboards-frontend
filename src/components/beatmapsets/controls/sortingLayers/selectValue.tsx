@@ -73,12 +73,12 @@ const SelectValue: FC<SelectValueProps> = ({items, selectedItem, onSelect }) => 
         <div
             ref={dropdownRef}
             className={clsx(
-                `border-transparent relative w-full transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border-[1px] rounded-lg`,
+                `border-transparent relative w-full transition-colors duration-300 ease-in-out sm:border-0 sm:rounded-none border rounded-lg`,
                 { "sm:border-primary-500": open }
             )}>
             <button
                 className={clsx(
-                    `w-full whitespace-nowrap p-2 sm:rounded-lg backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 border-[1px] flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
+                    `w-full whitespace-nowrap p-2 sm:rounded-lg backdrop-blur hover:bg-tertiary-100 active:bg-tertiary-200 dark:hover:bg-tertiary-800 border flex items-center justify-between gap-1 transition-colors duration-300 ease-in-out`,
                     open ? "border-primary-500 bg-tertiary-100 dark:bg-tertiary-800 rounded-t-lg" : "border-tertiary-300 dark:border-tertiary-700 rounded-lg"
                 )}
                 onClick={() => setOpen(!open)}>
@@ -101,7 +101,7 @@ const SelectValue: FC<SelectValueProps> = ({items, selectedItem, onSelect }) => 
             </button>
             {open && (
                 <div
-                    className="absolute overflow-hidden sm:mt-2 z-10 flex flex-col bg-tertiary-100 dark:bg-tertiary-900 sm:border-[1px] border-t-0 sm:border-t-[1px] border-tertiary-400 dark:border-tertiary-700 border-[1px] rounded-b-lg sm:rounded-lg min-w-full max-h-[19.25rem] snap-y">
+                    className="absolute overflow-hidden sm:mt-2 z-10 flex flex-col bg-tertiary-100 dark:bg-tertiary-900 sm:border border-t-0 sm:border-t border-tertiary-400 dark:border-tertiary-700 border rounded-b-lg sm:rounded-lg min-w-full max-h-[19.25rem] snap-y">
                     {
                         Object.entries(groups).map(([key, value]) => value.values.length > 0 && (
                             <SelectSortingItem

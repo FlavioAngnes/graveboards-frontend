@@ -53,7 +53,7 @@ const FiltersList = () => {
                     ref={filtersRef}
                     className={
                         `sm:absolute fixed w-screen h-screen sm:w-auto sm:h-auto top-0 sm:top-12 sm:max-h-1/2 sm:min-w-[36rem] right-0 z-50 rounded-none border-0 sm:rounded-xl bg-tertiary-50 dark:bg-tertiary-900 flex flex-col transition-colors duration-300 ease-in-out 
-                            ${canApply ? "border-primary-500 sm:border-2" : "border-tertiary-300 dark:border-tertiary-700 sm:border-[1px]"}`
+                            ${canApply ? "border-primary-500 sm:border-2" : "border-tertiary-300 dark:border-tertiary-700 sm:border"}`
                     }
                 >
                     <div
