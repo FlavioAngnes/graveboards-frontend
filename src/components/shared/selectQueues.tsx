@@ -45,7 +45,7 @@ const SelectQueues: FC<SelectQueuesProps> = ({ onSelect }) => {
                 onSelect([]);
             }
         }
-    }, [queue]);
+    }, [queue, onSelect]);
 
     return (
         <Select

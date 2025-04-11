@@ -21,19 +21,19 @@ const RootLayout = ({
 }>) => (
     <html lang="en">
     <body className="bg-white dark:bg-black text-black dark:text-white antialiased">
-    <Toaster position={"bottom-center"}/>
+    <Toaster position={"bottom-center"} />
     <AuthProvider>
         <BeatmapPreviewProvider>
             <SidebarProvider>
-                <div className="flex">
-                    <Sidebar />
-                    <div className="flex-1">
-                        <Navbar />
-                        <div className="px-5 pb-5">
-                            {children}
+                    <div className="flex">
+                        <Sidebar />
+                        <div className="flex-1">
+                            <Navbar />
+                            <div className="px-5 pb-5">
+                                {children}
+                            </div>
                         </div>
                     </div>
-                </div>
             </SidebarProvider>
             <BeatmapPreviewPlayer />
         </BeatmapPreviewProvider>

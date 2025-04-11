@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, startTransition, useActionState, useEffect, useState } from "react";
+import React, { forwardRef, startTransition, useActionState, useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { createPortal } from "react-dom";
 import Dialog from "@/components/shared/dialog";
@@ -63,9 +63,9 @@ const RequestDialog = forwardRef<HTMLDialogElement, RequestDialogProps>(
             return match ? parseInt(match[1], 10) : -1;
         };
 
-        const handleQueuesChange = (queues: number[]) => {
+        const handleQueuesChange = useCallback((queues: number[]) => {
             if (queues.length < 3) setQueues(queues);
-        };
+        }, []);
 
         const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
@@ -103,7 +103,7 @@ const RequestDialog = forwardRef<HTMLDialogElement, RequestDialogProps>(
             } else if (state.success === false) {
                 toast.error(state.message);
             }
-        }, [state]);
+        }, [state, onClose]);
 
         const { user, isAuthenticated } = useAuth();
 
