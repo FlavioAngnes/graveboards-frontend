@@ -26,7 +26,7 @@ const BeatmapsetPanelListView: FC<BeatmapsetProps> = ({ beatmapset, editMode }) 
         <div className="flex rounded-xl overflow-hidden h-24">
             <div
                 className="flex-col p-2.5 justify-end gap-3 items-end hidden xl:flex rounded-l-xl h-full aspect-video bg-center bg-no-repeat bg-[size:215%]"
-                style={{ backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})` }}>
+                style={{ backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover"]})` }}>
                 <div className="flex gap-1.5">
                     <Button className="px-1.5 gap-1 h-8.5 font-semibold text-sm"
                             onClick={() => {

@@ -28,7 +28,7 @@ const RequestPanelGridView: FC<RequestPanelProps> = ({request, showQueue = true}
                     "relative flex flex-col items-end p-2.5 justify-end gap-3 grow shrink-0 basis-0 self-stretch transition-[filter] duration-300 ease-in-out bg-center bg-no-repeat bg-[size:215%] tracking-[0.25px]",
                     {"delay-300": hover}
                 )}
-                style={{backgroundImage: `url(${request.beatmapset_snapshot.covers["cover@2x"]})`}}>
+                style={{backgroundImage: `url(${request.beatmapset_snapshot.covers["cover"]})`}}>
                 <div className="flex gap-1.5 z-10">
                     <Button className={clsx(
                         "px-1.5 gap-1 h-8.5 font-semibold text-sm transition-[opacity, max-height] box-border duration-300 ease-in-out",

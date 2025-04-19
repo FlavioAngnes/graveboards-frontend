@@ -27,7 +27,7 @@ const BeatmapsetPanelGridView: FC<BeatmapsetProps> = ({ beatmapset }) => {
         <div className="flex flex-col items-start shrink-0 rounded-xl overflow-hidden self-stretch min-w-72 h-64">
             <div
                 className={clsx("relative flex flex-col items-end p-2.5 justify-end gap-3 grow shrink-0 basis-0 self-stretch transition-[filter] duration-300 ease-in-out bg-center bg-no-repeat bg-[size:215%] tracking-[0.25px]", { "delay-300": hover })}
-                style={{ backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover@2x"]})` }}>
+                style={{ backgroundImage: `url(${beatmapset.beatmapset_snapshot.covers["cover"]})` }}>
                 <div className="flex gap-1.5 z-10">
                     <Button
                         onClick={() => {
